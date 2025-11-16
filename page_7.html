@@ -223,14 +223,30 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
-            /* Footer visibility on small mobile */
-            div[class*="mt-auto"] {
-                font-size: clamp(10px, 2.5vw, 12px) !important;
-                opacity: 1 !important;
-                margin-top: clamp(12px, 3vw, 20px) !important;
             }
+            /* Footer visibility on mobile */
             .slide {
-                padding-bottom: clamp(70px, 15vw, 90px) !important; /* Extra space for nav + footer */
+                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            div[class*="mt-auto"] {
+                margin-top: clamp(16px, 4vw, 24px) !important;
+                padding-top: clamp(8px, 2vw, 12px) !important;
+                padding-bottom: clamp(8px, 2vw, 12px) !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
+                opacity: 1 !important; /* Ensure visibility */
+                display: block !important;
+                visibility: visible !important;
+                position: relative !important;
+                z-index: 1 !important;
+                width: 100% !important;
+            }
+            div[class*="mt-auto"] p {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
             }
         }
         @media (max-width: 480px) and (orientation: landscape) {
@@ -244,32 +260,51 @@
                 margin-bottom: 8px !important;
             }
         }
-        .nav-container {
-                bottom: 12px;
-                padding: 6px 16px;
-                gap: 6px;
-            }
-            .nav-button {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                min-height: 44px; /* Better touch target */
-            }
-            .page-indicator {
-                font-size: 0.85rem;
-                padding: 0 10px;
-            }
-        }
         @media (max-width: 480px) {
             .slide {
-                padding: 12px !important;
+                padding: 10px !important;
             }
             h1 {
-                font-size: clamp(20px, 6vw, 28px) !important;
+                font-size: clamp(18px, 7vw, 24px) !important;
+                line-height: 1.2;
+            }
+            h2 {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-4xl {
+                font-size: clamp(20px, 8vw, 28px) !important;
+            }
+            .text-3xl {
+                font-size: clamp(18px, 7vw, 24px) !important;
+            }
+            .text-2xl {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-xl {
+                font-size: clamp(14px, 5vw, 18px) !important;
             }
             .nav-container {
-                flex-wrap: wrap;
-                width: calc(100% - 24px);
-                max-width: 320px;
+                flex-wrap: nowrap;
+                width: auto;
+                max-width: calc(100% - 16px);
+                bottom: 8px;
+                padding: 5px 8px;
+                gap: 4px;
+            }
+            .nav-button {
+                padding: 5px 8px;
+                font-size: 0.7rem;
+                min-height: 32px;
+                min-width: auto;
+                flex: 0 0 auto;
+            }
+            .page-indicator {
+                font-size: 0.7rem;
+                padding: 0 4px;
+                white-space: nowrap;
+            }
+            .budget-card, .category-card {
+                padding: 12px !important;
             }
         }
         h1 {
@@ -360,9 +395,9 @@ html {
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 overflow-hidden">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0" style="overflow: visible;">
 <!-- Left Column - Budget Table -->
-<div class="col-span-1 md:col-span-2 budget-card p-4 min-h-0">
+<div class="col-span-1 md:col-span-2 budget-card p-4 min-h-0 overflow-y-auto" style="max-height: calc(100vh - 180px);">
 <div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
 <table style="font-size: clamp(10px, 1.1vw, 14px); width: 100%; min-width: 600px;">
 <thead>
