@@ -199,92 +199,24 @@
                 width: 100%;
             }
             .nav-container {
-                bottom: 12px;
-                padding: 8px 14px;
-                gap: 8px;
+                bottom: 10px;
+                padding: 6px 10px;
+                gap: 6px;
                 width: auto;
-                max-width: calc(100% - 24px);
+                max-width: calc(100% - 20px);
+                font-size: 0.75rem;
             }
             .nav-button {
-                padding: 10px 14px;
-                font-size: 0.875rem;
-                min-height: 44px;
-                min-width: 44px;
-                touch-action: manipulation;
-            }
-            .page-indicator
-            }
-            /* Footer visibility on mobile */
-            .slide {
-                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
-                display: flex !important;
-                flex-direction: column !important;
-            }
-            div[class*="mt-auto"] {
-                margin-top: clamp(16px, 4vw, 24px) !important;
-                padding-top: clamp(8px, 2vw, 12px) !important;
-                padding-bottom: clamp(8px, 2vw, 12px) !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
-                opacity: 1 !important; /* Ensure visibility */
-                display: block !important;
-                visibility: visible !important;
-                position: relative !important;
-                z-index: 1 !important;
-                width: 100% !important;
-            }
-            div[class*="mt-auto"] p {
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
-            }
-            .icon-container {
-                width: clamp(36px, 8vw, 50px) !important;
-                height: clamp(36px, 8vw, 50px) !important;
-            }
-        }
-        @media (max-width: 480px) {
-            .slide {
-                padding: 10px !important;
-            }
-            h1 {
-                font-size: clamp(18px, 7vw, 24px) !important;
-                line-height: 1.2;
-            }
-            h2 {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-4xl {
-                font-size: clamp(20px, 8vw, 28px) !important;
-            }
-            .text-3xl {
-                font-size: clamp(18px, 7vw, 24px) !important;
-            }
-            .text-2xl {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-xl {
-                font-size: clamp(14px, 5vw, 18px) !important;
-            }
-            .nav-container {
-                flex-wrap: nowrap;
-                width: auto;
-                max-width: calc(100% - 16px);
-                bottom: 8px;
-                padding: 5px 8px;
-                gap: 4px;
-            }
-            .nav-button {
-                padding: 5px 8px;
-                font-size: 0.7rem;
-                min-height: 32px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+                min-height: 36px;
                 min-width: auto;
-                flex: 0 0 auto;
+                touch-action: manipulation;
+                flex-shrink: 0;
             }
             .page-indicator {
-                font-size: 0.7rem;
-                padding: 0 4px;
-                white-space: nowrap;
+                font-size: 0.75rem;
+                padding: 0 6px;
             }
             .budget-card, .category-card {
                 padding: 12px !important;
