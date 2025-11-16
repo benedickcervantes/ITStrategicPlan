@@ -129,6 +129,57 @@
                 height: calc(100vw * 9 / 16);
             }
         }
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            html, body {
+                overflow: auto;
+                height: auto;
+            }
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                max-width: 100%;
+                max-height: none;
+                padding: clamp(15px, 4vw, 25px) !important;
+            }
+            .grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            .grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
+            .grid-cols-5 {
+                grid-template-columns: 1fr !important;
+            }
+            .nav-container {
+                bottom: 12px;
+                padding: 6px 16px;
+                gap: 6px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-height: 44px; /* Better touch target */
+            }
+            .page-indicator {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 12px !important;
+            }
+            h1 {
+                font-size: clamp(20px, 6vw, 28px) !important;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                width: calc(100% - 24px);
+                max-width: 320px;
+            }
+        }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
@@ -233,9 +284,9 @@ html {
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-5 gap-4 min-h-0 overflow-hidden">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-5 gap-4 min-h-0 overflow-hidden">
 <!-- ROI Section - 3 columns -->
-<div class="col-span-3 flex flex-col gap-3 min-h-0 overflow-y-auto">
+<div class="col-span-1 md:col-span-3 flex flex-col gap-3 min-h-0 overflow-y-auto">
 <h2 class="font-bold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(18px, 2.2vw, 24px);">Expected Returns on Investment</h2>
 <!-- ROI Cards -->
 <div class="grid grid-cols-2 gap-3 flex-shrink-0" style="grid-template-rows: repeat(3, auto);">
@@ -314,7 +365,7 @@ html {
 </div>
 </div>
 <!-- Recommendations Section - 2 columns -->
-<div class="col-span-2 bg-white rounded-lg p-4 shadow flex flex-col min-h-0 overflow-y-auto">
+<div class="col-span-1 md:col-span-2 bg-white rounded-lg p-4 shadow flex flex-col min-h-0 overflow-y-auto">
 <h2 class="font-bold text-[#006D77] mb-3 flex-shrink-0" style="font-size: clamp(18px, 2.2vw, 24px);">Executive Recommendations</h2>
 <div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
 <h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">1. Strategic Plan Approval</h3>

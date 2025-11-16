@@ -127,6 +127,48 @@
                 height: calc(100vw * 9 / 16);
             }
         }
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            html, body {
+                overflow: auto;
+                height: auto;
+            }
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                max-width: 100%;
+                max-height: none;
+                padding: 20px !important;
+            }
+            .nav-container {
+                bottom: 12px;
+                padding: 6px 16px;
+                gap: 6px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-height: 44px;
+            }
+            .page-indicator {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 15px !important;
+            }
+            h1 {
+                font-size: clamp(24px, 8vw, 36px) !important;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                width: calc(100% - 24px);
+                max-width: 320px;
+            }
+        }
         .title {
             font-family: 'Montserrat', sans-serif;
         }
@@ -357,7 +399,7 @@ html {
 <!-- Subtitle -->
 <p class="text-2xl font-light mb-8 text-gray-100 subtitle-animate">Strategic IT Infrastructure Modernization, Risk Mitigation &amp; Digital Transformation</p>
 <!-- Key Statistics -->
-<div class="mt-12 mb-8 grid grid-cols-3 gap-8 max-w-4xl mx-auto subtitle-animate">
+<div class="mt-12 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto subtitle-animate">
 <div class="text-center">
 <div class="text-3xl font-bold text-orange-300 mb-2">₱1.6M</div>
 <div class="text-sm text-gray-200">Strategic Investment</div>

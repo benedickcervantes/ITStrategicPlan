@@ -129,6 +129,57 @@
                 height: calc(100vw * 9 / 16);
             }
         }
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            html, body {
+                overflow: auto;
+                height: auto;
+            }
+            .slide {
+                width: 100vw;
+                height: auto;
+                min-height: 100vh;
+                max-width: 100%;
+                max-height: none;
+                padding: clamp(15px, 4vw, 25px) !important;
+            }
+            .grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            .grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
+            .grid-cols-5 {
+                grid-template-columns: 1fr !important;
+            }
+            .nav-container {
+                bottom: 12px;
+                padding: 6px 16px;
+                gap: 6px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-height: 44px; /* Better touch target */
+            }
+            .page-indicator {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 12px !important;
+            }
+            h1 {
+                font-size: clamp(20px, 6vw, 28px) !important;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                width: calc(100% - 24px);
+                max-width: 320px;
+            }
+        }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
@@ -217,9 +268,9 @@ html {
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-3 gap-4 min-h-0 overflow-hidden">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 overflow-hidden">
 <!-- Left Column - Budget Table -->
-<div class="col-span-2 budget-card p-4 overflow-auto min-h-0">
+<div class="col-span-1 md:col-span-2 budget-card p-4 overflow-auto min-h-0">
 <table style="font-size: clamp(10px, 1.1vw, 14px);">
 <thead>
 <tr>
