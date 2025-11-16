@@ -137,7 +137,6 @@
         }
         /* Mobile Responsive Styles */
         @media (max-width: 768px) {
-            
             html, body {
                 overflow: auto !important;
                 height: auto !important;
@@ -153,6 +152,66 @@
                 padding: clamp(12px, 3vw, 20px) !important;
                 overflow: visible !important;
                 display: block !important;
+            }
+            /* Page 1 Specific Styles */
+            .z-10 {
+                padding-left: clamp(16px, 4vw, 64px) !important;
+                padding-right: clamp(16px, 4vw, 64px) !important;
+            }
+            .title {
+                font-size: clamp(28px, 8vw, 48px) !important;
+                line-height: 1.1 !important;
+                margin-bottom: clamp(12px, 3vw, 24px) !important;
+            }
+            .text-6xl {
+                font-size: clamp(28px, 8vw, 48px) !important;
+            }
+            .text-4xl {
+                font-size: clamp(20px, 6vw, 32px) !important;
+            }
+            .text-3xl {
+                font-size: clamp(18px, 5vw, 24px) !important;
+            }
+            .text-2xl {
+                font-size: clamp(16px, 4vw, 20px) !important;
+                line-height: 1.3 !important;
+            }
+            .text-sm {
+                font-size: clamp(10px, 2.5vw, 14px) !important;
+            }
+            .mb-6 {
+                margin-bottom: clamp(12px, 3vw, 24px) !important;
+            }
+            .mb-8 {
+                margin-bottom: clamp(16px, 4vw, 32px) !important;
+            }
+            .mb-4 {
+                margin-bottom: clamp(12px, 3vw, 20px) !important;
+            }
+            .mb-2 {
+                margin-bottom: clamp(6px, 1.5vw, 12px) !important;
+            }
+            .mt-12 {
+                margin-top: clamp(16px, 4vw, 48px) !important;
+            }
+            .mt-16 {
+                margin-top: clamp(20px, 5vw, 64px) !important;
+            }
+            .my-8 {
+                margin-top: clamp(12px, 3vw, 32px) !important;
+                margin-bottom: clamp(12px, 3vw, 32px) !important;
+            }
+            .space-x-16 > * + * {
+                margin-left: clamp(12px, 3vw, 64px) !important;
+            }
+            .circuit-line {
+                display: none !important; /* Hide decorative lines on mobile */
+            }
+            .circle-element {
+                opacity: 0.3 !important; /* Reduce opacity on mobile */
+            }
+            .grid-pattern {
+                opacity: 0.5 !important; /* Reduce pattern visibility */
             }
             .grid-cols-2 {
                 grid-template-columns: 1fr !important;
@@ -223,24 +282,55 @@
             .slide {
                 padding: 10px !important;
             }
-            h1 {
-                font-size: clamp(18px, 7vw, 24px) !important;
-                line-height: 1.2;
+            .z-10 {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+            h1, .title {
+                font-size: clamp(24px, 9vw, 32px) !important;
+                line-height: 1.15 !important;
+                margin-bottom: clamp(10px, 2.5vw, 16px) !important;
             }
             h2 {
                 font-size: clamp(16px, 6vw, 20px) !important;
             }
-            .text-4xl {
-                font-size: clamp(20px, 8vw, 28px) !important;
+            .text-6xl {
+                font-size: clamp(24px, 9vw, 32px) !important;
             }
-            .text-3xl {
+            .text-4xl {
                 font-size: clamp(18px, 7vw, 24px) !important;
             }
-            .text-2xl {
+            .text-3xl {
                 font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-2xl {
+                font-size: clamp(14px, 5vw, 18px) !important;
+                line-height: 1.4 !important;
             }
             .text-xl {
                 font-size: clamp(14px, 5vw, 18px) !important;
+            }
+            .text-sm {
+                font-size: clamp(9px, 2.2vw, 12px) !important;
+            }
+            .mb-6 {
+                margin-bottom: clamp(10px, 2.5vw, 16px) !important;
+            }
+            .mb-8 {
+                margin-bottom: clamp(12px, 3vw, 20px) !important;
+            }
+            .mt-12 {
+                margin-top: clamp(12px, 3vw, 24px) !important;
+            }
+            .mt-16 {
+                margin-top: clamp(16px, 4vw, 32px) !important;
+            }
+            .my-8 {
+                margin-top: clamp(10px, 2.5vw, 16px) !important;
+                margin-bottom: clamp(10px, 2.5vw, 16px) !important;
+            }
+            .space-x-16 > * + * {
+                margin-left: clamp(8px, 2vw, 24px) !important;
             }
             .nav-container {
                 flex-wrap: wrap;
@@ -266,6 +356,9 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
+            }
+            .icon-hover {
+                font-size: clamp(24px, 6vw, 32px) !important;
             }
         }
         @media (max-width: 480px) and (orientation: landscape) {
@@ -525,29 +618,29 @@ html {
 <div class="circle-element" style="width: 60px; height: 60px; top: 200px; left: 200px; animation-delay: 1.5s;"></div>
 <div class="circle-element" style="width: 90px; height: 90px; bottom: 180px; right: 220px; animation-delay: 2s;"></div>
 <!-- Content Container -->
-<div class="z-10 text-center px-16">
+<div class="z-10 text-center px-4 md:px-16">
 <!-- Company Name -->
 <div class="mb-4 date-animate" style="animation-delay: 0.1s;">
 <p class="text-sm font-semibold text-white tracking-widest uppercase" style="letter-spacing: 0.2em;">FEDERAL PIONEER DEVELOPMENT CORP.</p>
 </div>
 <!-- Main Title -->
-<h1 class="title text-6xl font-bold mb-6 tracking-tight title-animate">IT Strategic Plan and 2026 Budget Report</h1>
+<h1 class="title text-3xl md:text-6xl font-bold mb-4 md:mb-6 tracking-tight title-animate">IT Strategic Plan and 2026 Budget Report</h1>
 <!-- Divider -->
 <div class="h-1 bg-orange-400 mx-auto my-8 divider-animate"></div>
 <!-- Subtitle -->
-<p class="text-2xl font-light mb-8 text-gray-100 subtitle-animate">Strategic IT Infrastructure Modernization, Risk Mitigation &amp; Digital Transformation</p>
+<p class="text-base md:text-2xl font-light mb-6 md:mb-8 text-gray-100 subtitle-animate px-2">Strategic IT Infrastructure Modernization, Risk Mitigation &amp; Digital Transformation</p>
 <!-- Key Statistics -->
 <div class="mt-12 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto subtitle-animate">
 <div class="text-center">
-<div class="text-3xl font-bold text-orange-300 mb-2">₱1.6M</div>
+<div class="text-2xl md:text-3xl font-bold text-orange-300 mb-2">₱1.6M</div>
 <div class="text-sm text-gray-200">Strategic Investment</div>
 </div>
 <div class="text-center">
-<div class="text-3xl font-bold text-orange-300 mb-2">28-30</div>
+<div class="text-2xl md:text-3xl font-bold text-orange-300 mb-2">28-30</div>
 <div class="text-sm text-gray-200">Users Audited</div>
 </div>
 <div class="text-center">
-<div class="text-3xl font-bold text-orange-300 mb-2">3</div>
+<div class="text-2xl md:text-3xl font-bold text-orange-300 mb-2">3</div>
 <div class="text-sm text-gray-200">Implementation Phases</div>
 </div>
 </div>
@@ -556,21 +649,21 @@ html {
 <p class="text-lg text-gray-200 font-light tracking-wide">Prepared: November 2025</p>
 </div>
 <!-- Abstract Tech Icons -->
-<div class="flex justify-center mt-16 space-x-16">
+<div class="flex justify-center mt-8 md:mt-16 space-x-4 md:space-x-16 flex-wrap gap-4 md:gap-0">
 <div class="text-center icon-animate">
-<i class="fas fa-server text-4xl text-orange-400 mb-3 icon-hover"></i>
+<i class="fas fa-server text-2xl md:text-4xl text-orange-400 mb-2 md:mb-3 icon-hover"></i>
 <p class="text-sm text-gray-200">Infrastructure</p>
 </div>
 <div class="text-center icon-animate">
-<i class="fas fa-shield-alt text-4xl text-orange-400 mb-3 icon-hover"></i>
+<i class="fas fa-shield-alt text-2xl md:text-4xl text-orange-400 mb-2 md:mb-3 icon-hover"></i>
 <p class="text-sm text-gray-200">Security</p>
 </div>
 <div class="text-center icon-animate">
-<i class="fas fa-chart-line text-4xl text-orange-400 mb-3 icon-hover"></i>
+<i class="fas fa-chart-line text-2xl md:text-4xl text-orange-400 mb-2 md:mb-3 icon-hover"></i>
 <p class="text-sm text-gray-200">Growth</p>
 </div>
 <div class="text-center icon-animate">
-<i class="fas fa-laptop-code text-4xl text-orange-400 mb-3 icon-hover"></i>
+<i class="fas fa-laptop-code text-2xl md:text-4xl text-orange-400 mb-2 md:mb-3 icon-hover"></i>
 <p class="text-sm text-gray-200">Productivity</p>
 </div>
 </div>
