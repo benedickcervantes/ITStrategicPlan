@@ -247,6 +247,7 @@
                 visibility: visible !important;
                 opacity: 1 !important;
                 font-size: clamp(11px, 3vw, 13px) !important;
+                text-align: left !important;
             }
         }
         @media (max-width: 480px) {
@@ -314,6 +315,12 @@
             }
             .mb-4 {
                 margin-bottom: 8px !important;
+            }
+        }
+        /* Desktop: Keep footer right-aligned */
+        @media (min-width: 769px) {
+            div.mt-auto {
+                text-align: right;
             }
         }
         h1 {
@@ -481,8 +488,8 @@ html {
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 text-right text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
-<p>IT Equipment Audit Report, November 2025</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on IT Equipment Audit Report, November 2025</p>
 </div>
 </div>
 <script>
