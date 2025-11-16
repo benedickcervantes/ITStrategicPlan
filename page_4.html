@@ -300,6 +300,14 @@
                 font-size: clamp(10px, 2.5vw, 12px) !important;
                 opacity: 1 !important;
                 margin-top: clamp(12px, 3vw, 20px) !important;
+                display: block !important;
+                flex-direction: column !important;
+            }
+            div[class*="mt-auto"] p {
+                display: block !important;
+                width: 100% !important;
+                text-align: left !important;
+                margin-bottom: clamp(4px, 1vw, 6px) !important;
             }
             .slide {
                 padding-bottom: clamp(70px, 15vw, 90px) !important; /* Extra space for nav + footer */
@@ -507,13 +515,9 @@ html {
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 flex justify-between items-center text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px); gap: 10px;">
-<div class="flex-1">
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex justify-between items-center" style="font-size: clamp(10px, 1.2vw, 14px);">
 <p>Immediate action required to mitigate these security vulnerabilities</p>
-</div>
-<div class="text-right flex-shrink-0">
 <p>IT Equipment Audit Report, November 2025</p>
-</div>
 </div>
 </div>
 <script>
