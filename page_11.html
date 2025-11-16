@@ -266,23 +266,24 @@
                 font-size: clamp(14px, 5vw, 18px) !important;
             }
             .nav-container {
-                flex-wrap: wrap;
-                width: calc(100% - 20px);
-                max-width: 100%;
+                flex-wrap: nowrap;
+                width: auto;
+                max-width: calc(100% - 16px);
                 bottom: 8px;
-                padding: 6px 12px;
+                padding: 5px 8px;
+                gap: 4px;
             }
             .nav-button {
-                padding: 8px 12px;
-                font-size: 0.8rem;
-                flex: 1;
+                padding: 5px 8px;
+                font-size: 0.7rem;
+                min-height: 32px;
                 min-width: auto;
+                flex: 0 0 auto;
             }
             .page-indicator {
-                width: 100%;
-                text-align: center;
-                order: -1;
-                padding: 4px 0;
+                font-size: 0.7rem;
+                padding: 0 4px;
+                white-space: nowrap;
             }
             .budget-card, .category-card {
                 padding: 12px !important;
