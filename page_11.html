@@ -211,9 +211,31 @@
                 min-width: 44px;
                 touch-action: manipulation;
             }
-            .page-indicator {
-                font-size: 0.875rem;
-                padding: 0 8px;
+            .page-indicator
+            }
+            /* Footer visibility on mobile */
+            .slide {
+                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            div[class*="mt-auto"] {
+                margin-top: clamp(16px, 4vw, 24px) !important;
+                padding-top: clamp(8px, 2vw, 12px) !important;
+                padding-bottom: clamp(8px, 2vw, 12px) !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
+                opacity: 1 !important; /* Ensure visibility */
+                display: block !important;
+                visibility: visible !important;
+                position: relative !important;
+                z-index: 1 !important;
+                width: 100% !important;
+            }
+            div[class*="mt-auto"] p {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
             }
             .icon-container {
                 width: clamp(36px, 8vw, 50px) !important;
@@ -267,6 +289,14 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
+            /* Footer visibility on small mobile */
+            div[class*="mt-auto"] {
+                font-size: clamp(10px, 2.5vw, 12px) !important;
+                opacity: 1 !important;
+                margin-top: clamp(12px, 3vw, 20px) !important;
+            }
+            .slide {
+                padding-bottom: clamp(70px, 15vw, 90px) !important; /* Extra space for nav + footer */
             }
         }
         @media (max-width: 480px) and (orientation: landscape) {
