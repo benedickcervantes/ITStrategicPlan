@@ -130,10 +130,16 @@
             }
         }
         /* Mobile Responsive Styles */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: clamp(16px, 3vw, 30px) !important;
+            }
+        }
         @media (max-width: 768px) {
             html, body {
                 overflow: auto;
                 height: auto;
+                -webkit-overflow-scrolling: touch;
             }
             .slide {
                 width: 100vw;
@@ -141,7 +147,7 @@
                 min-height: 100vh;
                 max-width: 100%;
                 max-height: none;
-                padding: clamp(15px, 4vw, 25px) !important;
+                padding: clamp(12px, 3vw, 20px) !important;
             }
             .grid-cols-2 {
                 grid-template-columns: 1fr !important;
@@ -152,32 +158,109 @@
             .grid-cols-5 {
                 grid-template-columns: 1fr !important;
             }
+            .budget-card, .category-card, .issue-card, .risk-card, .goal-card {
+                padding: clamp(12px, 3vw, 20px) !important;
+                margin-bottom: 12px;
+            }
+            h1, h2 {
+                margin-bottom: clamp(8px, 2vw, 16px) !important;
+            }
+            .mb-8 {
+                margin-bottom: clamp(16px, 4vw, 32px) !important;
+            }
+            .mb-4 {
+                margin-bottom: clamp(12px, 3vw, 20px) !important;
+            }
+            .gap-8 {
+                gap: clamp(12px, 3vw, 24px) !important;
+            }
+            .gap-6 {
+                gap: clamp(10px, 2.5vw, 20px) !important;
+            }
+            .gap-4 {
+                gap: clamp(8px, 2vw, 16px) !important;
+            }
             .nav-container {
                 bottom: 12px;
-                padding: 6px 16px;
-                gap: 6px;
+                padding: 8px 14px;
+                gap: 8px;
+                width: auto;
+                max-width: calc(100% - 24px);
             }
             .nav-button {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                min-height: 44px; /* Better touch target */
+                padding: 10px 14px;
+                font-size: 0.875rem;
+                min-height: 44px;
+                min-width: 44px;
+                touch-action: manipulation;
             }
             .page-indicator {
-                font-size: 0.85rem;
-                padding: 0 10px;
+                font-size: 0.875rem;
+                padding: 0 8px;
+            }
+            .icon-container {
+                width: clamp(36px, 8vw, 50px) !important;
+                height: clamp(36px, 8vw, 50px) !important;
+            }
+            #budget-chart {
+                min-height: clamp(200px, 40vw, 280px) !important;
             }
         }
         @media (max-width: 480px) {
             .slide {
-                padding: 12px !important;
+                padding: 10px !important;
             }
             h1 {
-                font-size: clamp(20px, 6vw, 28px) !important;
+                font-size: clamp(18px, 7vw, 24px) !important;
+                line-height: 1.2;
+            }
+            h2 {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-4xl {
+                font-size: clamp(20px, 8vw, 28px) !important;
+            }
+            .text-3xl {
+                font-size: clamp(18px, 7vw, 24px) !important;
+            }
+            .text-2xl {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-xl {
+                font-size: clamp(14px, 5vw, 18px) !important;
             }
             .nav-container {
                 flex-wrap: wrap;
-                width: calc(100% - 24px);
-                max-width: 320px;
+                width: calc(100% - 20px);
+                max-width: 100%;
+                bottom: 8px;
+                padding: 6px 12px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+                flex: 1;
+                min-width: auto;
+            }
+            .page-indicator {
+                width: 100%;
+                text-align: center;
+                order: -1;
+                padding: 4px 0;
+            }
+            .budget-card, .category-card {
+                padding: 12px !important;
+            }
+        }
+        @media (max-width: 480px) and (orientation: landscape) {
+            .slide {
+                padding: 8px !important;
+            }
+            .mb-8 {
+                margin-bottom: 12px !important;
+            }
+            .mb-4 {
+                margin-bottom: 8px !important;
             }
         }
         h1 {
@@ -266,7 +349,7 @@ html {
 <div class="text-[#2F3E46] text-xl">Total 2026 IT Budget</div>
 <div class="text-[#006D77] text-3xl md:text-5xl font-bold">₱1,614,430</div>
 </div>
-<div class="w-full min-h-[280px] flex justify-center" id="budget-chart"></div>
+<div class="w-full min-h-[280px] flex justify-center overflow-hidden" id="budget-chart" style="min-height: clamp(200px, 40vw, 280px);"></div>
 </div>
 <!-- Right Column: Budget Breakdown -->
 <div class="budget-card p-6 flex flex-col">
