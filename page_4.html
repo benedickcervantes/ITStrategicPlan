@@ -1,0 +1,482 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Security and Compliance Risks</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .risk-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-5px);
+        }
+        .icon-container {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .impact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .impact-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<!-- Header -->
+<div class="mb-4 flex-shrink-0">
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">Security and Compliance Risks</h1>
+<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
+</div>
+<!-- Main Content -->
+<div class="flex-grow grid grid-cols-2 gap-4 min-h-0 overflow-hidden">
+<!-- Unlicensed Software Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#EE6C4D] text-white mr-3" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-exclamation-triangle" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Unlicensed Software</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-2" style="font-size: clamp(12px, 1.4vw, 18px); line-height: 1.4;">16 systems are running unlicensed or cracked versions of Windows and Microsoft Office, representing 57% of the total audited systems (28-30 users).</p>
+<div class="w-full mb-2" id="unlicensed-chart" style="height: clamp(100px, 15vh, 130px);"></div>
+<div class="bg-[#EE6C4D]/10 p-2 rounded text-xs text-[#EE6C4D] mb-2">
+<strong>Compliance Status:</strong> Non-compliant - Immediate action required in Phase 2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-gavel" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Legal penalties and compliance violations - Risk of fines and legal action from Microsoft</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-user-secret" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Increased vulnerability to cyberattacks - No security updates or patches available</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-database" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">System instability and crashes - Unlicensed software causing compatibility issues</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-ban" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">No technical support - Unable to receive official Microsoft support for critical issues</span>
+</div>
+</div>
+</div>
+<!-- Failing Server UPS Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#006D77] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-bolt" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Failing Server UPS</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-2" style="font-size: clamp(12px, 1.4vw, 18px); line-height: 1.4;">The APC UPS unit protecting the Fujitsu Primergy RX1330 M3 Rack Server is failing and requires <strong>IMMEDIATE replacement</strong> in Phase 1. Recommended: 2200 VA or 3000 VA capacity for critical network infrastructure protection.</p>
+<div class="flex flex-col items-center mb-3" style="height: clamp(100px, 15vh, 130px);">
+<div class="relative mb-2" style="width: clamp(120px, 15vw, 160px); height: clamp(100px, 12vh, 120px);">
+<div class="absolute inset-0 flex items-center justify-center z-10">
+<i class="fas fa-server text-[#006D77]" style="font-size: clamp(32px, 4vw, 48px);"></i>
+</div>
+<div class="absolute inset-0 flex items-center justify-center z-20">
+<i class="fas fa-bolt text-[#EE6C4D] animate-pulse" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+</div>
+<span class="bg-[#EE6C4D] text-white px-2 py-0.5 rounded-full font-bold" style="font-size: clamp(10px, 1.2vw, 14px);">Critical - Phase 1</span>
+</div>
+<div class="bg-[#006D77]/10 p-2 rounded text-xs text-[#006D77] mb-2">
+<strong>Priority:</strong> Highest - Address immediately to prevent server failure and data loss
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-clock" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">High risk of data loss during power outages - No protection for critical server</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-business-time" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Extended system downtime affecting business continuity - Network services at risk</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-shield-alt" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Compromised backup systems and data integrity - External storage at risk</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-exclamation-circle" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Potential hardware damage from power surges or sudden shutdowns</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-2 flex justify-between items-center text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px); gap: 10px;">
+<div class="flex-1">
+<p>Immediate action required to mitigate these security vulnerabilities</p>
+</div>
+<div class="text-right flex-shrink-0">
+<p>IT Equipment Audit Report, November 2025</p>
+</div>
+</div>
+</div>
+<script>
+        // Unlicensed Software Chart
+        const chartContainer = document.getElementById("unlicensed-chart");
+        const chartWidth = chartContainer.offsetWidth || 360;
+        const chartHeight = chartContainer.offsetHeight || 130;
+        
+        const unlicensedChart = d3.select("#unlicensed-chart")
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("viewBox", `0 0 ${Math.max(chartWidth, 360)} ${Math.max(chartHeight, 130)}`)
+            .attr("preserveAspectRatio", "xMidYMid meet");
+            
+        // Create a simple visualization of the 16 unlicensed systems
+        const systemCount = 16;
+        const maxSystems = 20; // Scale to show context
+        const svgWidth = Math.max(chartWidth, 360);
+        const svgHeight = Math.max(chartHeight, 130);
+        const barWidth = svgWidth - 40;
+        const barHeight = Math.min(30, svgHeight * 0.2);
+        const barY = svgHeight * 0.4;
+        
+        // Background bar showing total possible systems
+        unlicensedChart.append("rect")
+            .attr("x", 20)
+            .attr("y", barY)
+            .attr("width", barWidth)
+            .attr("height", barHeight)
+            .attr("rx", barHeight / 2)
+            .attr("fill", "#E0E1DD");
+            
+        // Foreground bar showing unlicensed systems with animation
+        unlicensedChart.append("rect")
+            .attr("x", 20)
+            .attr("y", barY)
+            .attr("width", 0)
+            .attr("height", barHeight)
+            .attr("rx", barHeight / 2)
+            .attr("fill", "#EE6C4D")
+            .transition()
+            .duration(1500)
+            .ease(d3.easeCubicOut)
+            .attr("width", barWidth * (systemCount / maxSystems));
+            
+        // Add text label with fade-in animation
+        unlicensedChart.append("text")
+            .attr("x", svgWidth / 2)
+            .attr("y", barY - 10)
+            .attr("text-anchor", "middle")
+            .attr("fill", "#2F3E46")
+            .attr("font-size", Math.min(14, svgHeight * 0.12) + "px")
+            .attr("font-weight", "bold")
+            .text("16 systems with unlicensed software")
+            .style("opacity", 0)
+            .transition()
+            .delay(1200)
+            .duration(800)
+            .style("opacity", 1);
+            
+        // Add icon representation of systems
+        const iconSize = Math.min(15, (barWidth / maxSystems) - 2);
+        const iconSpacing = barWidth / maxSystems;
+        const iconY = barY + barHeight + 15;
+        
+        const iconGroup = unlicensedChart.append("g")
+            .attr("transform", `translate(20, ${iconY})`);
+            
+        for (let i = 0; i < maxSystems; i++) {
+            iconGroup.append("rect")
+                .attr("x", i * iconSpacing)
+                .attr("y", 0)
+                .attr("width", iconSize)
+                .attr("height", iconSize)
+                .attr("rx", 2)
+                .attr("fill", i < systemCount ? "#EE6C4D" : "#E0E1DD")
+                .attr("stroke", "#2F3E46")
+                .attr("stroke-width", 0.5);
+                
+            if (i < 9) {
+                iconGroup.append("text")
+                    .attr("x", i * iconSpacing + iconSize / 2)
+                    .attr("y", iconSize / 2)
+                    .attr("text-anchor", "middle")
+                    .attr("dy", "0.35em")
+                    .attr("fill", i < systemCount ? "white" : "#2F3E46")
+                    .attr("font-size", Math.max(8, iconSize * 0.6) + "px")
+                    .attr("font-weight", "bold")
+                    .text(i + 1);
+            }
+        }
+    </script>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(3)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 4 of 11</div>
+    <button class="nav-button" onclick="goToPage(5)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '4');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 700);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 700);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(3);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(5);
+            }
+        }
+    });
+</script>
+</body></html>

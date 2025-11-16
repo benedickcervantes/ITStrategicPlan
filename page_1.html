@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IT Strategic Plan and 2026 Budget Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            background: linear-gradient(135deg, #006D77 0%, #004D56 100%);
+            color: white;
+            transform-origin: center center;
+            will-change: transform, opacity, filter;
+        }
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        /* Carousel entry animation */
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        .title {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .circuit-line {
+            position: absolute;
+            background: rgba(244, 162, 97, 0.4);
+            border-radius: 4px;
+            animation: slideInLine 1.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .circle-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(238, 108, 77, 0.15);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.15;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.25;
+                transform: scale(1.1);
+            }
+        }
+        
+        @keyframes slideInLine {
+            0% {
+                opacity: 0;
+                transform: translateX(-50px) rotate(var(--rotation, 0deg));
+            }
+            100% {
+                opacity: 0.4;
+                transform: translateX(0) rotate(var(--rotation, 0deg));
+            }
+        }
+        
+        .title-animate {
+            animation: titleFadeIn 1.2s ease-out forwards;
+            opacity: 0;
+        }
+        
+        @keyframes titleFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .divider-animate {
+            animation: dividerGrow 1s ease-out 0.5s forwards;
+            width: 0;
+        }
+        
+        @keyframes dividerGrow {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 96px;
+            }
+        }
+        
+        .subtitle-animate {
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .date-animate {
+            animation: fadeIn 1s ease-out 1.2s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .icon-animate {
+            animation: iconBounce 1s ease-out forwards;
+            opacity: 0;
+            transform: scale(0);
+        }
+        
+        @keyframes iconBounce {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+            60% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .icon-animate:nth-child(1) {
+            animation-delay: 1.5s;
+        }
+        
+        .icon-animate:nth-child(2) {
+            animation-delay: 1.7s;
+        }
+        
+        .icon-animate:nth-child(3) {
+            animation-delay: 1.9s;
+        }
+        
+        .icon-animate:nth-child(4) {
+            animation-delay: 2.1s;
+        }
+        
+        .icon-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .icon-hover:hover {
+            transform: scale(1.2) translateY(-5px);
+            color: #F4A261 !important;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide flex flex-col justify-center items-center" style=" overflow: hidden;">
+<!-- Background Pattern -->
+<div class="grid-pattern"></div>
+<!-- Abstract Tech Elements -->
+<div class="circuit-line" style="width: 180px; height: 4px; top: 140px; left: 120px; --rotation: 45deg; animation-delay: 0.2s;"></div>
+<div class="circuit-line" style="width: 120px; height: 4px; top: 200px; right: 180px; --rotation: -30deg; animation-delay: 0.4s;"></div>
+<div class="circuit-line" style="width: 80px; height: 4px; bottom: 160px; left: 240px; --rotation: 15deg; animation-delay: 0.6s;"></div>
+<div class="circuit-line" style="width: 150px; height: 4px; bottom: 220px; right: 150px; --rotation: -60deg; animation-delay: 0.8s;"></div>
+<div class="circle-element" style="width: 180px; height: 180px; top: 100px; right: 100px; animation-delay: 0.5s;"></div>
+<div class="circle-element" style="width: 120px; height: 120px; bottom: 80px; left: 150px; animation-delay: 1s;"></div>
+<div class="circle-element" style="width: 60px; height: 60px; top: 200px; left: 200px; animation-delay: 1.5s;"></div>
+<div class="circle-element" style="width: 90px; height: 90px; bottom: 180px; right: 220px; animation-delay: 2s;"></div>
+<!-- Content Container -->
+<div class="z-10 text-center px-16">
+<!-- Company Name -->
+<div class="mb-4 date-animate" style="animation-delay: 0.1s;">
+<p class="text-sm font-semibold text-white tracking-widest uppercase" style="letter-spacing: 0.2em;">FEDERAL PIONEER DEVELOPMENT CORP.</p>
+</div>
+<!-- Main Title -->
+<h1 class="title text-6xl font-bold mb-6 tracking-tight title-animate">IT Strategic Plan and 2026 Budget Report</h1>
+<!-- Divider -->
+<div class="h-1 bg-orange-400 mx-auto my-8 divider-animate"></div>
+<!-- Subtitle -->
+<p class="text-2xl font-light mb-8 text-gray-100 subtitle-animate">Strategic IT Infrastructure Modernization, Risk Mitigation &amp; Digital Transformation</p>
+<!-- Key Statistics -->
+<div class="mt-12 mb-8 grid grid-cols-3 gap-8 max-w-4xl mx-auto subtitle-animate">
+<div class="text-center">
+<div class="text-3xl font-bold text-orange-300 mb-2">₱1.6M</div>
+<div class="text-sm text-gray-200">Strategic Investment</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-orange-300 mb-2">28-30</div>
+<div class="text-sm text-gray-200">Users Audited</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-orange-300 mb-2">3</div>
+<div class="text-sm text-gray-200">Implementation Phases</div>
+</div>
+</div>
+<!-- Date -->
+<div class="mt-6 inline-block border-t border-gray-300 pt-2 date-animate">
+<p class="text-lg text-gray-200 font-light tracking-wide">Prepared: November 2025</p>
+</div>
+<!-- Abstract Tech Icons -->
+<div class="flex justify-center mt-16 space-x-16">
+<div class="text-center icon-animate">
+<i class="fas fa-server text-4xl text-orange-400 mb-3 icon-hover"></i>
+<p class="text-sm text-gray-200">Infrastructure</p>
+</div>
+<div class="text-center icon-animate">
+<i class="fas fa-shield-alt text-4xl text-orange-400 mb-3 icon-hover"></i>
+<p class="text-sm text-gray-200">Security</p>
+</div>
+<div class="text-center icon-animate">
+<i class="fas fa-chart-line text-4xl text-orange-400 mb-3 icon-hover"></i>
+<p class="text-sm text-gray-200">Growth</p>
+</div>
+<div class="text-center icon-animate">
+<i class="fas fa-laptop-code text-4xl text-orange-400 mb-3 icon-hover"></i>
+<p class="text-sm text-gray-200">Productivity</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(0)" disabled>
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 1 of 11</div>
+    <button class="nav-button" onclick="goToPage(2)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '1');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 700);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 700);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                // Already on page 1, do nothing
+            } else if (e.key === 'ArrowRight') {
+                goToPage(2);
+            }
+        }
+    });
+</script>
+</body></html>

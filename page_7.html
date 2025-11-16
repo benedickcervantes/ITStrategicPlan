@@ -1,0 +1,544 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hardware and Software Budget Breakdown</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .budget-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .category-header {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #006D77;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(0, 109, 119, 0.05);
+        }
+        .category-total {
+            font-weight: bold;
+            border-top: 2px solid #006D77;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<!-- Header -->
+<div class="mb-4 flex-shrink-0">
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 32px);">Hardware and Software Budget Breakdown</h1>
+<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
+</div>
+<!-- Main Content -->
+<div class="flex-grow grid grid-cols-3 gap-4 min-h-0 overflow-hidden">
+<!-- Left Column - Budget Table -->
+<div class="col-span-2 budget-card p-4 overflow-auto min-h-0">
+<table style="font-size: clamp(10px, 1.1vw, 14px);">
+<thead>
+<tr>
+<th class="rounded-tl-lg" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Category</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Units</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Unit Cost</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Total Cost</th>
+</tr>
+</thead>
+<tbody>
+<!-- Hardware Upgrades -->
+<tr>
+<td class="category-header text-[#006D77]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Hardware Upgrades &amp; Replacement</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">New Computers / Laptops</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱35,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱490,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">RAM Upgrades (to 16GB)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">17</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱42,500</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">SSD Upgrades (256GB/500GB)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱56,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Monitor Upgrades (24-27 inch)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">18</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱6,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱117,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Graphics Cards (1-2GB VRAM)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,600</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱41,600</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Hardware Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱747,100</td>
+</tr>
+<!-- Software &amp; Licensing -->
+<tr>
+<td class="category-header text-[#EE6C4D]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Software &amp; Licensing</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Windows &amp; Microsoft Office Licenses</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱5,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱80,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Fresh Start (No Migration) with M365</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">35</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱14,258</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱499,030</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Software Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱579,030</td>
+</tr>
+<!-- Infrastructure &amp; Peripherals -->
+<tr>
+<td class="category-header text-[#F4A261]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Infrastructure &amp; Peripherals</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Critical Server UPS Replacement</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">General Staff UPS / AVR</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱300</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,800</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Printer Replacements</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">2</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱9,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱19,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Laptop Battery Replacements</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">5</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱20,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Network Cabling / Labeling Materials</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Infrastructure Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱88,300</td>
+</tr>
+<!-- Grand Total -->
+<tr class="bg-[#2F3E46] text-white font-bold">
+<td class="rounded-bl-lg" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Grand Total (with Contingency)</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">₱1,614,430</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Right Column - Pie Chart and Notes -->
+<div class="budget-card p-4 flex flex-col min-h-0 overflow-y-auto">
+<h2 class="font-bold text-[#2F3E46] mb-3 flex-shrink-0" style="font-size: clamp(16px, 1.8vw, 20px);">Budget Allocation</h2>
+<!-- Pie Chart -->
+<div class="flex-grow flex justify-center items-center min-h-0" id="budget-chart" style="min-height: clamp(200px, 25vh, 280px);"></div>
+<!-- Legend -->
+<div class="grid grid-cols-3 gap-2 mt-3 flex-shrink-0">
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #006D77;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Hardware</span>
+</div>
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #EE6C4D;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Software</span>
+</div>
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #F4A261;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Infrastructure</span>
+</div>
+</div>
+<!-- Key Notes -->
+<div class="mt-4 border-t pt-3 flex-shrink-0">
+<h3 class="font-semibold text-[#2F3E46] mb-2" style="font-size: clamp(13px, 1.4vw, 16px);">Key Notes</h3>
+<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
+<li class="mb-1">Budget covers critical hardware upgrades and software licensing</li>
+<li class="mb-1">Includes contingency fund of ₱200,000 (12.4% of total)</li>
+<li class="mb-1">Strategic investments aligned with IT strategic goals for 2026</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on 2026 IT Strategic Plan and Budget</p>
+</div>
+</div>
+<script>
+        // Budget allocation data
+        const budgetData = [
+            { category: "Hardware", amount: 747100, color: "#006D77" },
+            { category: "Software", amount: 579030, color: "#EE6C4D" },
+            { category: "Infrastructure", amount: 88300, color: "#F4A261" }
+        ];
+        
+        // Create pie chart
+        const chartContainer = document.getElementById("budget-chart");
+        const containerWidth = chartContainer.offsetWidth || 280;
+        const containerHeight = chartContainer.offsetHeight || 280;
+        const size = Math.min(containerWidth, containerHeight);
+        const width = size;
+        const height = size;
+        const radius = Math.min(width, height) / 2;
+        
+        const svg = d3.select("#budget-chart")
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("viewBox", `0 0 ${width} ${height}`)
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g")
+            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+            
+        const pie = d3.pie()
+            .value(d => d.amount)
+            .sort(null);
+            
+        const arc = d3.arc()
+            .innerRadius(radius * 0.4) // Create a donut chart
+            .outerRadius(radius * 0.8);
+            
+        // Add outer arc for labels
+        const outerArc = d3.arc()
+            .innerRadius(radius * 0.9)
+            .outerRadius(radius * 0.9);
+            
+        // Create pie chart segments with animation
+        const arcTween = function(d) {
+            const interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+            return function(t) {
+                return arc(interpolate(t));
+            };
+        };
+        
+        const path = svg.selectAll("path")
+            .data(pie(budgetData))
+            .enter()
+            .append("path")
+            .attr("fill", d => d.data.color)
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .attr("d", function(d) {
+                const startAngle = d.startAngle;
+                const endAngle = d.startAngle;
+                return arc({...d, startAngle, endAngle});
+            })
+            .transition()
+            .duration(2200)
+            .ease(d3.easeCubicOut)
+            .attrTween("d", arcTween);
+            
+        // Add percentage labels inside the pie chart with fade-in animation
+        const labels = svg.selectAll("text.label")
+            .data(pie(budgetData))
+            .enter()
+            .append("text")
+            .attr("class", "label")
+            .attr("transform", d => `translate(${arc.centroid(d)})`)
+            .attr("text-anchor", "middle")
+            .attr("dy", ".35em")
+            .attr("fill", "white")
+            .attr("font-weight", "bold")
+            .attr("font-size", Math.min(12, radius * 0.12) + "px")
+            .style("opacity", 0)
+            .text(d => {
+                const percentage = Math.round((d.data.amount / 1614430) * 100);
+                return `${percentage}%`;
+            })
+            .transition()
+            .delay(1900)
+            .duration(1000)
+            .style("opacity", 1);
+            
+        // Add center text with fade-in animation
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0em")
+            .attr("font-size", Math.min(14, radius * 0.15) + "px")
+            .attr("font-weight", "bold")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text("₱1,614,430")
+            .transition()
+            .delay(2700)
+            .duration(1000)
+            .style("opacity", 1);
+            
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "1.5em")
+            .attr("font-size", Math.min(10, radius * 0.12) + "px")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text("Total Budget")
+            .transition()
+            .delay(2700)
+            .duration(1000)
+            .style("opacity", 1);
+    </script>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(6)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 7 of 11</div>
+    <button class="nav-button" onclick="goToPage(8)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '7');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 600);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 600);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(6);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(8);
+            }
+        }
+    });
+</script>
+</body></html>

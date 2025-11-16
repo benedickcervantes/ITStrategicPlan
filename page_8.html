@@ -1,0 +1,507 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Implementation Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .phase-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
+        }
+        .phase-card:hover {
+            transform: translateY(-5px);
+        }
+        .phase-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+        }
+        .phase-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .phase-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
+        }
+        .phase-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+        }
+        .phase-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        .timeline-line {
+            height: 4px;
+        }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+        .activity-item span {
+            line-height: 1.4;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            min-height: 26px;
+        }
+        .activity-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+            font-size: 0.8rem;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(15px, 2vw, 30px); display: flex; flex-direction: column; height: 100%;">
+<!-- Header -->
+<div class="mb-4 flex-shrink-0">
+<h1 class="text-3xl font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 28px);">Implementation Roadmap</h1>
+<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
+</div>
+<!-- Timeline -->
+<div class="flex justify-between items-center mb-4 px-12 flex-shrink-0" style="font-size: clamp(11px, 1.2vw, 14px);">
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#006D77]"></div>
+<div class="timeline-line bg-[#006D77] w-full mt-1"></div>
+<div class="text-[#006D77] font-bold mt-2">Q1 2026</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#F4A261]"></div>
+<div class="timeline-line bg-[#F4A261] w-full mt-1"></div>
+<div class="text-[#F4A261] font-bold mt-2">Q2 2026</div>
+</div>
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#EE6C4D]"></div>
+<div class="timeline-line bg-[#EE6C4D] w-full mt-1"></div>
+<div class="text-[#EE6C4D] font-bold mt-2">Q3-Q4 2026</div>
+</div>
+</div>
+<!-- Phases Content -->
+<div class="grid grid-cols-3 gap-5 flex-grow min-h-0" style="grid-template-rows: 1fr;">
+<!-- Phase 1 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#006D77] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">1</span>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 1: Immediate Action</h2>
+</div>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-exclamation-triangle"></i>
+</div>
+<span>Replace Critical Server UPS</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-building"></i>
+</div>
+<span>Initiate RAM/SSD Upgrades for Critical Users</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-print"></i>
+</div>
+<span>Address Critical Printer Issues</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-network-wired"></i>
+</div>
+<span>Network Infrastructure Reinforcement</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-envelope"></i>
+</div>
+<span>Email Migration to Corporate Email (Microsoft 365) - Required for Yondo CRM with User Training</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-[#006D77]/20 flex-shrink-0">
+<div class="text-[#006D77] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#006D77]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Critical risk mitigation and immediate performance improvements</div>
+</div>
+</div>
+<!-- Phase 2 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#F4A261] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">2</span>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 2: Systematic Upgrade</h2>
+</div>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-check-circle"></i>
+</div>
+<span>Regularize Software Licenses (16 systems)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-desktop"></i>
+</div>
+<span>Complete Remaining PC Upgrades (RAM &amp; SSD)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-tv"></i>
+</div>
+<span>Upgrade Monitors (18 units) - Existing monitors can be used as second screens</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-print"></i>
+</div>
+<span>Replace Problematic Printers (2 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-plug"></i>
+</div>
+<span>Deploy UPS/AVR Units for General Staff (16 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-project-diagram"></i>
+</div>
+<span>Network Cabling and Labeling</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-wifi"></i>
+</div>
+<span>Consolidate Internet Service Providers - Reduce to 2-3 ISPs for reliable connectivity</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-phone"></i>
+</div>
+<span>Optimize Landline Services - Retain only frequently used client contact lines</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-[#F4A261]/20 flex-shrink-0">
+<div class="text-[#F4A261] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#F4A261]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Medium-priority items with significant user impact</div>
+</div>
+</div>
+<!-- Phase 3 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#EE6C4D] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">3</span>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 3: Strategic Modernization</h2>
+</div>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-desktop"></i>
+</div>
+<span>Procure New Computer Systems (14 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-video"></i>
+</div>
+<span>Install Graphics Cards (16 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-laptop"></i>
+</div>
+<span>Replace Laptop Batteries (4 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-calendar-alt"></i>
+</div>
+<span>Establish Preventive Maintenance Schedule</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-cloud-upload-alt"></i>
+</div>
+<span>Cloud Migration of Physical Server</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-phone-alt"></i>
+</div>
+<span>Cloud PBX, SIP Trunking, VoIP</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-globe"></i>
+</div>
+<span>Website Development for Condominiums</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-[#EE6C4D]/20 flex-shrink-0">
+<div class="text-[#EE6C4D] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#EE6C4D]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Long-term modernization and sustainability</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex justify-between items-center" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on IT Strategic Plan, 2026</p>
+<p>Implementation prioritizes critical risks while maximizing operational continuity</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(7)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 8 of 11</div>
+    <button class="nav-button" onclick="goToPage(9)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '8');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 600);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 600);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(7);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(9);
+            }
+        }
+    });
+</script>
+</body></html>

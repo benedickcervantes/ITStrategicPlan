@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2026 Budget Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .budget-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .category-item {
+            transition: transform 0.2s;
+        }
+        .category-item:hover {
+            transform: translateX(5px);
+        }
+        .icon-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-4xl font-bold text-[#2F3E46] mb-2">2026 Budget Overview</h1>
+<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
+</div>
+<!-- Main Content -->
+<div class="grid grid-cols-2 gap-8 min-h-[500px]">
+<!-- Left Column: Pie Chart -->
+<div class="budget-card p-6 flex flex-col items-center justify-center">
+<div class="text-center mb-4">
+<div class="text-[#2F3E46] text-xl">Total 2026 IT Budget</div>
+<div class="text-[#006D77] text-5xl font-bold">₱1,614,430</div>
+</div>
+<div class="w-full min-h-[280px] flex justify-center" id="budget-chart"></div>
+</div>
+<!-- Right Column: Budget Breakdown -->
+<div class="budget-card p-6 flex flex-col">
+<h2 class="text-2xl font-bold text-[#2F3E46] mb-4">Budget Breakdown</h2>
+<!-- Hardware -->
+<div class="category-item flex items-center mb-4 pb-4 border-b border-gray-200">
+<div class="icon-container bg-[#006D77] text-white mr-4">
+<i class="fas fa-desktop text-xl"></i>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<div class="font-bold text-[#2F3E46]">Hardware Upgrades &amp; Replacement</div>
+<div class="font-bold text-[#006D77]">₱747,100</div>
+</div>
+<div class="text-sm text-[#2F3E46]">46.3% of total budget</div>
+</div>
+</div>
+<!-- Software -->
+<div class="category-item flex items-center mb-4 pb-4 border-b border-gray-200">
+<div class="icon-container bg-[#EE6C4D] text-white mr-4">
+<i class="fas fa-file-code text-xl"></i>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<div class="font-bold text-[#2F3E46]">Software &amp; Licensing</div>
+<div class="font-bold text-[#EE6C4D]">₱579,030</div>
+</div>
+<div class="text-sm text-[#2F3E46]">35.9% of total budget</div>
+</div>
+</div>
+<!-- Infrastructure -->
+<div class="category-item flex items-center mb-4 pb-4 border-b border-gray-200">
+<div class="icon-container bg-[#F4A261] text-white mr-4">
+<i class="fas fa-network-wired text-xl"></i>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<div class="font-bold text-[#2F3E46]">Infrastructure &amp; Peripherals</div>
+<div class="font-bold text-[#F4A261]">₱88,300</div>
+</div>
+<div class="text-sm text-[#2F3E46]">5.5% of total budget</div>
+</div>
+</div>
+<!-- Contingency -->
+<div class="category-item flex items-center">
+<div class="icon-container bg-[#2F3E46] text-white mr-4">
+<i class="fas fa-shield-alt text-xl"></i>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-center">
+<div class="font-bold text-[#2F3E46]">Contingency (12.4%)</div>
+<div class="font-bold text-[#2F3E46]">₱200,000</div>
+</div>
+<div class="text-sm text-[#2F3E46]">Covers unexpected expenses (e.g., price increases, additional hardware needs, unplanned repairs)</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on IT Strategic Plan, 2026</p>
+</div>
+</div>
+<script>
+        // Budget data
+        const budgetData = [
+            { category: "Hardware Upgrades & Replacement", value: 747100, percentage: 46.3, color: "#006D77" },
+            { category: "Software & Licensing", value: 579030, percentage: 35.9, color: "#EE6C4D" },
+            { category: "Infrastructure & Peripherals", value: 88300, percentage: 5.5, color: "#F4A261" },
+            { category: "Contingency", value: 200000, percentage: 12.4, color: "#2F3E46" }
+        ];
+        
+        // Set up the pie chart
+        const width = 320;
+        const height = 280;
+        const radius = Math.min(width, height) / 2;
+        
+        const svg = d3.select("#budget-chart")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+            
+        // Generate the pie
+        const pie = d3.pie()
+            .value(d => d.value)
+            .sort(null);
+            
+        // Generate the arcs
+        const arc = d3.arc()
+            .innerRadius(radius * 0.4)
+            .outerRadius(radius * 0.8);
+            
+        // Label arc for positioning text
+        const labelArc = d3.arc()
+            .innerRadius(radius * 0.9)
+            .outerRadius(radius * 0.9);
+            
+        // Generate groups
+        const arcs = svg.selectAll(".arc")
+            .data(pie(budgetData))
+            .enter()
+            .append("g")
+            .attr("class", "arc");
+            
+        // Draw arc paths with animation
+        const arcTween = function(d) {
+            const interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+            return function(t) {
+                return arc(interpolate(t));
+            };
+        };
+        
+        arcs.append("path")
+            .attr("fill", d => d.data.color)
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 0.8)
+            .attr("d", function(d) {
+                const startAngle = d.startAngle;
+                const endAngle = d.startAngle;
+                return arc({...d, startAngle, endAngle});
+            })
+            .transition()
+            .duration(2200)
+            .ease(d3.easeCubicOut)
+            .attrTween("d", arcTween);
+            
+        // Add percentage labels with fade-in animation
+        arcs.append("text")
+            .attr("transform", d => `translate(${labelArc.centroid(d)})`)
+            .attr("text-anchor", "middle")
+            .attr("font-size", "14px")
+            .attr("font-weight", "bold")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text(d => `${d.data.percentage}%`)
+            .transition()
+            .delay(1900)
+            .duration(1000)
+            .style("opacity", 1);
+            
+        // Add center text with fade-in animation
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("font-size", "12px")
+            .attr("font-weight", "bold")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text("Budget Distribution")
+            .transition()
+            .delay(2700)
+            .duration(1000)
+            .style("opacity", 1);
+    </script>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(5)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 6 of 11</div>
+    <button class="nav-button" onclick="goToPage(7)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '6');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 600);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 600);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(5);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(7);
+            }
+        }
+    });
+</script>
+</body></html>

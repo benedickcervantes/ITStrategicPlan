@@ -1,0 +1,623 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Equipment Inventory Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .inventory-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .inventory-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        .stat-box {
+            text-align: center;
+            padding: 14px 10px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .stat-box:hover {
+            transform: scale(1.02);
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: clamp(10px, 1.1vw, 14px);
+        }
+        th {
+            background-color: #006D77;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: clamp(9px, 1vw, 12px);
+        }
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 109, 119, 0.05);
+        }
+        tbody tr:hover {
+            background-color: rgba(0, 109, 119, 0.08);
+        }
+        tbody td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<!-- Header -->
+<div class="mb-4 flex-shrink-0">
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">IT Equipment Inventory Assessment</h1>
+<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
+</div>
+<!-- Main Content -->
+<div class="flex-grow grid grid-cols-2 gap-4 min-h-0 overflow-hidden">
+<!-- Left Column: Equipment Statistics -->
+<div class="grid grid-cols-2 gap-3 min-h-0 overflow-y-auto">
+<!-- Laptops -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#006D77] to-[#004D56] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-laptop"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Laptops</h3>
+</div>
+<div class="stat-box bg-[#006D77]/10 mb-2">
+<div class="text-3xl font-bold text-[#006D77]">10</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">1</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
+</div>
+</div>
+</div>
+<!-- Desktops -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-desktop"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Desktops</h3>
+</div>
+<div class="stat-box bg-[#F4A261]/10 mb-2">
+<div class="text-3xl font-bold text-[#F4A261]">24</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">20</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">4</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
+</div>
+</div>
+</div>
+<!-- Printers -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-print"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Printers</h3>
+</div>
+<div class="stat-box bg-[#EE6C4D]/10 mb-2">
+<div class="text-3xl font-bold text-[#EE6C4D]">17</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">15</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
+</div>
+</div>
+</div>
+<!-- Monitors -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-tv"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Monitors</h3>
+</div>
+<div class="stat-box bg-[#2F3E46]/10 mb-2">
+<div class="text-3xl font-bold text-[#2F3E46]">25</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">23</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Non-Operational</div>
+</div>
+</div>
+</div>
+<!-- WiFi Access Points -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-[#006D77] rounded-full flex items-center justify-center text-white mr-3">
+<i class="fas fa-wifi"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">WiFi Access Points</h3>
+</div>
+<div class="stat-box bg-[#006D77]/10 mb-2">
+<div class="text-3xl font-bold text-[#006D77]">2</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: AVR/UPS and Summary Table -->
+<div class="flex flex-col gap-3 min-h-0 overflow-y-auto">
+<!-- AVR/UPS Card -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-bolt"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">AVR/UPS Units</h3>
+</div>
+<div class="stat-box bg-[#F4A261]/10 mb-2">
+<div class="text-3xl font-bold text-[#F4A261]">13</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-3 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">3</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200/50 shadow-sm">
+<div class="font-bold text-blue-700 text-base mb-0.5">1</div>
+<div class="text-gray-600 text-xs">Server Infrastructure</div>
+</div>
+</div>
+<div class="mt-3 p-3.5 bg-gradient-to-r from-red-50 to-red-100 rounded-lg border-l-4 border-red-500 shadow-sm">
+<div class="text-xs font-bold text-red-800 mb-1.5 flex items-center">
+<i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Critical Infrastructure Alert
+</div>
+<div class="text-xs text-red-700 leading-relaxed">Server UPS unit (Fujitsu Primergy RX1330 M3) is experiencing critical failure and requires immediate replacement to prevent potential data loss and service interruption.</div>
+</div>
+</div>
+<!-- CCTV System -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-video"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">CCTV System</h3>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-2">
+<div class="stat-box bg-[#2F3E46]/10">
+<div class="text-2xl font-bold text-[#2F3E46]">1</div>
+<div class="text-xs text-[#2F3E46]">NVR/DVR</div>
+</div>
+<div class="stat-box bg-[#2F3E46]/10">
+<div class="text-2xl font-bold text-[#2F3E46]">8</div>
+<div class="text-xs text-[#2F3E46]">IP Cameras</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Network Equipment -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-network-wired"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Network Equipment</h3>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">Load Balancer</div>
+</div>
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">PoE Switch</div>
+</div>
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">Non-PoE Switch</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">3</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Server & Data Backup -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-server"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Server & Data Backup</h3>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-2">
+<div class="stat-box bg-[#EE6C4D]/10">
+<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
+<div class="text-xs text-[#2F3E46]">Rack Server</div>
+</div>
+<div class="stat-box bg-[#EE6C4D]/10">
+<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
+<div class="text-xs text-[#2F3E46]">External Storage</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Summary Table -->
+<div class="inventory-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Asset Inventory Overview</h3>
+<table>
+<thead>
+<tr>
+<th>Asset Category</th>
+<th>Total Assets</th>
+<th>Operational</th>
+<th>Requiring Attention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Laptops</strong></td>
+<td>10</td>
+<td>9</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Desktops</strong></td>
+<td>24</td>
+<td>20</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Printers</strong></td>
+<td>17</td>
+<td>15</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Monitors</strong></td>
+<td>25</td>
+<td>23</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>AVR/UPS</strong></td>
+<td>13</td>
+<td>9</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>WiFi Access Points</strong></td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>CCTV System</strong></td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Network Equipment</strong></td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Server</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Data Backup (External Storage)</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr style="background-color: #006D77; color: white; font-weight: bold;">
+<td><strong>TOTAL</strong></td>
+<td><strong>105</strong></td>
+<td><strong>92</strong></td>
+<td><strong>13</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px);">
+<p>Source: IT Equipment Audit Report, November 2025 | Audit Scope: 28-30 users</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(9)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 10 of 11</div>
+    <button class="nav-button" onclick="goToPage(11)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '10');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 600);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 600);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(9);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(11);
+            }
+        }
+    });
+</script>
+</body></html>
+
+

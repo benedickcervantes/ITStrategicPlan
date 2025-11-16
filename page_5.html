@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IT Strategic Goals for 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script><style>
+        * {
+            box-sizing: border-box;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            max-width: 1280px;
+            max-height: 720px;
+            position: relative;
+            transform-origin: center center;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            will-change: transform, opacity, filter;
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        @keyframes slideInFromLeft {
+            0% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+            60% {
+                opacity: 0.9;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+        }
+        
+        .slide.slide-out-left {
+            animation: slideOutLeft 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        .slide.slide-out-right {
+            animation: slideOutRight 0.7s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+        }
+        
+        @keyframes slideOutLeft {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            0% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+                filter: blur(0px) brightness(1);
+            }
+            40% {
+                opacity: 0.8;
+                filter: blur(3px) brightness(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100vw) scale(0.98);
+                filter: blur(8px) brightness(0.95);
+            }
+        }
+        
+        .slide.slide-in-from-right {
+            animation: slideInFromRight 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .slide.slide-in-from-left {
+            animation: slideInFromLeft 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @media (min-aspect-ratio: 16/9) {
+            .slide {
+                width: calc(100vh * 16 / 9);
+                height: 100vh;
+            }
+        }
+        @media (max-aspect-ratio: 16/9) {
+            .slide {
+                width: 100vw;
+                height: calc(100vw * 9 / 16);
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        .goal-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        .action-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .action-icon {
+            min-width: 24px;
+            margin-right: 8px;
+        }
+    
+html {
+    overflow: hidden;
+}
+        .nav-container {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(47, 62, 70, 0.85);
+            padding: 4px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .nav-button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 4px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+        .nav-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            color: white;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0 8px;
+        }
+</style>
+</head>
+<body>
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-4xl font-bold text-[#2F3E46] mb-2">IT Strategic Goals for 2026</h1>
+<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
+</div>
+<!-- Main Content -->
+<div class="grid grid-cols-3 gap-8 min-h-[520px]">
+<!-- Mitigate Critical Risks -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#006D77] text-white mb-6">
+<i class="fas fa-exclamation-triangle text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Mitigate Critical Risks</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-bolt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Replace Critical Server UPS:</span> Immediate replacement of failing power protection</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Critical Systems:</span> Initiate RAM/SSD upgrades for critical users</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-network-wired"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Reinforce Network Infrastructure:</span> Strengthen network reliability and connectivity</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-envelope"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Email Migration:</span> Migrate to Microsoft 365 with user training for Yondo CRM</p>
+</div>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#006D77]/10 text-[#006D77] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Critical risk mitigation and immediate performance improvements
+                    </span>
+</div>
+</div>
+<!-- Strategic Modernization -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#EE6C4D] text-white mb-6">
+<i class="fas fa-rocket text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Strategic Modernization</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Procure New Systems:</span> Replace 14 outdated computer systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-cloud-upload-alt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Cloud Migration:</span> Migrate physical server to cloud infrastructure</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-phone-alt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Modernize Communications:</span> Implement Cloud PBX, SIP Trunking, and VoIP</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-globe"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Digital Presence:</span> Develop website for condominiums</p>
+</div>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#EE6C4D]/10 text-[#EE6C4D] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Long-term modernization and sustainability
+                    </span>
+</div>
+</div>
+<!-- Systematic Upgrades -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#F4A261] text-white mb-6">
+<i class="fas fa-tools text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Systematic Upgrades</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-check-circle"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Regularize Software Licenses:</span> Acquire licenses for 16 unlicensed systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Complete PC Upgrades:</span> RAM & SSD upgrades for remaining systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-tv"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Monitors:</span> 18 units with existing monitors as second screens</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-wifi"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Optimize Connectivity:</span> Consolidate ISPs and optimize landline services</p>
+</div>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#F4A261]/10 text-[#F4A261] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Medium-priority items with significant user impact
+                    </span>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-8 text-center text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>These strategic goals will guide our 2026 IT investments, ensuring a more robust and productive environment</p>
+</div>
+</div>
+<!-- Navigation -->
+<div class="nav-container">
+    <button class="nav-button" onclick="goToPage(4)">
+        <i class="fas fa-chevron-left"></i> Previous
+    </button>
+    <div class="page-indicator">Page 5 of 11</div>
+    <button class="nav-button" onclick="goToPage(6)">
+        Next <i class="fas fa-chevron-right"></i>
+    </button>
+</div>
+<script>
+    // Get current page number from URL
+    const currentPage = parseInt(window.location.pathname.match(/page_(\d+)\.html/)?.[1] || '5');
+    
+    // Detect entry direction from sessionStorage
+    const entryDirection = sessionStorage.getItem('slideDirection') || 'right';
+    const slide = document.querySelector('.slide');
+    
+    // Apply entry animation based on direction
+    if (entryDirection === 'left') {
+        slide.classList.add('slide-in-from-left');
+    } else {
+        slide.classList.add('slide-in-from-right');
+    }
+    
+    // Clear direction after animation
+    setTimeout(() => {
+        slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
+    }, 600);
+    
+    function goToPage(pageNum) {
+        if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
+            const direction = pageNum > currentPage ? 'right' : 'left';
+            
+            // Store direction for next page
+            sessionStorage.setItem('slideDirection', direction);
+            
+            if (direction === 'right') {
+                slide.classList.add('slide-out-left');
+            } else {
+                slide.classList.add('slide-out-right');
+            }
+            
+            setTimeout(() => {
+                window.location.href = `page_${pageNum}.html`;
+            }, 600);
+        }
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (e.key === 'ArrowLeft') {
+                goToPage(4);
+            } else if (e.key === 'ArrowRight') {
+                goToPage(6);
+            }
+        }
+    });
+</script>
+</body></html>

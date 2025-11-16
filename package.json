@@ -1,0 +1,17 @@
+{
+  "name": "it-strategic-plan-presentation",
+  "version": "1.0.0",
+  "description": "IT Strategic Plan and 2026 Budget Report Presentation",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "keywords": ["presentation", "it-strategic-plan"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
