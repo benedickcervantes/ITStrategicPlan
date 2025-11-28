@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Current State Analysis</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<title>Equipment Inventory Summary</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script><style>
@@ -187,12 +187,15 @@
             .gap-4 {
                 gap: clamp(8px, 2vw, 16px) !important;
             }
+            .overflow-x-auto {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .overflow-x-auto table {
+                min-width: 600px !important;
+            }
             table {
                 font-size: clamp(9px, 2.5vw, 12px) !important;
-                display: block;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                white-space: nowrap;
             }
             table thead, table tbody {
                 display: table;
@@ -247,7 +250,6 @@
                 visibility: visible !important;
                 opacity: 1 !important;
                 font-size: clamp(11px, 3vw, 13px) !important;
-                text-align: left !important;
             }
         }
         @media (max-width: 480px) {
@@ -317,31 +319,74 @@
                 margin-bottom: 8px !important;
             }
         }
-        /* Desktop: Keep footer right-aligned */
-        @media (min-width: 769px) {
-            div.mt-auto {
-                text-align: right;
-            }
-        }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
-        .category-card {
+        .inventory-card {
             background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .inventory-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        .stat-box {
+            text-align: center;
+            padding: 14px 10px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .category-card:hover {
-            transform: translateY(-5px);
+        .stat-box:hover {
+            transform: scale(1.02);
         }
-        .icon-container {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: clamp(10px, 1.1vw, 14px);
+        }
+        th {
+            background-color: #006D77;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: clamp(9px, 1vw, 12px);
+        }
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 109, 119, 0.05);
+        }
+        tbody tr:hover {
+            background-color: rgba(0, 109, 119, 0.08);
+        }
+        tbody td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        /* Desktop: Remove overflow and min-width constraints */
+        @media (min-width: 769px) {
+            .overflow-x-auto {
+                overflow-x: visible !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            .overflow-x-auto table {
+                min-width: auto !important;
+                width: 100% !important;
+            }
         }
     
 html {
@@ -389,6 +434,53 @@ html {
             font-weight: 500;
             font-size: 0.75rem;
             padding: 0 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .page-indicator:hover {
+            text-decoration: underline;
+        }
+        .page-selector {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            background: rgba(47, 62, 70, 0.95);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .page-selector.show {
+            display: flex;
+        }
+        .page-option {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .page-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .page-option.active {
+            background: rgba(244, 162, 97, 0.3);
+            font-weight: 600;
+        }
+        .home-button {
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .home-button:hover {
+            background: rgba(244, 162, 97, 0.5);
         }
 </style>
 </head>
@@ -396,328 +488,354 @@ html {
 <div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
 <!-- Header -->
 <div class="mb-4 flex-shrink-0">
-<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 32px);">Current State Analysis</h1>
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">IT Equipment Inventory Assessment</h1>
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 overflow-hidden">
-<!-- Performance Bottlenecks -->
-<div class="category-card p-4 flex flex-col min-h-0 overflow-y-auto">
-<div class="flex items-center mb-3 flex-shrink-0">
-<div class="icon-container bg-[#006D77] text-white mr-3 flex items-center justify-center" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-tachometer-alt" style="font-size: clamp(16px, 2vw, 24px);"></i>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4 min-h-0 overflow-hidden">
+<!-- Left Column: Equipment Statistics -->
+<div class="grid grid-cols-2 gap-3 min-h-0 overflow-y-auto">
+<!-- Laptops -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#006D77] to-[#004D56] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-laptop"></i>
 </div>
-<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 20px);">Performance Bottlenecks</h2>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Laptops</h3>
 </div>
-<div class="flex-grow mb-3" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.5;">
-<div class="mb-3">
-<p class="text-[#2F3E46] font-semibold mb-1">RAM Deficiency (17 units)</p>
-<p class="text-[#2F3E46] text-xs">Operating with only 8GB RAM, causing application crashes and limiting multitasking. Modern applications require 16GB minimum.</p>
+<div class="stat-box bg-[#006D77]/10 mb-2">
+<div class="text-3xl font-bold text-[#006D77]">10</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
 </div>
-<div class="mb-3">
-<p class="text-[#2F3E46] font-semibold mb-1">Storage Issues (14 units)</p>
-<p class="text-[#2F3E46] text-xs">HDD or low-capacity SSD causing 5-10 minute boot times and slow application loading (2-5 minutes per app).</p>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Operational</div>
 </div>
-<div class="bg-[#006D77]/10 p-2 rounded text-xs text-[#006D77]">
-<strong>Impact:</strong> Estimated 15-20% productivity loss due to system lag and wait times
-</div>
-</div>
-<div class="mt-auto flex-shrink-0">
-<div class="w-full" id="performance-chart" style="height: clamp(80px, 12vh, 100px);"></div>
-</div>
-</div>
-<!-- Security &amp; Compliance Risks -->
-<div class="category-card p-4 flex flex-col min-h-0 overflow-y-auto">
-<div class="flex items-center mb-3 flex-shrink-0">
-<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex items-center justify-center" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-shield-alt" style="font-size: clamp(16px, 2vw, 24px);"></i>
-</div>
-<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 20px);">Security &amp; Compliance Risks</h2>
-</div>
-<div class="flex-grow mb-3" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.5;">
-<div class="mb-3">
-<p class="text-[#2F3E46] font-semibold mb-1">Unlicensed Software (16 systems)</p>
-<p class="text-[#2F3E46] text-xs">Windows and Microsoft Office running without valid licenses, exposing company to legal penalties and security vulnerabilities from unpatched systems.</p>
-</div>
-<div class="mb-3">
-<p class="text-[#2F3E46] font-semibold mb-1">Critical UPS Failure</p>
-<p class="text-[#2F3E46] text-xs">Server UPS protecting Fujitsu Primergy RX1330 M3 is failing - IMMEDIATE replacement required to prevent data loss and server downtime.</p>
-</div>
-<div class="bg-[#EE6C4D]/10 p-2 rounded text-xs text-[#EE6C4D]">
-<strong>Risk Level:</strong> HIGH - Legal exposure, data loss risk, and potential business interruption
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">1</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
 </div>
 </div>
-<div class="mt-auto flex-shrink-0">
-<div class="w-full" id="security-chart" style="height: clamp(80px, 12vh, 100px);"></div>
+</div>
+<!-- Desktops -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-desktop"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Desktops</h3>
+</div>
+<div class="stat-box bg-[#F4A261]/10 mb-2">
+<div class="text-3xl font-bold text-[#F4A261]">24</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">20</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">4</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
 </div>
 </div>
-<!-- Infrastructure Deficiencies -->
-<div class="category-card p-4 flex flex-col min-h-0 overflow-y-auto">
-<div class="flex items-center mb-3 flex-shrink-0">
-<div class="icon-container bg-[#F4A261] text-white mr-3 flex items-center justify-center" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-network-wired" style="font-size: clamp(16px, 2vw, 24px);"></i>
 </div>
-<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 20px);">Infrastructure Deficiencies</h2>
+<!-- Printers -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-print"></i>
 </div>
-<div class="flex-grow mb-3" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.5;">
-<div class="mb-2">
-<p class="text-[#2F3E46] font-semibold mb-1">Display Issues (18 users)</p>
-<p class="text-[#2F3E46] text-xs">18 defective monitors requiring upgrade. Existing monitors can be repurposed as second screens.</p>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Printers</h3>
 </div>
-<div class="mb-2">
-<p class="text-[#2F3E46] font-semibold mb-1">Printer Problems (2 units)</p>
-<p class="text-[#2F3E46] text-xs">2 printers with connectivity issues need replacement, affecting 5 workstations.</p>
+<div class="stat-box bg-[#EE6C4D]/10 mb-2">
+<div class="text-3xl font-bold text-[#EE6C4D]">17</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
 </div>
-<div class="mb-2">
-<p class="text-[#2F3E46] font-semibold mb-1">Network Infrastructure (18 users)</p>
-<p class="text-[#2F3E46] text-xs">Unlabeled cables, shared ports (3-4 users per port), and patch panel at full capacity causing bandwidth competition.</p>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">15</div>
+<div class="text-gray-600 text-xs">Operational</div>
 </div>
-<div class="bg-[#F4A261]/10 p-2 rounded text-xs text-[#F4A261]">
-<strong>Impact:</strong> Interrupted workflows, slow data transfers, increased troubleshooting time
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
 </div>
 </div>
-<div class="mt-auto flex-shrink-0">
-<div class="w-full" id="infrastructure-chart" style="height: clamp(100px, 14vh, 120px);"></div>
+</div>
+<!-- Monitors -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-tv"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Monitors</h3>
+</div>
+<div class="stat-box bg-[#2F3E46]/10 mb-2">
+<div class="text-3xl font-bold text-[#2F3E46]">25</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">23</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Non-Operational</div>
+</div>
+</div>
+</div>
+<!-- WiFi Access Points -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-[#006D77] rounded-full flex items-center justify-center text-white mr-3">
+<i class="fas fa-wifi"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">WiFi Access Points</h3>
+</div>
+<div class="stat-box bg-[#006D77]/10 mb-2">
+<div class="text-3xl font-bold text-[#006D77]">2</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: AVR/UPS and Summary Table -->
+<div class="flex flex-col gap-3 min-h-0 overflow-y-auto">
+<!-- AVR/UPS Card -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-bolt"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">AVR/UPS Units</h3>
+</div>
+<div class="stat-box bg-[#F4A261]/10 mb-2">
+<div class="text-3xl font-bold text-[#F4A261]">13</div>
+<div class="text-sm text-[#2F3E46]">Total Assets</div>
+</div>
+<div class="grid grid-cols-3 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Operational</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
+<div class="font-bold text-red-700 text-base mb-0.5">3</div>
+<div class="text-gray-600 text-xs">Requires Replacement</div>
+</div>
+<div class="text-center p-2.5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200/50 shadow-sm">
+<div class="font-bold text-blue-700 text-base mb-0.5">1</div>
+<div class="text-gray-600 text-xs">Server Infrastructure</div>
+</div>
+</div>
+<div class="mt-3 p-3.5 bg-gradient-to-r from-red-50 to-red-100 rounded-lg border-l-4 border-red-500 shadow-sm">
+<div class="text-xs font-bold text-red-800 mb-1.5 flex items-center">
+<i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Critical Infrastructure Alert
+</div>
+<div class="text-xs text-red-700 leading-relaxed">Server UPS unit (Fujitsu Primergy RX1330 M3) is experiencing critical failure and requires immediate replacement to prevent potential data loss and service interruption.</div>
+</div>
+</div>
+<!-- CCTV System -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-video"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">CCTV System</h3>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-2">
+<div class="stat-box bg-[#2F3E46]/10">
+<div class="text-2xl font-bold text-[#2F3E46]">1</div>
+<div class="text-xs text-[#2F3E46]">NVR</div>
+</div>
+<div class="stat-box bg-[#2F3E46]/10">
+<div class="text-2xl font-bold text-[#2F3E46]">8</div>
+<div class="text-xs text-[#2F3E46]">IP Cameras</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">9</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Network Equipment -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-network-wired"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Network Equipment</h3>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-2">
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">Load Balancer</div>
+</div>
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">PoE Switch</div>
+</div>
+<div class="stat-box bg-[#F4A261]/10">
+<div class="text-xl font-bold text-[#F4A261]">1</div>
+<div class="text-xs text-[#2F3E46]">Non-PoE Switch</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">3</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Server & Data Backup -->
+<div class="inventory-card p-4">
+<div class="flex items-center mb-3">
+<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<i class="fas fa-server"></i>
+</div>
+<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Server & Data Backup</h3>
+</div>
+<div class="grid grid-cols-2 gap-3 mb-2">
+<div class="stat-box bg-[#EE6C4D]/10">
+<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
+<div class="text-xs text-[#2F3E46]">Rack Server</div>
+</div>
+<div class="stat-box bg-[#EE6C4D]/10">
+<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
+<div class="text-xs text-[#2F3E46]">External Storage</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-2 text-xs">
+<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
+<div class="font-bold text-green-700 text-base mb-0.5">2</div>
+<div class="text-gray-600 text-xs">Total Operational</div>
+</div>
+</div>
+</div>
+<!-- Summary Table -->
+<div class="inventory-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Asset Inventory Overview</h3>
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Asset Category</th>
+<th>Total Assets</th>
+<th>Operational</th>
+<th>Requiring Attention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Laptops</strong></td>
+<td>10</td>
+<td>9</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>Desktops</strong></td>
+<td>24</td>
+<td>20</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>Printers</strong></td>
+<td>17</td>
+<td>15</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Monitors</strong></td>
+<td>25</td>
+<td>23</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>AVR/UPS</strong></td>
+<td>13</td>
+<td>9</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>WiFi Access Points</strong></td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>CCTV System</strong></td>
+<td>9</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Network Equipment</strong></td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Server</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>Data Backup (External Storage)</strong></td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr style="background-color: #006D77; color: white; font-weight: bold;">
+<td><strong>TOTAL</strong></td>
+<td><strong>105</strong></td>
+<td><strong>92</strong></td>
+<td><strong>13</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
-<p>Based on IT Equipment Audit Report, November 2025</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px);">
+<p>Source: IT Equipment Audit Report, November 2025 | Audit Scope: 28-30 users</p>
 </div>
 </div>
-<script>
-        // Performance Bottlenecks Chart
-        const performanceData = [
-            {label: "Insufficient RAM", value: 17},
-            {label: "Outdated Storage", value: 14}
-        ];
-        
-        const perfContainer = document.getElementById("performance-chart");
-        const perfWidth = perfContainer.offsetWidth || 250;
-        const perfHeight = perfContainer.offsetHeight || 100;
-        
-        const performanceChart = d3.select("#performance-chart")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(perfWidth, 250)} ${Math.max(perfHeight, 100)}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
-            
-        const performanceX = d3.scaleLinear()
-            .domain([0, 20])
-            .range([80, Math.max(perfWidth, 250) - 40]);
-            
-        const performanceY = d3.scaleBand()
-            .domain(performanceData.map(d => d.label))
-            .range([10, Math.max(perfHeight, 100) - 10])
-            .padding(0.3);
-            
-        performanceChart.selectAll("rect")
-            .data(performanceData)
-            .enter()
-            .append("rect")
-            .attr("x", 80)
-            .attr("y", d => performanceY(d.label))
-            .attr("width", 0)
-            .attr("height", performanceY.bandwidth())
-            .attr("fill", "#006D77")
-            .attr("rx", 2)
-            .attr("ry", 2)
-            .transition()
-            .duration(1200)
-            .delay((d, i) => i * 150)
-            .ease(d3.easeCubicOut)
-            .attr("width", d => performanceX(d.value) - 80);
-            
-        performanceChart.selectAll(".value")
-            .data(performanceData)
-            .enter()
-            .append("text")
-            .attr("class", "value")
-            .attr("x", d => performanceX(d.value) + 5)
-            .attr("y", d => performanceY(d.label) + performanceY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.value)
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", Math.min(11, perfHeight * 0.2) + "px")
-            .style("opacity", 0)
-            .transition()
-            .delay((d, i) => i * 150 + 1000)
-            .duration(600)
-            .style("opacity", 1);
-            
-        performanceChart.selectAll(".label")
-            .data(performanceData)
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("x", 75)
-            .attr("y", d => performanceY(d.label) + performanceY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
-            .attr("text-anchor", "end")
-            .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, perfHeight * 0.18) + "px");
-            
-        // Security & Compliance Chart
-        const securityData = [
-            {label: "Unlicensed Software", value: 16},
-            {label: "Failing Server UPS", value: 1}
-        ];
-        
-        const secContainer = document.getElementById("security-chart");
-        const secWidth = secContainer.offsetWidth || 250;
-        const secHeight = secContainer.offsetHeight || 100;
-        
-        const securityChart = d3.select("#security-chart")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(secWidth, 250)} ${Math.max(secHeight, 100)}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
-            
-        const securityX = d3.scaleLinear()
-            .domain([0, 20])
-            .range([80, Math.max(secWidth, 250) - 40]);
-            
-        const securityY = d3.scaleBand()
-            .domain(securityData.map(d => d.label))
-            .range([10, Math.max(secHeight, 100) - 10])
-            .padding(0.3);
-            
-        securityChart.selectAll("rect")
-            .data(securityData)
-            .enter()
-            .append("rect")
-            .attr("x", 80)
-            .attr("y", d => securityY(d.label))
-            .attr("width", 0)
-            .attr("height", securityY.bandwidth())
-            .attr("fill", "#EE6C4D")
-            .attr("rx", 2)
-            .attr("ry", 2)
-            .transition()
-            .duration(1200)
-            .delay((d, i) => i * 150)
-            .ease(d3.easeCubicOut)
-            .attr("width", d => securityX(d.value) - 80);
-            
-        securityChart.selectAll(".value")
-            .data(securityData)
-            .enter()
-            .append("text")
-            .attr("class", "value")
-            .attr("x", d => securityX(d.value) + 5)
-            .attr("y", d => securityY(d.label) + securityY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.value)
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", Math.min(11, secHeight * 0.2) + "px")
-            .style("opacity", 0)
-            .transition()
-            .delay((d, i) => i * 150 + 1000)
-            .duration(600)
-            .style("opacity", 1);
-            
-        securityChart.selectAll(".label")
-            .data(securityData)
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("x", 75)
-            .attr("y", d => securityY(d.label) + securityY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
-            .attr("text-anchor", "end")
-            .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, secHeight * 0.18) + "px");
-            
-        // Infrastructure Chart
-        const infrastructureData = [
-            {label: "Display Issues", value: 18},
-            {label: "Printer Problems", value: 2},
-            {label: "Network Issues", value: 18}
-        ];
-        
-        // Note: Network Issues affect 18 units, with 15 users specifically needing check and fix
-        
-        const infraContainer = document.getElementById("infrastructure-chart");
-        const infraWidth = infraContainer.offsetWidth || 250;
-        const infraHeight = infraContainer.offsetHeight || 120;
-        
-        const infrastructureChart = d3.select("#infrastructure-chart")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(infraWidth, 250)} ${Math.max(infraHeight, 120)}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
-            
-        const infrastructureX = d3.scaleLinear()
-            .domain([0, 20])
-            .range([80, Math.max(infraWidth, 250) - 40]);
-            
-        const infrastructureY = d3.scaleBand()
-            .domain(infrastructureData.map(d => d.label))
-            .range([10, Math.max(infraHeight, 120) - 10])
-            .padding(0.25);
-            
-        infrastructureChart.selectAll("rect")
-            .data(infrastructureData)
-            .enter()
-            .append("rect")
-            .attr("x", 80)
-            .attr("y", d => infrastructureY(d.label))
-            .attr("width", 0)
-            .attr("height", infrastructureY.bandwidth())
-            .attr("fill", "#F4A261")
-            .attr("rx", 2)
-            .attr("ry", 2)
-            .transition()
-            .duration(1200)
-            .delay((d, i) => i * 150)
-            .ease(d3.easeCubicOut)
-            .attr("width", d => infrastructureX(d.value) - 80);
-            
-        infrastructureChart.selectAll(".value")
-            .data(infrastructureData)
-            .enter()
-            .append("text")
-            .attr("class", "value")
-            .attr("x", d => infrastructureX(d.value) + 5)
-            .attr("y", d => infrastructureY(d.label) + infrastructureY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.value)
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", Math.min(11, infraHeight * 0.15) + "px")
-            .style("opacity", 0)
-            .transition()
-            .delay((d, i) => i * 150 + 1000)
-            .duration(600)
-            .style("opacity", 1);
-            
-        infrastructureChart.selectAll(".label")
-            .data(infrastructureData)
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("x", 75)
-            .attr("y", d => infrastructureY(d.label) + infrastructureY.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
-            .attr("text-anchor", "end")
-            .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, infraHeight * 0.13) + "px");
-    </script>
 <!-- Navigation -->
 <div class="nav-container">
+    <button class="nav-button home-button" onclick="goToPage(1)" title="Go to first page (Home key)">
+        <i class="fas fa-home"></i> Home
+    </button>
     <button class="nav-button" onclick="goToPage(1)">
         <i class="fas fa-chevron-left"></i> Previous
     </button>
-    <div class="page-indicator">Page 2 of 11</div>
+    <div class="page-indicator" onclick="togglePageSelector()" id="pageIndicator">
+        Page 2 of 11
+        <div class="page-selector" id="pageSelector">
+            <div class="page-option" onclick="goToPage(1); event.stopPropagation();">Page 1</div>
+            <div class="page-option active" onclick="goToPage(2); event.stopPropagation();">Page 2</div>
+            <div class="page-option" onclick="goToPage(3); event.stopPropagation();">Page 3</div>
+            <div class="page-option" onclick="goToPage(4); event.stopPropagation();">Page 4</div>
+            <div class="page-option" onclick="goToPage(5); event.stopPropagation();">Page 5</div>
+            <div class="page-option" onclick="goToPage(6); event.stopPropagation();">Page 6</div>
+            <div class="page-option" onclick="goToPage(7); event.stopPropagation();">Page 7</div>
+            <div class="page-option" onclick="goToPage(8); event.stopPropagation();">Page 8</div>
+            <div class="page-option" onclick="goToPage(9); event.stopPropagation();">Page 9</div>
+            <div class="page-option" onclick="goToPage(10); event.stopPropagation();">Page 10</div>
+            <div class="page-option" onclick="goToPage(11); event.stopPropagation();">Page 11</div>
+        </div>
+    </div>
     <button class="nav-button" onclick="goToPage(3)">
         Next <i class="fas fa-chevron-right"></i>
     </button>
@@ -740,7 +858,7 @@ html {
     // Clear direction after animation
     setTimeout(() => {
         slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
-    }, 700);
+    }, 600);
     
     function goToPage(pageNum) {
         if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
@@ -757,9 +875,23 @@ html {
             
             setTimeout(() => {
                 window.location.href = `page_${pageNum}.html`;
-            }, 700);
+            }, 600);
         }
     }
+    function togglePageSelector() {
+        const selector = document.getElementById('pageSelector');
+        selector.classList.toggle('show');
+    }
+    
+    // Close page selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const indicator = document.getElementById('pageIndicator');
+        const selector = document.getElementById('pageSelector');
+        if (!indicator.contains(e.target)) {
+            selector.classList.remove('show');
+        }
+    });
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             e.preventDefault();
@@ -768,7 +900,15 @@ html {
             } else if (e.key === 'ArrowRight') {
                 goToPage(3);
             }
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToPage(1);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToPage(11);
         }
     });
 </script>
 </body></html>
+
+

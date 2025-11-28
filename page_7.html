@@ -1,10 +1,9 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Hardware and Software Budget Breakdown</title>
+<title>IT Strategic Goals for 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script><style>
         * {
             box-sizing: border-box;
@@ -223,30 +222,14 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
-            }
-            /* Footer visibility on mobile */
-            .slide {
-                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
-                display: flex !important;
-                flex-direction: column !important;
-            }
+            /* Footer visibility on small mobile */
             div[class*="mt-auto"] {
-                margin-top: clamp(16px, 4vw, 24px) !important;
-                padding-top: clamp(8px, 2vw, 12px) !important;
-                padding-bottom: clamp(8px, 2vw, 12px) !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
-                opacity: 1 !important; /* Ensure visibility */
-                display: block !important;
-                visibility: visible !important;
-                position: relative !important;
-                z-index: 1 !important;
-                width: 100% !important;
-            }
-            div[class*="mt-auto"] p {
-                display: block !important;
-                visibility: visible !important;
+                font-size: clamp(10px, 2.5vw, 12px) !important;
                 opacity: 1 !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
+                margin-top: clamp(12px, 3vw, 20px) !important;
+            }
+            .slide {
+                padding-bottom: clamp(70px, 15vw, 90px) !important; /* Extra space for nav + footer */
             }
         }
         @media (max-width: 480px) and (orientation: landscape) {
@@ -260,83 +243,65 @@
                 margin-bottom: 8px !important;
             }
         }
-        @media (max-width: 480px) {
-            .slide {
-                padding: 10px !important;
-            }
-            h1 {
-                font-size: clamp(18px, 7vw, 24px) !important;
-                line-height: 1.2;
-            }
-            h2 {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-4xl {
-                font-size: clamp(20px, 8vw, 28px) !important;
-            }
-            .text-3xl {
-                font-size: clamp(18px, 7vw, 24px) !important;
-            }
-            .text-2xl {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-xl {
-                font-size: clamp(14px, 5vw, 18px) !important;
-            }
-            .nav-container {
-                flex-wrap: nowrap;
-                width: auto;
-                max-width: calc(100% - 16px);
-                bottom: 8px;
-                padding: 5px 8px;
-                gap: 4px;
+        .nav-container {
+                bottom: 12px;
+                padding: 6px 16px;
+                gap: 6px;
             }
             .nav-button {
-                padding: 5px 8px;
-                font-size: 0.7rem;
-                min-height: 32px;
-                min-width: auto;
-                flex: 0 0 auto;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-height: 44px; /* Better touch target */
             }
             .page-indicator {
-                font-size: 0.7rem;
-                padding: 0 4px;
-                white-space: nowrap;
+                font-size: 0.85rem;
+                padding: 0 10px;
             }
-            .budget-card, .category-card {
+        }
+        @media (max-width: 480px) {
+            .slide {
                 padding: 12px !important;
+            }
+            h1 {
+                font-size: clamp(20px, 6vw, 28px) !important;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                width: calc(100% - 24px);
+                max-width: 320px;
             }
         }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
-        .budget-card {
+        .goal-card {
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
         }
-        .category-header {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
         }
-        th, td {
-            padding: 8px 12px;
-            text-align: left;
+        .action-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
         }
-        th {
-            background-color: #006D77;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: rgba(0, 109, 119, 0.05);
-        }
-        .category-total {
-            font-weight: bold;
-            border-top: 2px solid #006D77;
+        .action-icon {
+            min-width: 24px;
+            margin-right: 8px;
         }
     
 html {
@@ -384,290 +349,209 @@ html {
             font-weight: 500;
             font-size: 0.75rem;
             padding: 0 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .page-indicator:hover {
+            text-decoration: underline;
+        }
+        .page-selector {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            background: rgba(47, 62, 70, 0.95);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .page-selector.show {
+            display: flex;
+        }
+        .page-option {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .page-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .page-option.active {
+            background: rgba(244, 162, 97, 0.3);
+            font-weight: 600;
+        }
+        .home-button {
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .home-button:hover {
+            background: rgba(244, 162, 97, 0.5);
         }
 </style>
 </head>
 <body>
 <div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
 <!-- Header -->
-<div class="mb-4 flex-shrink-0">
-<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 32px);">Hardware and Software Budget Breakdown</h1>
-<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
+<div class="mb-8">
+<h1 class="text-4xl font-bold text-[#2F3E46] mb-2">IT Strategic Goals for 2026</h1>
+<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0" style="overflow: visible;">
-<!-- Left Column - Budget Table -->
-<div class="col-span-1 md:col-span-2 budget-card p-4 min-h-0 overflow-y-auto" style="max-height: calc(100vh - 180px);">
-<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
-<table style="font-size: clamp(10px, 1.1vw, 14px); width: 100%; min-width: 600px;">
-<thead>
-<tr>
-<th class="rounded-tl-lg" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Category</th>
-<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Units</th>
-<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Unit Cost</th>
-<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Total Cost</th>
-</tr>
-</thead>
-<tbody>
-<!-- Hardware Upgrades -->
-<tr>
-<td class="category-header text-[#006D77]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Hardware Upgrades &amp; Replacement</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">New Computers / Laptops</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱35,000</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱490,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">RAM Upgrades (to 16GB)</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">17</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,500</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱42,500</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">SSD Upgrades (256GB/500GB)</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱56,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Monitor Upgrades (24-27 inch)</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">18</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱6,500</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱117,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Graphics Cards (1-2GB VRAM)</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,600</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱41,600</td>
-</tr>
-<tr class="category-total">
-<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Hardware Total</td>
-<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱747,100</td>
-</tr>
-<!-- Software &amp; Licensing -->
-<tr>
-<td class="category-header text-[#EE6C4D]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Software &amp; Licensing</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Windows &amp; Microsoft Office Licenses</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱5,000</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱80,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Fresh Start (No Migration) with M365</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">35</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱14,258</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱499,030</td>
-</tr>
-<tr class="category-total">
-<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Software Total</td>
-<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱579,030</td>
-</tr>
-<!-- Infrastructure &amp; Peripherals -->
-<tr>
-<td class="category-header text-[#F4A261]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Infrastructure &amp; Peripherals</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Critical Server UPS Replacement</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">General Staff UPS / AVR</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱300</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,800</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Printer Replacements</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">2</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱9,500</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱19,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Laptop Battery Replacements</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">5</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱20,000</td>
-</tr>
-<tr>
-<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Network Cabling / Labeling Materials</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
-<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
-</tr>
-<tr class="category-total">
-<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Infrastructure Total</td>
-<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱88,300</td>
-</tr>
-<!-- Grand Total -->
-<tr class="bg-[#2F3E46] text-white font-bold">
-<td class="rounded-bl-lg" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Grand Total (with Contingency)</td>
-<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">₱1,614,430</td>
-</tr>
-</tbody>
-</table>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 min-h-[520px]">
+<!-- Mitigate Critical Risks -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#006D77] text-white mb-6">
+<i class="fas fa-exclamation-triangle text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Mitigate Critical Risks</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-bolt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Replace Critical Server UPS:</span> Immediate replacement of failing power protection</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Critical Systems:</span> Initiate RAM/SSD upgrades for critical users</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-network-wired"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Reinforce Network Infrastructure:</span> Strengthen network reliability and connectivity</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#006D77]">
+<i class="fas fa-envelope"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Email Migration:</span> Migrate to Microsoft 365 with user training for Yondo CRM</p>
 </div>
 </div>
-<!-- Right Column - Pie Chart and Notes -->
-<div class="budget-card p-4 flex flex-col min-h-0 overflow-y-auto">
-<h2 class="font-bold text-[#2F3E46] mb-3 flex-shrink-0" style="font-size: clamp(16px, 1.8vw, 20px);">Budget Allocation</h2>
-<!-- Pie Chart -->
-<div class="flex-grow flex justify-center items-center min-h-0" id="budget-chart" style="min-height: clamp(200px, 25vh, 280px);"></div>
-<!-- Legend -->
-<div class="grid grid-cols-3 gap-2 mt-3 flex-shrink-0">
-<div class="flex items-center">
-<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #006D77;"></div>
-<span style="font-size: clamp(9px, 1vw, 12px);">Hardware</span>
-</div>
-<div class="flex items-center">
-<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #EE6C4D;"></div>
-<span style="font-size: clamp(9px, 1vw, 12px);">Software</span>
-</div>
-<div class="flex items-center">
-<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #F4A261;"></div>
-<span style="font-size: clamp(9px, 1vw, 12px);">Infrastructure</span>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#006D77]/10 text-[#006D77] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Critical risk mitigation and immediate performance improvements
+                    </span>
 </div>
 </div>
-<!-- Key Notes -->
-<div class="mt-4 border-t pt-3 flex-shrink-0">
-<h3 class="font-semibold text-[#2F3E46] mb-2" style="font-size: clamp(13px, 1.4vw, 16px);">Key Notes</h3>
-<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
-<li class="mb-1">Budget covers critical hardware upgrades and software licensing</li>
-<li class="mb-1">Includes contingency fund of ₱200,000 (12.4% of total)</li>
-<li class="mb-1">Strategic investments aligned with IT strategic goals for 2026</li>
-</ul>
+<!-- Strategic Modernization -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#EE6C4D] text-white mb-6">
+<i class="fas fa-rocket text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Strategic Modernization</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Procure New Systems:</span> Replace 14 outdated computer systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-cloud-upload-alt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Cloud Migration:</span> Migrate physical server to cloud infrastructure</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-phone-alt"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Modernize Communications:</span> Implement Cloud PBX, SIP Trunking, and VoIP</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#EE6C4D]">
+<i class="fas fa-globe"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Digital Presence:</span> Develop website for condominiums</p>
+</div>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#EE6C4D]/10 text-[#EE6C4D] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Long-term modernization and sustainability
+                    </span>
+</div>
+</div>
+<!-- Systematic Upgrades -->
+<div class="goal-card p-6 flex flex-col">
+<div class="icon-circle bg-[#F4A261] text-white mb-6">
+<i class="fas fa-tools text-4xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Systematic Upgrades</h2>
+<div class="flex-grow">
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-check-circle"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Regularize Software Licenses:</span> Acquire licenses for 16 unlicensed systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-desktop"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Complete PC Upgrades:</span> RAM & SSD upgrades for remaining systems</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-tv"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Monitors:</span> 18 units with existing monitors as second screens</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-wifi"></i>
+</div>
+<p class="text-[#2F3E46]"><span class="font-semibold">Optimize Connectivity:</span> Consolidate ISPs and optimize landline services</p>
+</div>
+</div>
+<div class="mt-4 text-center">
+<span class="inline-block bg-[#F4A261]/10 text-[#F4A261] px-3 py-1 rounded-full text-sm font-medium">
+                        Impact: Medium-priority items with significant user impact
+                    </span>
 </div>
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
-<p>Based on 2026 IT Strategic Plan and Budget</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>These strategic goals will guide our 2026 IT investments, ensuring a more robust and productive environment</p>
 </div>
 </div>
-<script>
-        // Budget allocation data
-        const budgetData = [
-            { category: "Hardware", amount: 747100, color: "#006D77" },
-            { category: "Software", amount: 579030, color: "#EE6C4D" },
-            { category: "Infrastructure", amount: 88300, color: "#F4A261" }
-        ];
-        
-        // Create pie chart
-        const chartContainer = document.getElementById("budget-chart");
-        const containerWidth = chartContainer.offsetWidth || 280;
-        const containerHeight = chartContainer.offsetHeight || 280;
-        const size = Math.min(containerWidth, containerHeight);
-        const width = size;
-        const height = size;
-        const radius = Math.min(width, height) / 2;
-        
-        const svg = d3.select("#budget-chart")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${width} ${height}`)
-            .attr("preserveAspectRatio", "xMidYMid meet")
-            .append("g")
-            .attr("transform", `translate(${width / 2}, ${height / 2})`);
-            
-        const pie = d3.pie()
-            .value(d => d.amount)
-            .sort(null);
-            
-        const arc = d3.arc()
-            .innerRadius(radius * 0.4) // Create a donut chart
-            .outerRadius(radius * 0.8);
-            
-        // Add outer arc for labels
-        const outerArc = d3.arc()
-            .innerRadius(radius * 0.9)
-            .outerRadius(radius * 0.9);
-            
-        // Create pie chart segments with animation
-        const arcTween = function(d) {
-            const interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
-            return function(t) {
-                return arc(interpolate(t));
-            };
-        };
-        
-        const path = svg.selectAll("path")
-            .data(pie(budgetData))
-            .enter()
-            .append("path")
-            .attr("fill", d => d.data.color)
-            .attr("stroke", "white")
-            .style("stroke-width", "2px")
-            .attr("d", function(d) {
-                const startAngle = d.startAngle;
-                const endAngle = d.startAngle;
-                return arc({...d, startAngle, endAngle});
-            })
-            .transition()
-            .duration(2200)
-            .ease(d3.easeCubicOut)
-            .attrTween("d", arcTween);
-            
-        // Add percentage labels inside the pie chart with fade-in animation
-        const labels = svg.selectAll("text.label")
-            .data(pie(budgetData))
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("transform", d => `translate(${arc.centroid(d)})`)
-            .attr("text-anchor", "middle")
-            .attr("dy", ".35em")
-            .attr("fill", "white")
-            .attr("font-weight", "bold")
-            .attr("font-size", Math.min(12, radius * 0.12) + "px")
-            .style("opacity", 0)
-            .text(d => {
-                const percentage = Math.round((d.data.amount / 1614430) * 100);
-                return `${percentage}%`;
-            })
-            .transition()
-            .delay(1900)
-            .duration(1000)
-            .style("opacity", 1);
-            
-        // Add center text with fade-in animation
-        svg.append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", "0em")
-            .attr("font-size", Math.min(14, radius * 0.15) + "px")
-            .attr("font-weight", "bold")
-            .attr("fill", "#2F3E46")
-            .style("opacity", 0)
-            .text("₱1,614,430")
-            .transition()
-            .delay(2700)
-            .duration(1000)
-            .style("opacity", 1);
-            
-        svg.append("text")
-            .attr("text-anchor", "middle")
-            .attr("dy", "1.5em")
-            .attr("font-size", Math.min(10, radius * 0.12) + "px")
-            .attr("fill", "#2F3E46")
-            .style("opacity", 0)
-            .text("Total Budget")
-            .transition()
-            .delay(2700)
-            .duration(1000)
-            .style("opacity", 1);
-    </script>
 <!-- Navigation -->
 <div class="nav-container">
+    <button class="nav-button home-button" onclick="goToPage(1)" title="Go to first page (Home key)">
+        <i class="fas fa-home"></i> Home
+    </button>
     <button class="nav-button" onclick="goToPage(6)">
         <i class="fas fa-chevron-left"></i> Previous
     </button>
-    <div class="page-indicator">Page 7 of 11</div>
+    <div class="page-indicator" onclick="togglePageSelector()" id="pageIndicator">
+        Page 7 of 11
+        <div class="page-selector" id="pageSelector">
+            <div class="page-option" onclick="goToPage(1); event.stopPropagation();">Page 1</div>
+            <div class="page-option" onclick="goToPage(2); event.stopPropagation();">Page 2</div>
+            <div class="page-option" onclick="goToPage(3); event.stopPropagation();">Page 3</div>
+            <div class="page-option" onclick="goToPage(4); event.stopPropagation();">Page 4</div>
+            <div class="page-option" onclick="goToPage(5); event.stopPropagation();">Page 5</div>
+            <div class="page-option" onclick="goToPage(6); event.stopPropagation();">Page 6</div>
+            <div class="page-option active" onclick="goToPage(7); event.stopPropagation();">Page 7</div>
+            <div class="page-option" onclick="goToPage(8); event.stopPropagation();">Page 8</div>
+            <div class="page-option" onclick="goToPage(9); event.stopPropagation();">Page 9</div>
+            <div class="page-option" onclick="goToPage(10); event.stopPropagation();">Page 10</div>
+            <div class="page-option" onclick="goToPage(11); event.stopPropagation();">Page 11</div>
+        </div>
+    </div>
     <button class="nav-button" onclick="goToPage(8)">
         Next <i class="fas fa-chevron-right"></i>
     </button>
@@ -710,6 +594,20 @@ html {
             }, 600);
         }
     }
+    function togglePageSelector() {
+        const selector = document.getElementById('pageSelector');
+        selector.classList.toggle('show');
+    }
+    
+    // Close page selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const indicator = document.getElementById('pageIndicator');
+        const selector = document.getElementById('pageSelector');
+        if (!indicator.contains(e.target)) {
+            selector.classList.remove('show');
+        }
+    });
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             e.preventDefault();
@@ -718,6 +616,12 @@ html {
             } else if (e.key === 'ArrowRight') {
                 goToPage(8);
             }
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToPage(1);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToPage(11);
         }
     });
 </script>

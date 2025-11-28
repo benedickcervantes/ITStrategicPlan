@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Expected ROI and Recommendations</title>
+<title>Hardware and Software Budget Breakdown</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -249,6 +249,17 @@
                 font-size: clamp(11px, 3vw, 13px) !important;
             }
         }
+        @media (max-width: 480px) and (orientation: landscape) {
+            .slide {
+                padding: 8px !important;
+            }
+            .mb-8 {
+                margin-bottom: 12px !important;
+            }
+            .mb-4 {
+                margin-bottom: 8px !important;
+            }
+        }
         @media (max-width: 480px) {
             .slide {
                 padding: 10px !important;
@@ -295,73 +306,37 @@
             .budget-card, .category-card {
                 padding: 12px !important;
             }
-            /* Footer visibility on small mobile */
-            div[class*="mt-auto"] {
-                font-size: clamp(10px, 2.5vw, 12px) !important;
-                opacity: 1 !important;
-                margin-top: clamp(12px, 3vw, 20px) !important;
-            }
-            .slide {
-                padding-bottom: clamp(70px, 15vw, 90px) !important; /* Extra space for nav + footer */
-            }
-        }
-        @media (max-width: 480px) and (orientation: landscape) {
-            .slide {
-                padding: 8px !important;
-            }
-            .mb-8 {
-                margin-bottom: 12px !important;
-            }
-            .mb-4 {
-                margin-bottom: 8px !important;
-            }
         }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
-        .roi-card {
+        .budget-card {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
         }
-        .roi-card:hover {
-            transform: translateY(-5px);
+        .category-header {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
         }
-        .icon-container {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .recommendation-item {
-            border-left: 4px solid #F4A261;
-            padding-left: 16px;
-            margin-bottom: 16px;
+        th, td {
+            padding: 8px 12px;
+            text-align: left;
         }
-        @keyframes fadeInUp {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        th {
+            background-color: #006D77;
+            color: white;
         }
-        .chart-title-animate {
-            animation: fadeInUp 0.8s ease-out 0.3s forwards;
-            opacity: 0;
+        tr:nth-child(even) {
+            background-color: rgba(0, 109, 119, 0.05);
         }
-        .chart-investment-animate {
-            animation: fadeInUp 0.8s ease-out 0.5s forwards;
-            opacity: 0;
-        }
-        .chart-container-animate {
-            animation: fadeInUp 0.8s ease-out 0.7s forwards;
-            opacity: 0;
+        .category-total {
+            font-weight: bold;
+            border-top: 2px solid #006D77;
         }
     
 html {
@@ -409,6 +384,53 @@ html {
             font-weight: 500;
             font-size: 0.75rem;
             padding: 0 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .page-indicator:hover {
+            text-decoration: underline;
+        }
+        .page-selector {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            background: rgba(47, 62, 70, 0.95);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .page-selector.show {
+            display: flex;
+        }
+        .page-option {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .page-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .page-option.active {
+            background: rgba(244, 162, 97, 0.3);
+            font-weight: 600;
+        }
+        .home-button {
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .home-button:hover {
+            background: rgba(244, 162, 97, 0.5);
         }
 </style>
 </head>
@@ -416,235 +438,301 @@ html {
 <div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
 <!-- Header -->
 <div class="mb-4 flex-shrink-0">
-<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">Expected ROI and Recommendations</h1>
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 32px);">Hardware and Software Budget Breakdown</h1>
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-5 gap-4 min-h-0 overflow-hidden">
-<!-- ROI Section - 3 columns -->
-<div class="col-span-1 md:col-span-3 flex flex-col gap-3 min-h-0 overflow-y-auto">
-<h2 class="font-bold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(18px, 2.2vw, 24px);">Expected Returns on Investment</h2>
-<!-- ROI Cards -->
-<div class="grid grid-cols-2 gap-3 flex-shrink-0" style="grid-template-rows: repeat(3, auto);">
-<!-- Productivity Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#006D77] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-chart-line" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0" style="overflow: visible;">
+<!-- Left Column - Budget Table -->
+<div class="col-span-1 md:col-span-2 budget-card p-4 min-h-0 overflow-y-auto" style="max-height: calc(100vh - 180px);">
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="font-size: clamp(10px, 1.1vw, 14px); width: 100%; min-width: 600px;">
+<thead>
+<tr>
+<th class="rounded-tl-lg" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Category</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Units</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Unit Cost</th>
+<th style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Total Cost</th>
+</tr>
+</thead>
+<tbody>
+<!-- Hardware Upgrades -->
+<tr>
+<td class="category-header text-[#006D77]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Hardware Upgrades &amp; Replacement</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">New Computers / Laptops</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱35,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱490,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">RAM Upgrades (to 16GB)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">17</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱42,500</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">SSD Upgrades (256GB/500GB)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">14</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱56,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Monitor Upgrades (24-27 inch)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">18</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱6,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱117,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Graphics Cards (1-2GB VRAM)</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱2,600</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱41,600</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Hardware Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱747,100</td>
+</tr>
+<!-- Software &amp; Licensing -->
+<tr>
+<td class="category-header text-[#EE6C4D]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Software &amp; Licensing</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Windows &amp; Microsoft Office Licenses</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱5,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱80,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Fresh Start (No Migration) with M365</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">35</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱14,258</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱499,030</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Software Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱579,030</td>
+</tr>
+<!-- Infrastructure &amp; Peripherals -->
+<tr>
+<td class="category-header text-[#F4A261]" colspan="4" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Infrastructure &amp; Peripherals</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Critical Server UPS Replacement</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱7,500</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">General Staff UPS / AVR</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">16</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱300</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,800</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Printer Replacements</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">2</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱9,500</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱19,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Laptop Battery Replacements</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">5</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱4,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱20,000</td>
+</tr>
+<tr>
+<td class="pl-4" style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">Network Cabling / Labeling Materials</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">1</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
+<td style="padding: clamp(6px, 0.8vw, 10px) clamp(8px, 1vw, 12px);">₱37,000</td>
+</tr>
+<tr class="category-total">
+<td class="text-right" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">Infrastructure Total</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(11px, 1.2vw, 15px);">₱88,300</td>
+</tr>
+<!-- Grand Total -->
+<tr class="bg-[#2F3E46] text-white font-bold">
+<td class="rounded-bl-lg" colspan="3" style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">Grand Total (with Contingency)</td>
+<td style="padding: clamp(8px, 1vw, 12px); font-size: clamp(12px, 1.3vw, 16px);">₱1,614,430</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Operational Efficiency Enhancement</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Strategic hardware upgrades (16GB RAM, SSD storage) deliver measurable performance improvements: system boot times reduced from 5-10 minutes to under 30 seconds, application load times from 2-5 minutes to near-instantaneous response.</p>
-<p class="text-[#006D77] text-xs font-semibold">Business Value: Estimated 15-20% workforce productivity increase, enhanced operational capacity, improved employee satisfaction and retention</p>
+</div>
+<!-- Right Column - Pie Chart and Notes -->
+<div class="budget-card p-4 flex flex-col min-h-0 overflow-y-auto">
+<h2 class="font-bold text-[#2F3E46] mb-3 flex-shrink-0" style="font-size: clamp(16px, 1.8vw, 20px);">Budget Allocation</h2>
+<!-- Pie Chart -->
+<div class="flex-grow flex justify-center items-center min-h-0" id="budget-chart" style="min-height: clamp(200px, 25vh, 280px);"></div>
+<!-- Legend -->
+<div class="grid grid-cols-3 gap-2 mt-3 flex-shrink-0">
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #006D77;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Hardware</span>
+</div>
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #EE6C4D;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Software</span>
+</div>
+<div class="flex items-center">
+<div class="rounded-sm mr-2" style="width: clamp(12px, 1.2vw, 16px); height: clamp(12px, 1.2vw, 16px); background-color: #F4A261;"></div>
+<span style="font-size: clamp(9px, 1vw, 12px);">Infrastructure</span>
 </div>
 </div>
-<!-- Downtime Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-clock" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Business Continuity Assurance</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Critical infrastructure investment in server UPS replacement and enhanced power protection systems eliminates single points of failure, ensuring 99.9% service availability and protecting against data loss during power disruptions.</p>
-<p class="text-[#EE6C4D] text-xs font-semibold">Business Value: Mitigated operational risk, guaranteed data integrity, sustained service delivery, reduced business interruption costs</p>
-</div>
-</div>
-<!-- Security Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#F4A261] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-shield-alt" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Cybersecurity Posture Strengthening</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Software license regularization enables continuous security patching and threat mitigation. Strategic cloud migration and infrastructure modernization establish robust data protection frameworks aligned with industry best practices.</p>
-<p class="text-[#F4A261] text-xs font-semibold">Business Value: Reduced cyber risk exposure, enhanced data protection, regulatory compliance alignment, minimized breach liability</p>
-</div>
-</div>
-<!-- Compliance Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#006D77] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-check-circle" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Regulatory Compliance &amp; Legal Risk Mitigation</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Comprehensive software license regularization across 16 non-compliant systems eliminates legal exposure to vendor penalties and audit findings. Licensed software ensures system reliability, vendor support eligibility, and operational stability.</p>
-<p class="text-[#006D77] text-xs font-semibold">Business Value: Eliminated legal and financial exposure, enhanced system reliability, authorized vendor support access, audit readiness</p>
-</div>
-</div>
-<!-- Network Optimization Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#F4A261] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-network-wired" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Network Infrastructure Optimization</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Strategic ISP consolidation to 2-3 primary providers, implementation of dedicated LAN infrastructure, and comprehensive network documentation eliminate connectivity disruptions affecting 18 users, reducing IT support overhead by an estimated 60%.</p>
-<p class="text-[#F4A261] text-xs font-semibold">Business Value: Improved service reliability, reduced operational overhead, enhanced scalability, optimized cost structure</p>
-</div>
-</div>
-<!-- Modernization Card -->
-<div class="roi-card p-3 flex items-start">
-<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
-<i class="fas fa-rocket" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-</div>
-<div class="flex-1">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">Digital Transformation Enablement</h3>
-<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Strategic initiatives including cloud infrastructure migration, unified communications (VoIP/SIP), and digital presence development establish a foundation for scalable growth, operational efficiency, and competitive differentiation in the digital marketplace.</p>
-<p class="text-[#EE6C4D] text-xs font-semibold">Business Value: Future-ready technology platform, reduced total cost of ownership, enhanced market positioning, accelerated business agility</p>
-</div>
-</div>
-</div>
-<!-- ROI Visualization -->
-<div class="roi-chart mt-2 bg-white rounded-lg p-3 shadow flex-shrink-0">
-<h3 class="font-bold text-[#2F3E46] mb-2 chart-title-animate" style="font-size: clamp(14px, 1.6vw, 18px);">Investment Impact Analysis</h3>
-<div class="text-[#006D77] text-sm mb-2 chart-investment-animate" style="font-size: clamp(11px, 1.2vw, 14px);">Total Strategic Investment: ₱1,614,430</div>
-<div class="w-full chart-container-animate" id="roi-chart" style="height: clamp(180px, 25vh, 250px);"></div>
-</div>
-</div>
-<!-- Recommendations Section - 2 columns -->
-<div class="col-span-1 md:col-span-2 bg-white rounded-lg p-4 shadow flex flex-col min-h-0 overflow-y-auto">
-<h2 class="font-bold text-[#006D77] mb-3 flex-shrink-0" style="font-size: clamp(18px, 2.2vw, 24px);">Executive Recommendations</h2>
-<div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">1. Strategic Plan Approval</h3>
-<p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Approve the 2026 IT Strategic Plan and allocated budget of ₱1,614,430 to authorize critical infrastructure modernization and risk mitigation initiatives that directly support organizational objectives.</p>
-</div>
-<div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">2. Immediate Phase 1 Execution (Q1 2026)</h3>
-<p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Prioritize immediate implementation of critical risk mitigation measures: server UPS replacement, strategic hardware upgrades for mission-critical users, and network infrastructure reinforcement to address highest-priority vulnerabilities.</p>
-</div>
-<div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">3. Phased Implementation Strategy</h3>
-<p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Execute systematic Phase 2 upgrades (Q2 2026) and strategic Phase 3 modernization initiatives (Q3-Q4 2026) following established timelines to minimize operational disruption while maximizing value delivery.</p>
-</div>
-<div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">4. Performance Monitoring &amp; Governance</h3>
-<p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Establish quarterly review cycles with key performance indicators (KPIs) to track implementation progress, measure return on investment, and enable data-driven decision-making for priority adjustments based on evolving business requirements.</p>
-</div>
-<div class="mt-auto p-3 bg-[#006D77]/10 rounded-lg border border-[#006D77]/20 flex-shrink-0">
-<div class="flex items-center mb-2">
-<i class="fas fa-lightbulb text-[#F4A261] mr-2" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(13px, 1.5vw, 18px);">Strategic Business Impact</h3>
-</div>
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">This strategic investment of ₱1,614,430 represents a critical enabler for organizational resilience, operational excellence, and sustainable competitive advantage in an increasingly digital business environment.</p>
-<div class="grid grid-cols-2 gap-2 text-xs text-[#2F3E46]">
-<div><strong>Immediate Benefits (0-6 months):</strong> Risk mitigation, regulatory compliance, operational efficiency improvements</div>
-<div><strong>Sustained Value (12+ months):</strong> Scalable infrastructure foundation, optimized operational costs, digital transformation capabilities</div>
-</div>
+<!-- Key Notes -->
+<div class="mt-4 border-t pt-3 flex-shrink-0">
+<h3 class="font-semibold text-[#2F3E46] mb-2" style="font-size: clamp(13px, 1.4vw, 16px);">Key Notes</h3>
+<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
+<li class="mb-1">Budget covers critical hardware upgrades and software licensing</li>
+<li class="mb-1">Includes contingency fund of ₱200,000 (12.4% of total)</li>
+<li class="mb-1">Strategic investments aligned with IT strategic goals for 2026</li>
+</ul>
 </div>
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 flex justify-between items-center text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px); gap: 10px;">
-<p>Based on IT Strategic Plan, 2026</p>
-<p class="font-semibold">End of Report</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on 2026 IT Strategic Plan and Budget</p>
 </div>
 </div>
 <script>
-        // ROI Chart - Enhanced Vertical Bar Chart
-        const roiData = [
-            {category: "Productivity", value: 25, color: "#006D77"},
-            {category: "Security", value: 20, color: "#F4A261"},
-            {category: "Compliance", value: 18, color: "#006D77"},
-            {category: "Downtime", value: 15, color: "#EE6C4D"},
-            {category: "Network", value: 12, color: "#F4A261"},
-            {category: "Modernization", value: 10, color: "#EE6C4D"}
+        // Budget allocation data
+        const budgetData = [
+            { category: "Hardware", amount: 747100, color: "#006D77" },
+            { category: "Software", amount: 579030, color: "#EE6C4D" },
+            { category: "Infrastructure", amount: 88300, color: "#F4A261" }
         ];
         
-        const chartContainer = document.getElementById("roi-chart");
-        const chartWidth = chartContainer.offsetWidth || 500;
-        const chartHeight = chartContainer.offsetHeight || 200;
+        // Create pie chart
+        const chartContainer = document.getElementById("budget-chart");
+        const containerWidth = chartContainer.offsetWidth || 280;
+        const containerHeight = chartContainer.offsetHeight || 280;
+        const size = Math.min(containerWidth, containerHeight);
+        const width = size;
+        const height = size;
+        const radius = Math.min(width, height) / 2;
         
-        const svgWidth = Math.max(chartWidth, 500);
-        const svgHeight = Math.max(chartHeight, 200);
-        const margin = { top: 20, right: 20, bottom: 40, left: 20 };
-        const chartWidthInner = svgWidth - margin.left - margin.right;
-        const chartHeightInner = svgHeight - margin.top - margin.bottom;
-        
-        const roiChart = d3.select("#roi-chart")
+        const svg = d3.select("#budget-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
+            .attr("viewBox", `0 0 ${width} ${height}`)
+            .attr("preserveAspectRatio", "xMidYMid meet")
+            .append("g")
+            .attr("transform", `translate(${width / 2}, ${height / 2})`);
+            
+        const pie = d3.pie()
+            .value(d => d.amount)
+            .sort(null);
+            
+        const arc = d3.arc()
+            .innerRadius(radius * 0.4) // Create a donut chart
+            .outerRadius(radius * 0.8);
+            
+        // Add outer arc for labels
+        const outerArc = d3.arc()
+            .innerRadius(radius * 0.9)
+            .outerRadius(radius * 0.9);
+            
+        // Create pie chart segments with animation
+        const arcTween = function(d) {
+            const interpolate = d3.interpolate({startAngle: 0, endAngle: 0}, d);
+            return function(t) {
+                return arc(interpolate(t));
+            };
+        };
         
-        // Create scales for vertical bars
-        const x = d3.scaleBand()
-            .domain(roiData.map(d => d.category))
-            .range([margin.left, svgWidth - margin.right])
-            .padding(0.4);
-            
-        const y = d3.scaleLinear()
-            .domain([0, d3.max(roiData, d => d.value) + 5])
-            .range([chartHeightInner + margin.top, margin.top]);
-            
-        // Add vertical bars with animation
-        roiChart.selectAll("rect")
-            .data(roiData)
+        const path = svg.selectAll("path")
+            .data(pie(budgetData))
             .enter()
-            .append("rect")
-            .attr("x", d => x(d.category))
-            .attr("y", chartHeightInner + margin.top)
-            .attr("width", x.bandwidth())
-            .attr("height", 0)
-            .attr("fill", d => d.color)
-            .attr("rx", 4)
-            .attr("ry", 4)
+            .append("path")
+            .attr("fill", d => d.data.color)
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .attr("d", function(d) {
+                const startAngle = d.startAngle;
+                const endAngle = d.startAngle;
+                return arc({...d, startAngle, endAngle});
+            })
             .transition()
-            .duration(1200)
-            .delay((d, i) => i * 150)
+            .duration(2200)
             .ease(d3.easeCubicOut)
-            .attr("y", d => y(d.value))
-            .attr("height", d => chartHeightInner + margin.top - y(d.value));
+            .attrTween("d", arcTween);
             
-        // Add percentage values on top of bars with fade-in animation
-        roiChart.selectAll(".value")
-            .data(roiData)
-            .enter()
-            .append("text")
-            .attr("class", "value")
-            .attr("x", d => x(d.category) + x.bandwidth() / 2)
-            .attr("y", d => y(d.value) - 5)
-            .text(d => d.value + "%")
-            .attr("text-anchor", "middle")
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", Math.min(13, svgHeight * 0.08) + "px")
-            .style("opacity", 0)
-            .transition()
-            .delay((d, i) => i * 150 + 1000)
-            .duration(600)
-            .style("opacity", 1);
-            
-        // Add category labels below bars
-        roiChart.selectAll(".label")
-            .data(roiData)
+        // Add percentage labels inside the pie chart with fade-in animation
+        const labels = svg.selectAll("text.label")
+            .data(pie(budgetData))
             .enter()
             .append("text")
             .attr("class", "label")
-            .attr("x", d => x(d.category) + x.bandwidth() / 2)
-            .attr("y", svgHeight - margin.bottom + 15)
-            .text(d => d.category)
+            .attr("transform", d => `translate(${arc.centroid(d)})`)
             .attr("text-anchor", "middle")
-            .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(11, svgHeight * 0.07) + "px");
+            .attr("dy", ".35em")
+            .attr("fill", "white")
+            .attr("font-weight", "bold")
+            .attr("font-size", Math.min(12, radius * 0.12) + "px")
+            .style("opacity", 0)
+            .text(d => {
+                const percentage = Math.round((d.data.amount / 1614430) * 100);
+                return `${percentage}%`;
+            })
+            .transition()
+            .delay(1900)
+            .duration(1000)
+            .style("opacity", 1);
             
-        // Add dotted connecting lines between bars (from top right of one bar to top left of next)
-        for (let i = 0; i < roiData.length - 1; i++) {
-            roiChart.append("line")
-                .attr("x1", x(roiData[i].category) + x.bandwidth())
-                .attr("y1", y(roiData[i].value))
-                .attr("x2", x(roiData[i+1].category))
-                .attr("y2", y(roiData[i+1].value))
-                .attr("stroke", "#E0E1DD")
-                .attr("stroke-width", 2)
-                .attr("stroke-dasharray", "3,3");
-        }
+        // Add center text with fade-in animation
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "0em")
+            .attr("font-size", Math.min(14, radius * 0.15) + "px")
+            .attr("font-weight", "bold")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text("₱1,614,430")
+            .transition()
+            .delay(2700)
+            .duration(1000)
+            .style("opacity", 1);
+            
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("dy", "1.5em")
+            .attr("font-size", Math.min(10, radius * 0.12) + "px")
+            .attr("fill", "#2F3E46")
+            .style("opacity", 0)
+            .text("Total Budget")
+            .transition()
+            .delay(2700)
+            .duration(1000)
+            .style("opacity", 1);
     </script>
 <!-- Navigation -->
 <div class="nav-container">
+    <button class="nav-button home-button" onclick="goToPage(1)" title="Go to first page (Home key)">
+        <i class="fas fa-home"></i> Home
+    </button>
     <button class="nav-button" onclick="goToPage(8)">
         <i class="fas fa-chevron-left"></i> Previous
     </button>
-    <div class="page-indicator">Page 9 of 11</div>
+    <div class="page-indicator" onclick="togglePageSelector()" id="pageIndicator">
+        Page 9 of 11
+        <div class="page-selector" id="pageSelector">
+            <div class="page-option" onclick="goToPage(1); event.stopPropagation();">Page 1</div>
+            <div class="page-option" onclick="goToPage(2); event.stopPropagation();">Page 2</div>
+            <div class="page-option" onclick="goToPage(3); event.stopPropagation();">Page 3</div>
+            <div class="page-option" onclick="goToPage(4); event.stopPropagation();">Page 4</div>
+            <div class="page-option" onclick="goToPage(5); event.stopPropagation();">Page 5</div>
+            <div class="page-option" onclick="goToPage(6); event.stopPropagation();">Page 6</div>
+            <div class="page-option" onclick="goToPage(7); event.stopPropagation();">Page 7</div>
+            <div class="page-option" onclick="goToPage(8); event.stopPropagation();">Page 8</div>
+            <div class="page-option active" onclick="goToPage(9); event.stopPropagation();">Page 9</div>
+            <div class="page-option" onclick="goToPage(10); event.stopPropagation();">Page 10</div>
+            <div class="page-option" onclick="goToPage(11); event.stopPropagation();">Page 11</div>
+        </div>
+    </div>
     <button class="nav-button" onclick="goToPage(10)">
         Next <i class="fas fa-chevron-right"></i>
     </button>
@@ -687,6 +775,20 @@ html {
             }, 600);
         }
     }
+    function togglePageSelector() {
+        const selector = document.getElementById('pageSelector');
+        selector.classList.toggle('show');
+    }
+    
+    // Close page selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const indicator = document.getElementById('pageIndicator');
+        const selector = document.getElementById('pageSelector');
+        if (!indicator.contains(e.target)) {
+            selector.classList.remove('show');
+        }
+    });
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             e.preventDefault();
@@ -695,6 +797,12 @@ html {
             } else if (e.key === 'ArrowRight') {
                 goToPage(10);
             }
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToPage(1);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToPage(11);
         }
     });
 </script>
