@@ -1,8 +1,8 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Equipment Inventory Summary</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>Implementation Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script><style>
@@ -187,15 +187,12 @@
             .gap-4 {
                 gap: clamp(8px, 2vw, 16px) !important;
             }
-            .overflow-x-auto {
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch;
-            }
-            .overflow-x-auto table {
-                min-width: 600px !important;
-            }
             table {
                 font-size: clamp(9px, 2.5vw, 12px) !important;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                white-space: nowrap;
             }
             table thead, table tbody {
                 display: table;
@@ -226,78 +223,6 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
-            }
-            /* Footer visibility on mobile */
-            .slide {
-                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
-                display: flex !important;
-                flex-direction: column !important;
-            }
-            div[class*="mt-auto"] {
-                margin-top: clamp(16px, 4vw, 24px) !important;
-                padding-top: clamp(8px, 2vw, 12px) !important;
-                padding-bottom: clamp(8px, 2vw, 12px) !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
-                opacity: 1 !important; /* Ensure visibility */
-                display: block !important;
-                visibility: visible !important;
-                position: relative !important;
-                z-index: 1 !important;
-                width: 100% !important;
-            }
-            div[class*="mt-auto"] p {
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                font-size: clamp(11px, 3vw, 13px) !important;
-            }
-        }
-        @media (max-width: 480px) {
-            .slide {
-                padding: 10px !important;
-            }
-            h1 {
-                font-size: clamp(18px, 7vw, 24px) !important;
-                line-height: 1.2;
-            }
-            h2 {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-4xl {
-                font-size: clamp(20px, 8vw, 28px) !important;
-            }
-            .text-3xl {
-                font-size: clamp(18px, 7vw, 24px) !important;
-            }
-            .text-2xl {
-                font-size: clamp(16px, 6vw, 20px) !important;
-            }
-            .text-xl {
-                font-size: clamp(14px, 5vw, 18px) !important;
-            }
-            .nav-container {
-                flex-wrap: nowrap;
-                width: auto;
-                max-width: calc(100% - 16px);
-                bottom: 8px;
-                padding: 5px 8px;
-                gap: 4px;
-            }
-            .nav-button {
-                padding: 5px 8px;
-                font-size: 0.7rem;
-                min-height: 32px;
-                min-width: auto;
-                flex: 0 0 auto;
-            }
-            .page-indicator {
-                font-size: 0.7rem;
-                padding: 0 4px;
-                white-space: nowrap;
-            }
-            .budget-card, .category-card {
-                padding: 12px !important;
-            }
             /* Footer visibility on small mobile */
             div[class*="mt-auto"] {
                 font-size: clamp(10px, 2.5vw, 12px) !important;
@@ -319,74 +244,101 @@
                 margin-bottom: 8px !important;
             }
         }
+        .nav-container {
+                bottom: 12px;
+                padding: 6px 16px;
+                gap: 6px;
+            }
+            .nav-button {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+                min-height: 44px; /* Better touch target */
+            }
+            .page-indicator {
+                font-size: 0.85rem;
+                padding: 0 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 12px !important;
+            }
+            h1 {
+                font-size: clamp(20px, 6vw, 28px) !important;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                width: calc(100% - 24px);
+                max-width: 320px;
+            }
+        }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
-        .inventory-card {
+        .phase-card {
             background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        .inventory-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-        }
-        .stat-box {
-            text-align: center;
-            padding: 14px 10px;
             border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-        .stat-box:hover {
-            transform: scale(1.02);
-        }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 100%;
         }
-        th, td {
-            padding: 10px 14px;
-            text-align: left;
-            font-size: clamp(10px, 1.1vw, 14px);
+        .phase-card:hover {
+            transform: translateY(-5px);
         }
-        th {
-            background-color: #006D77;
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-size: clamp(9px, 1vw, 12px);
+        .phase-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
         }
-        tbody tr {
-            transition: background-color 0.2s ease;
+        .phase-content::-webkit-scrollbar {
+            width: 4px;
         }
-        tbody tr:nth-child(even) {
-            background-color: rgba(0, 109, 119, 0.05);
+        .phase-content::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
         }
-        tbody tr:hover {
-            background-color: rgba(0, 109, 119, 0.08);
+        .phase-content::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
         }
-        tbody td {
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        .phase-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
-        /* Desktop: Remove overflow and min-width constraints */
-        @media (min-width: 769px) {
-            .overflow-x-auto {
-                overflow-x: visible !important;
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-            .overflow-x-auto table {
-                min-width: auto !important;
-                width: 100% !important;
-            }
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        .timeline-line {
+            height: 4px;
+        }
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+        .activity-item span {
+            line-height: 1.4;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            min-height: 26px;
+        }
+        .activity-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+            font-size: 0.8rem;
         }
     
 html {
@@ -434,343 +386,317 @@ html {
             font-weight: 500;
             font-size: 0.75rem;
             padding: 0 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .page-indicator:hover {
+            text-decoration: underline;
+        }
+        .page-selector {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            background: rgba(47, 62, 70, 0.95);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .page-selector.show {
+            display: flex;
+        }
+        .page-option {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .page-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .page-option.active {
+            background: rgba(244, 162, 97, 0.3);
+            font-weight: 600;
+        }
+        .home-button {
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .home-button:hover {
+            background: rgba(244, 162, 97, 0.5);
         }
 </style>
 </head>
 <body>
-<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
+<div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(15px, 2vw, 30px); display: flex; flex-direction: column; height: 100%;">
 <!-- Header -->
 <div class="mb-4 flex-shrink-0">
-<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">IT Equipment Inventory Assessment</h1>
-<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
+<h1 class="text-3xl font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 2.5vw, 28px);">Implementation Roadmap</h1>
+<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
 </div>
-<!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4 min-h-0 overflow-hidden">
-<!-- Left Column: Equipment Statistics -->
-<div class="grid grid-cols-2 gap-3 min-h-0 overflow-y-auto">
-<!-- Laptops -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#006D77] to-[#004D56] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-laptop"></i>
+<!-- Timeline -->
+<div class="flex justify-between items-center mb-4 px-12 flex-shrink-0" style="font-size: clamp(11px, 1.2vw, 14px);">
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#006D77]"></div>
+<div class="timeline-line bg-[#006D77] w-full mt-1"></div>
+<div class="text-[#006D77] font-bold mt-2">Q1 2026</div>
 </div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Laptops</h3>
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#F4A261]"></div>
+<div class="timeline-line bg-[#F4A261] w-full mt-1"></div>
+<div class="text-[#F4A261] font-bold mt-2">Q2 2026</div>
 </div>
-<div class="stat-box bg-[#006D77]/10 mb-2">
-<div class="text-3xl font-bold text-[#006D77]">10</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
-</div>
-<div class="grid grid-cols-2 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">9</div>
-<div class="text-gray-600 text-xs">Operational</div>
-</div>
-<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
-<div class="font-bold text-red-700 text-base mb-0.5">1</div>
-<div class="text-gray-600 text-xs">Requires Replacement</div>
+<div class="flex flex-col items-center">
+<div class="timeline-dot bg-[#EE6C4D]"></div>
+<div class="timeline-line bg-[#EE6C4D] w-full mt-1"></div>
+<div class="text-[#EE6C4D] font-bold mt-2">Q3-Q4 2026</div>
 </div>
 </div>
+<!-- Phases Content -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-5 flex-grow min-h-0" style="grid-template-rows: 1fr;">
+<!-- Phase 1 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#006D77] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">1</span>
 </div>
-<!-- Desktops -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-desktop"></i>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 1: Immediate Action</h2>
 </div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Desktops</h3>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-exclamation-triangle"></i>
 </div>
-<div class="stat-box bg-[#F4A261]/10 mb-2">
-<div class="text-3xl font-bold text-[#F4A261]">24</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
+<span>Replace Critical Server UPS</span>
 </div>
-<div class="grid grid-cols-2 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">20</div>
-<div class="text-gray-600 text-xs">Operational</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-building"></i>
 </div>
-<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
-<div class="font-bold text-red-700 text-base mb-0.5">4</div>
-<div class="text-gray-600 text-xs">Requires Replacement</div>
+<span>Initiate RAM/SSD Upgrades for Critical Users</span>
 </div>
-</div>
-</div>
-<!-- Printers -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
 <i class="fas fa-print"></i>
 </div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Printers</h3>
+<span>Address Critical Printer Issues</span>
 </div>
-<div class="stat-box bg-[#EE6C4D]/10 mb-2">
-<div class="text-3xl font-bold text-[#EE6C4D]">17</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
-</div>
-<div class="grid grid-cols-2 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">15</div>
-<div class="text-gray-600 text-xs">Operational</div>
-</div>
-<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
-<div class="font-bold text-red-700 text-base mb-0.5">2</div>
-<div class="text-gray-600 text-xs">Requires Replacement</div>
-</div>
-</div>
-</div>
-<!-- Monitors -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-tv"></i>
-</div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Monitors</h3>
-</div>
-<div class="stat-box bg-[#2F3E46]/10 mb-2">
-<div class="text-3xl font-bold text-[#2F3E46]">25</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
-</div>
-<div class="grid grid-cols-2 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">23</div>
-<div class="text-gray-600 text-xs">Operational</div>
-</div>
-<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
-<div class="font-bold text-red-700 text-base mb-0.5">2</div>
-<div class="text-gray-600 text-xs">Non-Operational</div>
-</div>
-</div>
-</div>
-<!-- WiFi Access Points -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-[#006D77] rounded-full flex items-center justify-center text-white mr-3">
-<i class="fas fa-wifi"></i>
-</div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">WiFi Access Points</h3>
-</div>
-<div class="stat-box bg-[#006D77]/10 mb-2">
-<div class="text-3xl font-bold text-[#006D77]">2</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
-</div>
-<div class="grid grid-cols-1 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">2</div>
-<div class="text-gray-600 text-xs">Operational</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column: AVR/UPS and Summary Table -->
-<div class="flex flex-col gap-3 min-h-0 overflow-y-auto">
-<!-- AVR/UPS Card -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-bolt"></i>
-</div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">AVR/UPS Units</h3>
-</div>
-<div class="stat-box bg-[#F4A261]/10 mb-2">
-<div class="text-3xl font-bold text-[#F4A261]">13</div>
-<div class="text-sm text-[#2F3E46]">Total Assets</div>
-</div>
-<div class="grid grid-cols-3 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">9</div>
-<div class="text-gray-600 text-xs">Operational</div>
-</div>
-<div class="text-center p-2.5 bg-gradient-to-br from-red-50 to-red-100 rounded-lg border border-red-200/50 shadow-sm">
-<div class="font-bold text-red-700 text-base mb-0.5">3</div>
-<div class="text-gray-600 text-xs">Requires Replacement</div>
-</div>
-<div class="text-center p-2.5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg border border-blue-200/50 shadow-sm">
-<div class="font-bold text-blue-700 text-base mb-0.5">1</div>
-<div class="text-gray-600 text-xs">Server Infrastructure</div>
-</div>
-</div>
-<div class="mt-3 p-3.5 bg-gradient-to-r from-red-50 to-red-100 rounded-lg border-l-4 border-red-500 shadow-sm">
-<div class="text-xs font-bold text-red-800 mb-1.5 flex items-center">
-<i class="fas fa-exclamation-triangle mr-2 text-red-600"></i>Critical Infrastructure Alert
-</div>
-<div class="text-xs text-red-700 leading-relaxed">Server UPS unit (Fujitsu Primergy RX1330 M3) is experiencing critical failure and requires immediate replacement to prevent potential data loss and service interruption.</div>
-</div>
-</div>
-<!-- CCTV System -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#2F3E46] to-[#1A2328] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-video"></i>
-</div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">CCTV System</h3>
-</div>
-<div class="grid grid-cols-2 gap-3 mb-2">
-<div class="stat-box bg-[#2F3E46]/10">
-<div class="text-2xl font-bold text-[#2F3E46]">1</div>
-<div class="text-xs text-[#2F3E46]">NVR/DVR</div>
-</div>
-<div class="stat-box bg-[#2F3E46]/10">
-<div class="text-2xl font-bold text-[#2F3E46]">8</div>
-<div class="text-xs text-[#2F3E46]">IP Cameras</div>
-</div>
-</div>
-<div class="grid grid-cols-1 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">9</div>
-<div class="text-gray-600 text-xs">Total Operational</div>
-</div>
-</div>
-</div>
-<!-- Network Equipment -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#F4A261] to-[#E76F51] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
 <i class="fas fa-network-wired"></i>
 </div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Network Equipment</h3>
+<span>Network Infrastructure Reinforcement</span>
 </div>
-<div class="grid grid-cols-3 gap-2 mb-2">
-<div class="stat-box bg-[#F4A261]/10">
-<div class="text-xl font-bold text-[#F4A261]">1</div>
-<div class="text-xs text-[#2F3E46]">Load Balancer</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#006D77] text-white">
+<i class="fas fa-envelope"></i>
 </div>
-<div class="stat-box bg-[#F4A261]/10">
-<div class="text-xl font-bold text-[#F4A261]">1</div>
-<div class="text-xs text-[#2F3E46]">PoE Switch</div>
-</div>
-<div class="stat-box bg-[#F4A261]/10">
-<div class="text-xl font-bold text-[#F4A261]">1</div>
-<div class="text-xs text-[#2F3E46]">Non-PoE Switch</div>
+<span>Email Migration to Corporate Email (Microsoft 365) - Required for Yondo CRM with User Training</span>
 </div>
 </div>
-<div class="grid grid-cols-1 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">3</div>
-<div class="text-gray-600 text-xs">Total Operational</div>
+<div class="mt-auto pt-3 border-t border-[#006D77]/20 flex-shrink-0">
+<div class="text-[#006D77] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#006D77]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Critical risk mitigation and immediate performance improvements</div>
+</div>
+</div>
+<!-- Phase 2 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#F4A261] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">2</span>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 2: Systematic Upgrade</h2>
+</div>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-check-circle"></i>
+</div>
+<span>Regularize Software Licenses (16 systems)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-desktop"></i>
+</div>
+<span>Complete Remaining PC Upgrades (RAM &amp; SSD)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-tv"></i>
+</div>
+<span>Upgrade Monitors (18 units) - Existing monitors can be used as second screens</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-print"></i>
+</div>
+<span>Replace Problematic Printers (2 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-plug"></i>
+</div>
+<span>Deploy UPS/AVR Units for General Staff (16 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-project-diagram"></i>
+</div>
+<span>Network Cabling and Labeling</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-wifi"></i>
+</div>
+<span>Consolidate Internet Service Providers - Reduce to 2-3 ISPs for reliable connectivity</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#F4A261] text-white">
+<i class="fas fa-phone"></i>
+</div>
+<span>Optimize Landline Services - Retain only frequently used client contact lines</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-[#F4A261]/20 flex-shrink-0">
+<div class="text-[#F4A261] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#F4A261]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Medium-priority items with significant user impact</div>
+</div>
+</div>
+<!-- Phase 3 -->
+<div class="phase-card p-5 flex flex-col">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="w-10 h-10 bg-[#EE6C4D] rounded-full flex items-center justify-center text-white mr-3" style="font-size: clamp(14px, 1.5vw, 18px);">
+<span class="font-bold">3</span>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Phase 3: Strategic Modernization</h2>
+</div>
+<div class="phase-content text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 13px);">
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-desktop"></i>
+</div>
+<span>Procure New Computer Systems (14 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-video"></i>
+</div>
+<span>Install Graphics Cards (16 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-laptop"></i>
+</div>
+<span>Replace Laptop Batteries (4 units)</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-calendar-alt"></i>
+</div>
+<span>Establish Preventive Maintenance Schedule</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-cloud-upload-alt"></i>
+</div>
+<span>Cloud Migration of Physical Server</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-phone-alt"></i>
+</div>
+<span>Cloud PBX, SIP Trunking, VoIP</span>
+</div>
+<div class="activity-item">
+<div class="activity-icon bg-[#EE6C4D] text-white">
+<i class="fas fa-globe"></i>
+</div>
+<span>Website Development for Condominiums</span>
+</div>
+</div>
+<div class="mt-auto pt-3 border-t border-[#EE6C4D]/20 flex-shrink-0">
+<div class="text-[#EE6C4D] font-semibold mb-1" style="font-size: clamp(10px, 1.1vw, 12px);">Priority Focus:</div>
+<div class="text-[#EE6C4D]" style="font-size: clamp(10px, 1.1vw, 12px); line-height: 1.4;">Long-term modernization and sustainability</div>
 </div>
 </div>
 </div>
-<!-- Server & Data Backup -->
-<div class="inventory-card p-4">
-<div class="flex items-center mb-3">
-<div class="w-12 h-12 bg-gradient-to-br from-[#EE6C4D] to-[#D45A3A] rounded-xl flex items-center justify-center text-white mr-3 shadow-md">
-<i class="fas fa-server"></i>
+<!-- Quarterly Budget Summary -->
+<div class="mt-2 flex-shrink-0">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+<!-- Q1 Budget Summary -->
+<div class="budget-card p-2" style="background: linear-gradient(135deg, rgba(0, 109, 119, 0.1) 0%, rgba(0, 109, 119, 0.05) 100%); border-left: 2px solid #006D77;">
+<div class="flex items-center justify-between mb-0.5">
+<h3 class="font-bold text-[#006D77]" style="font-size: clamp(9px, 1vw, 12px);">Q1 2026</h3>
+<div class="w-1.5 h-1.5 rounded-full bg-[#006D77]"></div>
 </div>
-<h3 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 18px);">Server & Data Backup</h3>
+<div class="text-sm font-bold text-[#2F3E46]" style="font-size: clamp(11px, 1.1vw, 14px);">₱632,997</div>
+<div class="text-xs text-[#2F3E46] opacity-70" style="font-size: clamp(7px, 0.75vw, 9px);">₱554,580 + ₱78,417</div>
 </div>
-<div class="grid grid-cols-2 gap-3 mb-2">
-<div class="stat-box bg-[#EE6C4D]/10">
-<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
-<div class="text-xs text-[#2F3E46]">Rack Server</div>
+<!-- Q2 Budget Summary -->
+<div class="budget-card p-2" style="background: linear-gradient(135deg, rgba(244, 162, 97, 0.1) 0%, rgba(244, 162, 97, 0.05) 100%); border-left: 2px solid #F4A261;">
+<div class="flex items-center justify-between mb-0.5">
+<h3 class="font-bold text-[#F4A261]" style="font-size: clamp(9px, 1vw, 12px);">Q2 2026</h3>
+<div class="w-1.5 h-1.5 rounded-full bg-[#F4A261]"></div>
 </div>
-<div class="stat-box bg-[#EE6C4D]/10">
-<div class="text-2xl font-bold text-[#EE6C4D]">1</div>
-<div class="text-xs text-[#2F3E46]">External Storage</div>
+<div class="text-sm font-bold text-[#2F3E46]" style="font-size: clamp(11px, 1.1vw, 14px);">₱351,836</div>
+<div class="text-xs text-[#2F3E46] opacity-70" style="font-size: clamp(7px, 0.75vw, 9px);">₱308,250 + ₱43,586</div>
+</div>
+<!-- Q3-Q4 Budget Summary -->
+<div class="budget-card p-2" style="background: linear-gradient(135deg, rgba(238, 108, 77, 0.1) 0%, rgba(238, 108, 77, 0.05) 100%); border-left: 2px solid #EE6C4D;">
+<div class="flex items-center justify-between mb-0.5">
+<h3 class="font-bold text-[#EE6C4D]" style="font-size: clamp(9px, 1vw, 12px);">Q3-Q4 2026</h3>
+<div class="w-1.5 h-1.5 rounded-full bg-[#EE6C4D]"></div>
+</div>
+<div class="text-sm font-bold text-[#2F3E46]" style="font-size: clamp(11px, 1.1vw, 14px);">₱629,597</div>
+<div class="text-xs text-[#2F3E46] opacity-70" style="font-size: clamp(7px, 0.75vw, 9px);">₱551,600 + ₱77,997</div>
 </div>
 </div>
-<div class="grid grid-cols-1 gap-2 text-xs">
-<div class="text-center p-2.5 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border border-green-200/50 shadow-sm">
-<div class="font-bold text-green-700 text-base mb-0.5">2</div>
-<div class="text-gray-600 text-xs">Total Operational</div>
-</div>
-</div>
-</div>
-<!-- Summary Table -->
-<div class="inventory-card p-4">
-<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Asset Inventory Overview</h3>
-<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
-<table style="width: 100%;">
-<thead>
-<tr>
-<th>Asset Category</th>
-<th>Total Assets</th>
-<th>Operational</th>
-<th>Requiring Attention</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Laptops</strong></td>
-<td>10</td>
-<td>9</td>
-<td>1</td>
-</tr>
-<tr>
-<td><strong>Desktops</strong></td>
-<td>24</td>
-<td>20</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>Printers</strong></td>
-<td>17</td>
-<td>15</td>
-<td>2</td>
-</tr>
-<tr>
-<td><strong>Monitors</strong></td>
-<td>25</td>
-<td>23</td>
-<td>2</td>
-</tr>
-<tr>
-<td><strong>AVR/UPS</strong></td>
-<td>13</td>
-<td>9</td>
-<td>4</td>
-</tr>
-<tr>
-<td><strong>WiFi Access Points</strong></td>
-<td>2</td>
-<td>2</td>
-<td>0</td>
-</tr>
-<tr>
-<td><strong>CCTV System</strong></td>
-<td>9</td>
-<td>9</td>
-<td>0</td>
-</tr>
-<tr>
-<td><strong>Network Equipment</strong></td>
-<td>3</td>
-<td>3</td>
-<td>0</td>
-</tr>
-<tr>
-<td><strong>Server</strong></td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr>
-<td><strong>Data Backup (External Storage)</strong></td>
-<td>1</td>
-<td>1</td>
-<td>0</td>
-</tr>
-<tr style="background-color: #006D77; color: white; font-weight: bold;">
-<td><strong>TOTAL</strong></td>
-<td><strong>105</strong></td>
-<td><strong>92</strong></td>
-<td><strong>13</strong></td>
-</tr>
-</tbody>
-</table>
-</div>
+<div class="mt-1.5 text-center">
+<div class="inline-block budget-card p-1.5" style="background: rgba(47, 62, 70, 0.05);">
+<div class="text-xs text-[#2F3E46] opacity-70 mb-0.5" style="font-size: clamp(8px, 0.9vw, 10px);">Total Budget 2026</div>
+<div class="text-sm font-bold text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 16px);">₱1,614,430</div>
 </div>
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px);">
-<p>Source: IT Equipment Audit Report, November 2025 | Audit Scope: 28-30 users</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex justify-between items-center" style="font-size: clamp(10px, 1.2vw, 14px);">
+<p>Based on IT Strategic Plan, 2026</p>
+<p>Implementation prioritizes critical risks while maximizing operational continuity</p>
 </div>
 </div>
 <!-- Navigation -->
 <div class="nav-container">
+    <button class="nav-button home-button" onclick="goToPage(1)" title="Go to first page (Home key)">
+        <i class="fas fa-home"></i> Home
+    </button>
     <button class="nav-button" onclick="goToPage(9)">
         <i class="fas fa-chevron-left"></i> Previous
     </button>
-    <div class="page-indicator">Page 10 of 11</div>
+    <div class="page-indicator" onclick="togglePageSelector()" id="pageIndicator">
+        Page 10 of 11
+        <div class="page-selector" id="pageSelector">
+            <div class="page-option" onclick="goToPage(1); event.stopPropagation();">Page 1</div>
+            <div class="page-option" onclick="goToPage(2); event.stopPropagation();">Page 2</div>
+            <div class="page-option" onclick="goToPage(3); event.stopPropagation();">Page 3</div>
+            <div class="page-option" onclick="goToPage(4); event.stopPropagation();">Page 4</div>
+            <div class="page-option" onclick="goToPage(5); event.stopPropagation();">Page 5</div>
+            <div class="page-option" onclick="goToPage(6); event.stopPropagation();">Page 6</div>
+            <div class="page-option" onclick="goToPage(7); event.stopPropagation();">Page 7</div>
+            <div class="page-option" onclick="goToPage(8); event.stopPropagation();">Page 8</div>
+            <div class="page-option" onclick="goToPage(9); event.stopPropagation();">Page 9</div>
+            <div class="page-option active" onclick="goToPage(10); event.stopPropagation();">Page 10</div>
+            <div class="page-option" onclick="goToPage(11); event.stopPropagation();">Page 11</div>
+        </div>
+    </div>
     <button class="nav-button" onclick="goToPage(11)">
         Next <i class="fas fa-chevron-right"></i>
     </button>
@@ -813,6 +739,20 @@ html {
             }, 600);
         }
     }
+    function togglePageSelector() {
+        const selector = document.getElementById('pageSelector');
+        selector.classList.toggle('show');
+    }
+    
+    // Close page selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const indicator = document.getElementById('pageIndicator');
+        const selector = document.getElementById('pageSelector');
+        if (!indicator.contains(e.target)) {
+            selector.classList.remove('show');
+        }
+    });
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             e.preventDefault();
@@ -821,9 +761,13 @@ html {
             } else if (e.key === 'ArrowRight') {
                 goToPage(11);
             }
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToPage(1);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToPage(11);
         }
     });
 </script>
 </body></html>
-
-

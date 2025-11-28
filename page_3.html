@@ -1,10 +1,9 @@
 <!DOCTYPE html><html lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Key Performance Issues</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Roboto:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<title>Network Infrastructure & Server Details</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
-<script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script><style>
         * {
             box-sizing: border-box;
@@ -187,12 +186,15 @@
             .gap-4 {
                 gap: clamp(8px, 2vw, 16px) !important;
             }
+            .overflow-x-auto {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            .overflow-x-auto table {
+                min-width: 600px !important;
+            }
             table {
                 font-size: clamp(9px, 2.5vw, 12px) !important;
-                display: block;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                white-space: nowrap;
             }
             table thead, table tbody {
                 display: table;
@@ -223,6 +225,78 @@
             }
             table {
                 font-size: clamp(8px, 2vw, 11px) !important;
+            }
+            /* Footer visibility on mobile */
+            .slide {
+                padding-bottom: clamp(60px, 12vw, 80px) !important; /* Space for nav + footer */
+                display: flex !important;
+                flex-direction: column !important;
+            }
+            div[class*="mt-auto"] {
+                margin-top: clamp(16px, 4vw, 24px) !important;
+                padding-top: clamp(8px, 2vw, 12px) !important;
+                padding-bottom: clamp(8px, 2vw, 12px) !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
+                opacity: 1 !important; /* Ensure visibility */
+                display: block !important;
+                visibility: visible !important;
+                position: relative !important;
+                z-index: 1 !important;
+                width: 100% !important;
+            }
+            div[class*="mt-auto"] p {
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                font-size: clamp(11px, 3vw, 13px) !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 10px !important;
+            }
+            h1 {
+                font-size: clamp(18px, 7vw, 24px) !important;
+                line-height: 1.2;
+            }
+            h2 {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-4xl {
+                font-size: clamp(20px, 8vw, 28px) !important;
+            }
+            .text-3xl {
+                font-size: clamp(18px, 7vw, 24px) !important;
+            }
+            .text-2xl {
+                font-size: clamp(16px, 6vw, 20px) !important;
+            }
+            .text-xl {
+                font-size: clamp(14px, 5vw, 18px) !important;
+            }
+            .nav-container {
+                flex-wrap: nowrap;
+                width: auto;
+                max-width: calc(100% - 16px);
+                bottom: 8px;
+                padding: 5px 8px;
+                gap: 4px;
+            }
+            .nav-button {
+                padding: 5px 8px;
+                font-size: 0.7rem;
+                min-height: 32px;
+                min-width: auto;
+                flex: 0 0 auto;
+            }
+            .page-indicator {
+                font-size: 0.7rem;
+                padding: 0 4px;
+                white-space: nowrap;
+            }
+            .budget-card, .category-card {
+                padding: 12px !important;
+            }
             /* Footer visibility on small mobile */
             div[class*="mt-auto"] {
                 font-size: clamp(10px, 2.5vw, 12px) !important;
@@ -244,53 +318,70 @@
                 margin-bottom: 8px !important;
             }
         }
-        .nav-container {
-                bottom: 12px;
-                padding: 6px 16px;
-                gap: 6px;
-            }
-            .nav-button {
-                padding: 8px 12px;
-                font-size: 0.85rem;
-                min-height: 44px; /* Better touch target */
-            }
-            .page-indicator {
-                font-size: 0.85rem;
-                padding: 0 10px;
-            }
-        }
-        @media (max-width: 480px) {
-            .slide {
-                padding: 12px !important;
-            }
-            h1 {
-                font-size: clamp(20px, 6vw, 28px) !important;
-            }
-            .nav-container {
-                flex-wrap: wrap;
-                width: calc(100% - 24px);
-                max-width: 320px;
-            }
-        }
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
-        .issue-card {
+        .info-card {
             background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+        }
+        .critical-alert {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid #dc2626;
+            border-radius: 12px;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            overflow: hidden;
         }
-        .issue-card:hover {
-            transform: translateY(-5px);
+        th, td {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: clamp(10px, 1.1vw, 13px);
         }
-        .icon-container {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        th {
+            background-color: #006D77;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: clamp(9px, 1vw, 12px);
+        }
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgba(0, 109, 119, 0.05);
+        }
+        tbody tr:hover {
+            background-color: rgba(0, 109, 119, 0.08);
+        }
+        tbody td {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        /* Desktop: Remove overflow and min-width constraints */
+        @media (min-width: 769px) {
+            .overflow-x-auto {
+                overflow-x: visible !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            .overflow-x-auto table {
+                min-width: auto !important;
+                width: 100% !important;
+            }
         }
     
 html {
@@ -338,6 +429,53 @@ html {
             font-weight: 500;
             font-size: 0.75rem;
             padding: 0 8px;
+            cursor: pointer;
+            position: relative;
+        }
+        .page-indicator:hover {
+            text-decoration: underline;
+        }
+        .page-selector {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            background: rgba(47, 62, 70, 0.95);
+            border-radius: 12px;
+            padding: 8px;
+            min-width: 120px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .page-selector.show {
+            display: flex;
+        }
+        .page-option {
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .page-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .page-option.active {
+            background: rgba(244, 162, 97, 0.3);
+            font-weight: 600;
+        }
+        .home-button {
+            background: rgba(244, 162, 97, 0.3);
+        }
+        .home-button:hover {
+            background: rgba(244, 162, 97, 0.5);
         }
 </style>
 </head>
@@ -345,91 +483,204 @@ html {
 <div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
 <!-- Header -->
 <div class="mb-4 flex-shrink-0">
-<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">Key Performance Issues</h1>
+<h1 class="font-bold text-[#2F3E46] mb-2" style="font-size: clamp(24px, 3vw, 36px);">Network Infrastructure & Server Details</h1>
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 min-h-0 overflow-hidden">
-<!-- Left Column: Issues List -->
-<div class="space-y-4 overflow-y-auto pr-2">
-<!-- Issue 1: Insufficient RAM -->
-<div class="issue-card p-4 flex items-start">
-<div class="icon-container bg-[#006D77] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-memory" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
+<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4 min-h-0 overflow-hidden">
+<!-- Left Column: Network Equipment -->
+<div class="space-y-3 min-h-0 overflow-y-auto">
+<!-- Critical Server Alert -->
+<div class="info-card critical-alert p-4">
+<div class="flex items-center mb-3">
+<i class="fas fa-exclamation-triangle text-red-600 mr-2" style="font-size: clamp(18px, 2vw, 24px);"></i>
+<h3 class="font-bold text-red-800" style="font-size: clamp(14px, 1.6vw, 18px);">Critical Infrastructure Alert: Server UPS Failure</h3>
 </div>
-<div class="flex-1">
-<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">Insufficient RAM (17 units)</h2>
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">17 units are operating with only 8GB RAM, causing noticeable lag, application crashes, and severely limiting multitasking capabilities. Modern applications require 16GB for optimal performance.</p>
-<p class="text-[#006D77] text-xs font-semibold">Impact: Reduced productivity, increased wait times, inability to run multiple applications simultaneously</p>
+<p class="text-sm text-red-700 mb-2 leading-relaxed">The APC UPS unit protecting the <strong>Fujitsu Primergy RX1330 M3 Rack Server</strong> is experiencing critical failure and requires <strong>IMMEDIATE replacement</strong> to prevent potential data loss and service interruption.</p>
+<div class="mt-3 p-2.5 bg-red-50 rounded border border-red-200">
+<p class="text-xs text-red-800 font-semibold mb-1">Recommended Specification:</p>
+<p class="text-xs text-red-700">2200 VA or 3000 VA UPS unit with sufficient runtime for graceful server shutdown during extended power outages</p>
 </div>
-</div>
-<!-- Issue 2: Outdated Storage -->
-<div class="issue-card p-4 flex items-start">
-<div class="icon-container bg-[#006D77] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-hdd" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
-</div>
-<div class="flex-1">
-<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">Outdated Storage (14 units)</h2>
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">14 units utilize traditional Hard Disk Drives (HDDs) or low-capacity SSDs, resulting in slow system boot times (5-10 minutes), delayed application loading, and poor file access speeds.</p>
-<p class="text-[#006D77] text-xs font-semibold">Impact: Extended boot times, slow file operations, delayed application responsiveness</p>
+<div class="mt-2 p-2 bg-white/50 rounded">
+<p class="text-xs text-red-700"><strong>Priority:</strong> Highest - Address in Phase 1 (Q1 2026) to eliminate single point of failure</p>
 </div>
 </div>
-<!-- Issue 3: System Instability -->
-<div class="issue-card p-4 flex items-start">
-<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-exclamation-triangle" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
+<!-- Network Equipment -->
+<div class="info-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Core Network Infrastructure</h3>
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Component</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Load Balancer</strong></td>
+<td>Ruijie Reyee RG-EG310GH-E 10-Port High-Performance Cloud Managed Office Router</td>
+</tr>
+<tr>
+<td><strong>PoE Switch</strong></td>
+<td>Ruijie Reyee RG-NBS3100-8GT2SFP-P-V2 8-Port Gigabit Layer 2 Cloud Managed PoE Switch</td>
+</tr>
+<tr>
+<td><strong>Non-PoE Switch</strong></td>
+<td>Ruijie Reyee RG-NBS5100-24GT4SFP 24-Port Gigabit Layer 3 Non-PoE Switch</td>
+</tr>
+<tr>
+<td><strong>WiFi Access Points</strong></td>
+<td>2 x Ruijie Reyee RG-RAP2260 Wi-Fi 6 AX3000 High Performance Multi-G Ceiling Access Point</td>
+</tr>
+<tr>
+<td><strong>Patch Panel</strong></td>
+<td>CAT 5E Patch Panel (18 RJ45 Ports + 6 RJ11 Ports) - Fully Utilized</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="flex-1">
-<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">System Instability &amp; Freezes (6 units)</h2>
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">6 units experience frequent freezes and system instability, often requiring forced restarts. Unlicensed software on 16 systems contributes to crashes, compatibility issues, and security vulnerabilities.</p>
-<p class="text-[#EE6C4D] text-xs font-semibold">Impact: Data loss risk, work interruption, potential security breaches, compliance violations</p>
+<div class="mt-3 p-2.5 bg-blue-50 rounded border border-blue-200">
+<p class="text-xs text-blue-800"><strong>Status:</strong> Core network equipment operational. Patch panel at capacity - expansion required for future growth.</p>
 </div>
 </div>
-<!-- Issue 4: Network Connectivity -->
-<div class="issue-card p-4 flex items-start">
-<div class="icon-container bg-[#F4A261] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
-<i class="fas fa-wifi" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
+<!-- Internet Services -->
+<div class="info-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Internet Service Providers & Communications</h3>
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Provider/System</th>
+<th>Specification</th>
+<th>Connection Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PLDT</strong></td>
+<td>200 Mbps + 1 Phone Line</td>
+<td>Fiber Optic</td>
+</tr>
+<tr>
+<td><strong>PLDT</strong></td>
+<td>100 Mbps + 1 Phone Line</td>
+<td>Fiber Optic</td>
+</tr>
+<tr>
+<td><strong>PLDT</strong></td>
+<td>50 Mbps + 2 Phone Lines</td>
+<td>Fiber Optic</td>
+</tr>
+<tr>
+<td><strong>PT&T</strong></td>
+<td>50 Mbps</td>
+<td>Fiber Optic</td>
+</tr>
+<tr>
+<td><strong>PBX System</strong></td>
+<td>Panasonic KX-TES824 (Analog)</td>
+<td>Analog/Copper-wire</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="flex-1">
-<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">Network Connectivity Issues (18 users)</h2>
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">18 users affected by unstable network connections, with 3-4 users sharing single network ports causing bandwidth competition and intermittent connectivity problems.</p>
-<p class="text-[#F4A261] text-xs font-semibold">Impact: Interrupted workflows, slow data transfers, unreliable internet access</p>
+<div class="mt-3 p-2.5 bg-amber-50 rounded border border-amber-200">
+<p class="text-xs text-amber-800 font-semibold mb-1">Optimization Recommendation (Phase 2):</p>
+<p class="text-xs text-amber-700">Consolidate to 2-3 primary ISPs for improved reliability and cost optimization. Retain only frequently used client contact landlines.</p>
 </div>
 </div>
 </div>
-<!-- Right Column: Data Visualization and Impact -->
-<div class="flex flex-col min-h-0 overflow-y-auto">
-<!-- Chart -->
-<div class="bg-white p-4 rounded-lg shadow-md mb-4 flex-shrink-0">
-<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Affected Units by Performance Issue</h3>
-<div class="w-full" id="performance-chart" style="height: clamp(180px, 25vh, 250px);"></div>
+<!-- Right Column: Server & Security -->
+<div class="space-y-3 min-h-0 overflow-y-auto">
+<!-- Server Details -->
+<div class="info-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Server Infrastructure & Data Backup</h3>
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Component</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rack Server</strong></td>
+<td>Fujitsu Primergy RX1330 M3 Rack Server</td>
+</tr>
+<tr>
+<td><strong>Server Monitor</strong></td>
+<td>ViewSonic VA1903a 19" 1366x768 Home and Office Monitor</td>
+</tr>
+<tr>
+<td><strong>External Storage</strong></td>
+<td>Seagate Backup Plus Hub 4TB External HDD (Connected to Rack Server)</td>
+</tr>
+</tbody>
+</table>
 </div>
-<!-- Impact on Productivity -->
-<div class="bg-white p-4 rounded-lg shadow-md flex-shrink-0">
-<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Cumulative Impact on Business</h3>
+<div class="mt-3 p-2.5 bg-purple-50 rounded border border-purple-200">
+<p class="text-xs text-purple-800 font-semibold mb-1">Modernization Plan (Phase 3):</p>
+<p class="text-xs text-purple-700">Cloud migration of physical server to cloud infrastructure for improved scalability, disaster recovery, and reduced maintenance overhead.</p>
+</div>
+</div>
+<!-- CCTV System -->
+<div class="info-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Security & Surveillance System</h3>
+<div class="overflow-x-auto -mx-4 px-4" style="-webkit-overflow-scrolling: touch;">
+<table style="width: 100%;">
+<thead>
+<tr>
+<th>Component</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Network Video Recorder (NVR)</strong></td>
+<td>HIKVISION DS-7616NI-Q2/16P Network Video Recorder</td>
+</tr>
+<tr>
+<td><strong>IP Cameras</strong></td>
+<td>8 x HIKVISION IP Cameras</td>
+</tr>
+<tr>
+<td><strong>CCTV Monitor</strong></td>
+<td>Philips 223V5LHSV2/71 21.5" 1920x1080 LCD Monitor</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-3 p-2.5 bg-green-50 rounded border border-green-200">
+<p class="text-xs text-green-800"><strong>Status:</strong> All surveillance equipment operational and providing comprehensive security coverage.</p>
+</div>
+</div>
+<!-- Network Issues -->
+<div class="info-card p-4">
+<h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Network Infrastructure Challenges & Remediation</h3>
 <div class="space-y-3">
-<div style="border-left: 3px solid #006D77; padding-left: 12px;">
-<h4 class="font-semibold text-[#006D77] mb-1" style="font-size: clamp(12px, 1.3vw, 16px);">Productivity Loss</h4>
-<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
-<li>System lag and frequent pauses (estimated 15-20% productivity loss)</li>
-<li>Limited multitasking capabilities affecting workflow efficiency</li>
-<li>Slow application loading times (2-5 minutes per application)</li>
+<div class="p-2.5 bg-red-50 rounded border-l-4 border-red-400">
+<p class="text-xs text-red-800 font-semibold mb-1">Critical Issues:</p>
+<ul class="list-disc ml-4 text-red-700" style="font-size: clamp(10px, 1.1vw, 13px);">
+<li class="mb-1">18 units affected by network connectivity issues (15 users require immediate check and fix)</li>
+<li class="mb-1">Network cables unlabeled, significantly increasing troubleshooting time and maintenance overhead</li>
 </ul>
 </div>
-<div style="border-left: 3px solid #EE6C4D; padding-left: 12px;">
-<h4 class="font-semibold text-[#EE6C4D] mb-1" style="font-size: clamp(12px, 1.3vw, 16px);">Risk &amp; Compliance</h4>
-<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
-<li>Unlicensed software exposing company to legal penalties</li>
-<li>System instability risking data loss and work interruption</li>
-<li>Security vulnerabilities from outdated and unpatched systems</li>
+<div class="p-2.5 bg-amber-50 rounded border-l-4 border-amber-400">
+<p class="text-xs text-amber-800 font-semibold mb-1">Infrastructure Limitations:</p>
+<ul class="list-disc ml-4 text-amber-700" style="font-size: clamp(10px, 1.1vw, 13px);">
+<li class="mb-1">Shared network ports (3-4 users per port) causing bandwidth competition and performance degradation</li>
+<li class="mb-1">Patch panel fully utilized (18 RJ45 + 6 RJ11 ports) - no capacity for expansion</li>
+<li class="mb-1">Lack of dedicated LAN ports for individual workstations</li>
 </ul>
 </div>
-<div style="border-left: 3px solid #F4A261; padding-left: 12px;">
-<h4 class="font-semibold text-[#F4A261] mb-1" style="font-size: clamp(12px, 1.3vw, 16px);">Operational Costs</h4>
-<ul class="list-disc ml-4 text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 13px);">
-<li>Increased IT support time troubleshooting issues</li>
-<li>Employee frustration leading to decreased morale</li>
-<li>Delayed project completion due to technical limitations</li>
+<div class="p-2.5 bg-blue-50 rounded border-l-4 border-blue-400">
+<p class="text-xs text-blue-800 font-semibold mb-1">Planned Remediation (Phase 2):</p>
+<ul class="list-disc ml-4 text-blue-700" style="font-size: clamp(10px, 1.1vw, 13px);">
+<li class="mb-1">Comprehensive network cabling and labeling initiative</li>
+<li class="mb-1">Installation of additional LAN switches/ports for dedicated workstation connectivity</li>
+<li class="mb-1">Network infrastructure reinforcement to eliminate connectivity disruptions</li>
 </ul>
 </div>
 </div>
@@ -437,117 +688,34 @@ html {
 </div>
 </div>
 <!-- Footer -->
-<div class="mt-auto pt-2 text-right text-[#2F3E46] opacity-70" style="font-size: clamp(10px, 1.2vw, 14px);">
-<p>IT Equipment Audit Report, November 2025</p>
+<div class="mt-auto pt-2 text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px);">
+<p>Source: IT Equipment Audit Report, November 2025 | Audit Scope: 28-30 users</p>
 </div>
 </div>
-<script>
-        // Performance Issues Chart
-        const performanceData = [
-            {label: "Insufficient RAM", value: 17, color: "#006D77"},
-            {label: "Outdated Storage", value: 14, color: "#006D77"},
-            {label: "Unlicensed Software", value: 16, color: "#EE6C4D"},
-            {label: "System Instability", value: 6, color: "#EE6C4D"},
-            {label: "Network Issues", value: 18, color: "#F4A261"}
-        ];
-        
-        const chartContainer = document.getElementById("performance-chart");
-        const chartWidth = chartContainer.offsetWidth || 400;
-        const chartHeight = chartContainer.offsetHeight || 200;
-        
-        const chart = d3.select("#performance-chart")
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(chartWidth, 400)} ${Math.max(chartHeight, 200)}`)
-            .attr("preserveAspectRatio", "xMidYMid meet");
-            
-        const svgWidth = Math.max(chartWidth, 400);
-        const svgHeight = Math.max(chartHeight, 200);
-        const margin = { top: 30, right: 20, bottom: 20, left: 100 };
-        const chartWidthInner = svgWidth - margin.left - margin.right;
-        const chartHeightInner = svgHeight - margin.top - margin.bottom;
-        
-        const x = d3.scaleLinear()
-            .domain([0, 20])
-            .range([0, chartWidthInner]);
-            
-        // Update domain to accommodate all values including Network Issues (18)
-        const maxValue = d3.max(performanceData, d => d.value);
-        x.domain([0, Math.max(20, maxValue + 2)]);
-            
-        // Note: System Instability affects 6 units, Unlicensed Software affects 16 units (both impact performance)
-            
-        const y = d3.scaleBand()
-            .domain(performanceData.map(d => d.label))
-            .range([0, chartHeightInner])
-            .padding(0.3);
-            
-        const chartGroup = chart.append("g")
-            .attr("transform", `translate(${margin.left}, ${margin.top})`);
-            
-        chartGroup.selectAll("rect")
-            .data(performanceData)
-            .enter()
-            .append("rect")
-            .attr("x", 0)
-            .attr("y", d => y(d.label))
-            .attr("width", 0)
-            .attr("height", y.bandwidth())
-            .attr("fill", d => d.color)
-            .transition()
-            .duration(1200)
-            .delay((d, i) => i * 150)
-            .ease(d3.easeCubicOut)
-            .attr("width", d => x(d.value));
-            
-        chartGroup.selectAll(".value")
-            .data(performanceData)
-            .enter()
-            .append("text")
-            .attr("class", "value")
-            .attr("x", d => x(d.value) + 5)
-            .attr("y", d => y(d.label) + y.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.value)
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", "12px")
-            .style("opacity", 0)
-            .transition()
-            .delay((d, i) => i * 150 + 1000)
-            .duration(600)
-            .style("opacity", 1);
-            
-        chartGroup.selectAll(".label")
-            .data(performanceData)
-            .enter()
-            .append("text")
-            .attr("class", "label")
-            .attr("x", -5)
-            .attr("y", d => y(d.label) + y.bandwidth() / 2)
-            .attr("dy", "0.35em")
-            .text(d => d.label)
-            .attr("text-anchor", "end")
-            .attr("fill", "#2F3E46")
-            .attr("font-size", "11px");
-            
-        // Add a title for the chart
-        chart.append("text")
-            .attr("x", svgWidth / 2)
-            .attr("y", 20)
-            .attr("text-anchor", "middle")
-            .attr("fill", "#2F3E46")
-            .attr("font-weight", "bold")
-            .attr("font-size", "12px")
-            .text("Number of Units Affected");
-    </script>
 <!-- Navigation -->
 <div class="nav-container">
+    <button class="nav-button home-button" onclick="goToPage(1)" title="Go to first page (Home key)">
+        <i class="fas fa-home"></i> Home
+    </button>
     <button class="nav-button" onclick="goToPage(2)">
         <i class="fas fa-chevron-left"></i> Previous
     </button>
-    <div class="page-indicator">Page 3 of 11</div>
+    <div class="page-indicator" onclick="togglePageSelector()" id="pageIndicator">
+        Page 3 of 11
+        <div class="page-selector" id="pageSelector">
+            <div class="page-option" onclick="goToPage(1); event.stopPropagation();">Page 1</div>
+            <div class="page-option" onclick="goToPage(2); event.stopPropagation();">Page 2</div>
+            <div class="page-option active" onclick="goToPage(3); event.stopPropagation();">Page 3</div>
+            <div class="page-option" onclick="goToPage(4); event.stopPropagation();">Page 4</div>
+            <div class="page-option" onclick="goToPage(5); event.stopPropagation();">Page 5</div>
+            <div class="page-option" onclick="goToPage(6); event.stopPropagation();">Page 6</div>
+            <div class="page-option" onclick="goToPage(7); event.stopPropagation();">Page 7</div>
+            <div class="page-option" onclick="goToPage(8); event.stopPropagation();">Page 8</div>
+            <div class="page-option" onclick="goToPage(9); event.stopPropagation();">Page 9</div>
+            <div class="page-option" onclick="goToPage(10); event.stopPropagation();">Page 10</div>
+            <div class="page-option" onclick="goToPage(11); event.stopPropagation();">Page 11</div>
+        </div>
+    </div>
     <button class="nav-button" onclick="goToPage(4)">
         Next <i class="fas fa-chevron-right"></i>
     </button>
@@ -570,7 +738,7 @@ html {
     // Clear direction after animation
     setTimeout(() => {
         slide.classList.remove('slide-in-from-left', 'slide-in-from-right');
-    }, 700);
+    }, 600);
     
     function goToPage(pageNum) {
         if (pageNum >= 1 && pageNum <= 11 && pageNum !== currentPage) {
@@ -587,9 +755,23 @@ html {
             
             setTimeout(() => {
                 window.location.href = `page_${pageNum}.html`;
-            }, 700);
+            }, 600);
         }
     }
+    function togglePageSelector() {
+        const selector = document.getElementById('pageSelector');
+        selector.classList.toggle('show');
+    }
+    
+    // Close page selector when clicking outside
+    document.addEventListener('click', function(e) {
+        const indicator = document.getElementById('pageIndicator');
+        const selector = document.getElementById('pageSelector');
+        if (!indicator.contains(e.target)) {
+            selector.classList.remove('show');
+        }
+    });
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
             e.preventDefault();
@@ -598,7 +780,14 @@ html {
             } else if (e.key === 'ArrowRight') {
                 goToPage(4);
             }
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            goToPage(1);
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            goToPage(11);
         }
     });
 </script>
 </body></html>
+
