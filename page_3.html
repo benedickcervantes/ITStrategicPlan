@@ -620,6 +620,34 @@ html {
 </tbody>
 </table>
 </div>
+<!-- Server Admin Password Alert -->
+<div class="mt-3 p-3 bg-red-50 rounded border border-red-200">
+<p class="text-xs text-red-800 font-semibold mb-2 flex items-center">
+<i class="fas fa-exclamation-circle mr-2"></i>Server Access & Status Check Limitation
+</p>
+<div class="text-xs text-red-700 space-y-2">
+<p class="mb-1"><strong>Critical Issue:</strong> The Fujitsu Primergy RX1330 M3 Rack Server requires an <strong>admin password</strong> to access the server management interface and check current operational status.</p>
+<div class="bg-white/60 p-2 rounded">
+<p class="text-red-900 font-medium mb-1">Current Status:</p>
+<ul class="list-disc ml-4 space-y-0.5 text-red-700">
+<li>Server status cannot be verified without admin credentials</li>
+<li>Unable to check: System health, resource utilization, storage capacity, backup status</li>
+<li>Unable to verify: Running services, security patches, performance metrics</li>
+<li>Management interface (iRMC/iLO) access requires admin password</li>
+</ul>
+</div>
+<div class="bg-white/60 p-2 rounded mt-2">
+<p class="text-red-900 font-medium mb-1">Required Action:</p>
+<ul class="list-disc ml-4 space-y-0.5 text-red-700">
+<li><strong>Obtain admin password</strong> from previous IT personnel who set up the server</li>
+<li>If password is unknown, contact Fujitsu support or perform password reset (may require physical access)</li>
+<li>Document and securely store admin credentials for future access</li>
+<li>Establish regular server health monitoring once access is restored</li>
+</ul>
+</div>
+<p class="mt-2 text-red-600 italic">⚠️ <strong>Management Note:</strong> Without server access, we cannot assess current server condition, verify backup integrity, or ensure optimal performance. This limits our ability to proactively address potential issues.</p>
+</div>
+</div>
 <div class="mt-3 p-2.5 bg-purple-50 rounded border border-purple-200">
 <p class="text-xs text-purple-800 font-semibold mb-1">Modernization Plan (Phase 3):</p>
 <p class="text-xs text-purple-700">Cloud migration of physical server to cloud infrastructure for improved scalability, disaster recovery, and reduced maintenance overhead.</p>
@@ -652,8 +680,81 @@ html {
 </tbody>
 </table>
 </div>
+<!-- NVR Access Information -->
+<div class="mt-3 p-3 bg-blue-50 rounded border border-blue-200">
+<p class="text-xs text-blue-800 font-semibold mb-2 flex items-center">
+<i class="fas fa-key mr-2"></i>NVR Dashboard Access Credentials
+</p>
+<div class="space-y-2 text-xs">
+<div class="bg-white/60 p-2 rounded">
+<p class="text-blue-900 font-medium mb-1">Web Access:</p>
+<p class="text-blue-700">URL: <code class="bg-blue-100 px-1.5 py-0.5 rounded">http://[NVR_IP_ADDRESS]</code> (Check router DHCP client list for IP)</p>
+</div>
+<div class="bg-white/60 p-2 rounded">
+<p class="text-blue-900 font-medium mb-1">Default Login (if not changed):</p>
+<p class="text-blue-700">Username: <code class="bg-blue-100 px-1.5 py-0.5 rounded">admin</code> | Password: <code class="bg-blue-100 px-1.5 py-0.5 rounded">12345</code></p>
+<p class="text-blue-600 text-xs mt-1 italic">⚠️ If password was changed, contact previous IT setup personnel or perform factory reset (will require reconfiguration)</p>
+</div>
+</div>
+</div>
+<!-- Storage Check Instructions -->
+<div class="mt-3 p-3 bg-amber-50 rounded border border-amber-200">
+<p class="text-xs text-amber-800 font-semibold mb-2 flex items-center">
+<i class="fas fa-hdd mr-2"></i>Storage Status Check
+</p>
+<div class="text-xs text-amber-700 space-y-1">
+<p class="mb-1"><strong>To check storage status:</strong></p>
+<ol class="list-decimal ml-4 space-y-0.5">
+<li>Login to NVR Dashboard (web or local interface)</li>
+<li>Navigate to: <strong>Configuration → Storage → Storage Management</strong></li>
+<li>Check: Total capacity, Used space, Available space, HDD health status</li>
+<li>Verify recording is active and storage allocation is proper</li>
+</ol>
+<p class="mt-2 text-amber-600"><strong>Recommendation:</strong> Keep storage usage below 80% for optimal performance</p>
+</div>
+</div>
+<!-- Cloud Monitoring Setup -->
+<div class="mt-3 p-3 bg-purple-50 rounded border border-purple-200">
+<p class="text-xs text-purple-800 font-semibold mb-2 flex items-center">
+<i class="fas fa-cloud mr-2"></i>Cloud-Based Monitoring Setup (Mobile/Web Access)
+</p>
+<div class="text-xs text-purple-700 space-y-2">
+<div>
+<p class="font-medium mb-1">Step 1: Enable Hik-Connect on NVR</p>
+<ol class="list-decimal ml-4 space-y-0.5">
+<li>Login to NVR Dashboard</li>
+<li>Go to: <strong>Configuration → Network → Advanced Settings → Platform Access</strong></li>
+<li>Enable: <strong>"Enable Hik-Connect"</strong></li>
+<li>Note the <strong>Verification Code</strong> displayed (required for mobile app)</li>
+</ol>
+</div>
+<div>
+<p class="font-medium mb-1">Step 2: Mobile App Setup</p>
+<ul class="list-disc ml-4 space-y-0.5">
+<li>Download <strong>Hik-Connect</strong> app (iOS App Store / Google Play Store)</li>
+<li>Create account or login to Hik-Connect</li>
+<li>Tap <strong>"Add Device"</strong> and scan QR code or enter:</li>
+<li class="ml-4">- Serial Number (from NVR label/device info)</li>
+<li class="ml-4">- Verification Code (from Step 1)</li>
+</ul>
+</div>
+<div>
+<p class="font-medium mb-1">Step 3: Web Access</p>
+<p>Visit: <code class="bg-purple-100 px-1.5 py-0.5 rounded">https://www.hik-connect.com</code> and login with same Hik-Connect account</p>
+</div>
+<div class="mt-2 p-2 bg-white/60 rounded">
+<p class="text-purple-800 font-medium text-xs">Features Available:</p>
+<ul class="list-disc ml-4 text-purple-700 text-xs mt-1 space-y-0.5">
+<li>Live camera viewing on mobile/web</li>
+<li>Playback recorded footage</li>
+<li>Motion detection alerts</li>
+<li>PTZ camera control (if applicable)</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="mt-3 p-2.5 bg-green-50 rounded border border-green-200">
-<p class="text-xs text-green-800"><strong>Status:</strong> All surveillance equipment operational and providing comprehensive security coverage.</p>
+<p class="text-xs text-green-800"><strong>Status:</strong> All surveillance equipment operational. Cloud monitoring can be enabled using steps above for remote access.</p>
 </div>
 </div>
 <!-- Network Issues -->

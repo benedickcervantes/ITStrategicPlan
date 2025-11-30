@@ -512,12 +512,20 @@ html {
 <p class="text-[#2F3E46] font-semibold mb-1">Network Infrastructure (18 users)</p>
 <p class="text-[#2F3E46] text-xs">Unlabeled cables, shared ports (3-4 users per port), and patch panel at full capacity causing bandwidth competition.</p>
 </div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">CCTV System Access Limitation</p>
+<p class="text-[#2F3E46] text-xs">HIKVISION NVR requires admin password to access dashboard. Cannot verify storage status, enable cloud monitoring, or check current operational status without credentials.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Microsoft 365 Email Rollout Incomplete (35 users)</p>
+<p class="text-[#2F3E46] text-xs">M365 email migration not yet completed for 35 users. Required for Yondo CRM integration and corporate email standardization. User training needed for full adoption.</p>
+</div>
 <div class="bg-[#F4A261]/10 p-2 rounded text-xs text-[#F4A261]">
-<strong>Impact:</strong> Interrupted workflows, slow data transfers, increased troubleshooting time
+<strong>Impact:</strong> Interrupted workflows, slow data transfers, increased troubleshooting time, limited security monitoring capabilities, incomplete CRM integration, fragmented communication systems
 </div>
 </div>
 <div class="mt-auto flex-shrink-0">
-<div class="w-full" id="infrastructure-chart" style="height: clamp(100px, 14vh, 120px);"></div>
+<div class="w-full" id="infrastructure-chart" style="height: clamp(140px, 18vh, 160px);"></div>
 </div>
 </div>
 </div>
@@ -679,30 +687,34 @@ html {
         const infrastructureData = [
             {label: "Display Issues", value: 18},
             {label: "Printer Problems", value: 2},
-            {label: "Network Issues", value: 18}
+            {label: "Network Issues", value: 18},
+            {label: "CCTV Access Limitation", value: 1},
+            {label: "M365 Email Incomplete", value: 35}
         ];
         
         // Note: Network Issues affect 18 units, with 15 users specifically needing check and fix
+        // CCTV: 1 NVR system with access limitation (password required)
+        // M365: Email rollout incomplete, affects 35 users for CRM integration
         
         const infraContainer = document.getElementById("infrastructure-chart");
         const infraWidth = infraContainer.offsetWidth || 250;
-        const infraHeight = infraContainer.offsetHeight || 120;
+        const infraHeight = infraContainer.offsetHeight || 160;
         
         const infrastructureChart = d3.select("#infrastructure-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(infraWidth, 250)} ${Math.max(infraHeight, 120)}`)
+            .attr("viewBox", `0 0 ${Math.max(infraWidth, 250)} ${Math.max(infraHeight, 160)}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
             
         const infrastructureX = d3.scaleLinear()
-            .domain([0, 20])
+            .domain([0, 40])
             .range([80, Math.max(infraWidth, 250) - 40]);
             
         const infrastructureY = d3.scaleBand()
             .domain(infrastructureData.map(d => d.label))
-            .range([10, Math.max(infraHeight, 120) - 10])
-            .padding(0.25);
+            .range([10, Math.max(infraHeight, 160) - 10])
+            .padding(0.18);
             
         infrastructureChart.selectAll("rect")
             .data(infrastructureData)
@@ -750,7 +762,7 @@ html {
             .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
             .attr("text-anchor", "end")
             .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, infraHeight * 0.13) + "px");
+            .attr("font-size", Math.min(7, infraHeight * 0.11) + "px");
     </script>
 <!-- Navigation -->
 <div class="nav-container">

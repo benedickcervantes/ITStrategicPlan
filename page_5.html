@@ -487,13 +487,35 @@ html {
 <p class="text-[#F4A261] text-xs font-semibold">Impact: Interrupted workflows, slow data transfers, unreliable internet access</p>
 </div>
 </div>
+<!-- Issue 5: M365 Email Incomplete -->
+<div class="issue-card p-4 flex items-start">
+<div class="icon-container bg-[#2F3E46] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
+<i class="fas fa-envelope" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
+</div>
+<div class="flex-1">
+<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">Microsoft 365 Email Rollout Incomplete (35 users)</h2>
+<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">M365 email migration not yet completed for 35 users. Required for Yondo CRM integration and corporate email standardization. User training needed for full adoption and productivity optimization.</p>
+<p class="text-[#2F3E46] text-xs font-semibold">Impact: Incomplete CRM integration, fragmented communication systems, reduced collaboration efficiency</p>
+</div>
+</div>
+<!-- Issue 6: System Access Limitations -->
+<div class="issue-card p-4 flex items-start">
+<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex-shrink-0" style="width: clamp(40px, 4vw, 60px); height: clamp(40px, 4vw, 60px);">
+<i class="fas fa-lock" style="font-size: clamp(16px, 1.8vw, 24px);"></i>
+</div>
+<div class="flex-1">
+<h2 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(14px, 1.6vw, 20px);">System Access & Monitoring Limitations</h2>
+<p class="text-[#2F3E46] mb-2" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.4;">Server and CCTV systems require admin passwords for access. Cannot verify server health, storage status, backup integrity, or enable cloud monitoring without credentials. Limits proactive issue detection and system optimization.</p>
+<p class="text-[#EE6C4D] text-xs font-semibold">Impact: Unable to assess system condition, verify backup integrity, enable remote monitoring, or proactively address potential issues</p>
+</div>
+</div>
 </div>
 <!-- Right Column: Data Visualization and Impact -->
 <div class="flex flex-col min-h-0 overflow-y-auto">
 <!-- Chart -->
 <div class="bg-white p-4 rounded-lg shadow-md mb-4 flex-shrink-0">
 <h3 class="font-bold text-[#2F3E46] mb-3" style="font-size: clamp(14px, 1.6vw, 18px);">Affected Units by Performance Issue</h3>
-<div class="w-full" id="performance-chart" style="height: clamp(180px, 25vh, 250px);"></div>
+<div class="w-full" id="performance-chart" style="height: clamp(220px, 30vh, 280px);"></div>
 </div>
 <!-- Impact on Productivity -->
 <div class="bg-white p-4 rounded-lg shadow-md flex-shrink-0">
@@ -521,6 +543,8 @@ html {
 <li>Increased IT support time troubleshooting issues</li>
 <li>Employee frustration leading to decreased morale</li>
 <li>Delayed project completion due to technical limitations</li>
+<li>Incomplete email system preventing full CRM integration</li>
+<li>Limited system visibility due to access restrictions</li>
 </ul>
 </div>
 </div>
@@ -539,40 +563,42 @@ html {
             {label: "Outdated Storage", value: 14, color: "#006D77"},
             {label: "Unlicensed Software", value: 16, color: "#EE6C4D"},
             {label: "System Instability", value: 6, color: "#EE6C4D"},
-            {label: "Network Issues", value: 18, color: "#F4A261"}
+            {label: "Network Issues", value: 18, color: "#F4A261"},
+            {label: "M365 Email Incomplete", value: 35, color: "#2F3E46"},
+            {label: "Access Limitations", value: 2, color: "#EE6C4D"}
         ];
         
         const chartContainer = document.getElementById("performance-chart");
         const chartWidth = chartContainer.offsetWidth || 400;
-        const chartHeight = chartContainer.offsetHeight || 200;
+        const chartHeight = chartContainer.offsetHeight || 250;
         
         const chart = d3.select("#performance-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(chartWidth, 400)} ${Math.max(chartHeight, 200)}`)
+            .attr("viewBox", `0 0 ${Math.max(chartWidth, 400)} ${Math.max(chartHeight, 250)}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
             
         const svgWidth = Math.max(chartWidth, 400);
-        const svgHeight = Math.max(chartHeight, 200);
+        const svgHeight = Math.max(chartHeight, 250);
         const margin = { top: 30, right: 20, bottom: 20, left: 100 };
         const chartWidthInner = svgWidth - margin.left - margin.right;
         const chartHeightInner = svgHeight - margin.top - margin.bottom;
         
         const x = d3.scaleLinear()
-            .domain([0, 20])
+            .domain([0, 40])
             .range([0, chartWidthInner]);
             
-        // Update domain to accommodate all values including Network Issues (18)
+        // Update domain to accommodate all values including M365 Email (35 users)
         const maxValue = d3.max(performanceData, d => d.value);
-        x.domain([0, Math.max(20, maxValue + 2)]);
+        x.domain([0, Math.max(40, maxValue + 5)]);
             
         // Note: System Instability affects 6 units, Unlicensed Software affects 16 units (both impact performance)
             
         const y = d3.scaleBand()
             .domain(performanceData.map(d => d.label))
             .range([0, chartHeightInner])
-            .padding(0.3);
+            .padding(0.2);
             
         const chartGroup = chart.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -621,7 +647,7 @@ html {
             .text(d => d.label)
             .attr("text-anchor", "end")
             .attr("fill", "#2F3E46")
-            .attr("font-size", "11px");
+            .attr("font-size", "10px");
             
         // Add a title for the chart
         chart.append("text")
