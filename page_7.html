@@ -161,6 +161,40 @@
             .grid-cols-3 {
                 grid-template-columns: 1fr !important;
             }
+            .goal-card {
+                margin-bottom: clamp(16px, 3vw, 24px) !important;
+                min-height: auto !important;
+            }
+            .icon-circle {
+                width: clamp(50px, 10vw, 70px) !important;
+                height: clamp(50px, 10vw, 70px) !important;
+                margin-bottom: clamp(12px, 2.5vw, 20px) !important;
+            }
+            .action-item {
+                margin-bottom: clamp(10px, 2vw, 14px) !important;
+            }
+            .action-item p {
+                font-size: clamp(10px, 1.3vw, 13px) !important;
+                line-height: 1.4 !important;
+            }
+            .action-icon {
+                min-width: clamp(18px, 3vw, 24px) !important;
+                width: clamp(18px, 3vw, 24px) !important;
+                height: clamp(18px, 3vw, 24px) !important;
+                margin-right: clamp(8px, 1.5vw, 12px) !important;
+            }
+            .goal-card h2 {
+                font-size: clamp(14px, 2.2vw, 20px) !important;
+                margin-bottom: clamp(12px, 2vw, 20px) !important;
+            }
+            .goal-card .mt-4 {
+                margin-top: clamp(12px, 2vw, 16px) !important;
+            }
+            .goal-card .mt-4 span {
+                font-size: clamp(9px, 1.1vw, 12px) !important;
+                padding: clamp(4px, 0.8vw, 8px) clamp(8px, 1.5vw, 12px) !important;
+                line-height: 1.3 !important;
+            }
             .grid-cols-5 {
                 grid-template-columns: 1fr !important;
             }
@@ -318,34 +352,55 @@
         h1 {
             font-family: 'Montserrat', sans-serif;
         }
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .action-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: clamp(8px, 1.2vw, 12px);
+        }
+        .action-icon {
+            min-width: clamp(20px, 2.5vw, 28px);
+            width: clamp(20px, 2.5vw, 28px);
+            height: clamp(20px, 2.5vw, 28px);
+            margin-right: clamp(8px, 1vw, 12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(12px, 1.4vw, 16px);
+            flex-shrink: 0;
+        }
+        .action-item p {
+            font-size: clamp(11px, 1.2vw, 14px);
+            line-height: 1.5;
+            margin: 0;
+        }
         .goal-card {
             background-color: white;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
-        }
-        .goal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            padding: clamp(16px, 2vw, 24px) !important;
         }
         .icon-circle {
-            width: 80px;
-            height: 80px;
+            width: clamp(60px, 8vw, 80px);
+            height: clamp(60px, 8vw, 80px);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
+            margin-bottom: clamp(16px, 2vw, 24px) !important;
         }
-        .action-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
+        .icon-circle i {
+            font-size: clamp(24px, 3vw, 32px) !important;
         }
-        .action-icon {
-            min-width: 24px;
-            margin-right: 8px;
+        .goal-card h2 {
+            font-size: clamp(16px, 2vw, 24px) !important;
+            margin-bottom: clamp(16px, 2vw, 24px) !important;
         }
     
 html {
@@ -446,12 +501,12 @@ html {
 <body>
 <div class="slide bg-gradient-to-br from-[#E0E1DD] to-[#EE6C4D]/10" style="padding: clamp(20px, 2.5vw, 40px);">
 <!-- Header -->
-<div class="mb-8">
-<h1 class="text-4xl font-bold text-[#2F3E46] mb-2">IT Strategic Goals for 2026</h1>
-<div class="w-32 h-1 bg-[#F4A261] rounded"></div>
+<div class="mb-4 flex-shrink-0">
+<h1 class="text-4xl font-bold text-[#2F3E46] mb-2" style="font-size: clamp(20px, 3vw, 36px);">IT Strategic Goals for 2026</h1>
+<div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 min-h-[520px]">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 min-h-0 overflow-hidden">
 <!-- Mitigate Critical Risks -->
 <div class="goal-card p-6 flex flex-col">
 <div class="icon-circle bg-[#006D77] text-white mb-6">
@@ -463,29 +518,29 @@ html {
 <div class="action-icon text-[#006D77]">
 <i class="fas fa-bolt"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Replace Critical Server UPS:</span> Immediate replacement of failing power protection</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Replace Critical Server UPS:</span> Immediate replacement of failing power protection</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#006D77]">
 <i class="fas fa-desktop"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Critical Systems:</span> Initiate RAM/SSD upgrades for critical users</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Upgrade Critical Systems:</span> Initiate RAM/SSD upgrades for critical users</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#006D77]">
 <i class="fas fa-network-wired"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Reinforce Network Infrastructure:</span> Strengthen network reliability and connectivity</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Reinforce Network Infrastructure:</span> Strengthen network reliability and connectivity</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#006D77]">
 <i class="fas fa-envelope"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Email Migration:</span> Migrate to Microsoft 365 with user training for Yondo CRM</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Email Migration:</span> Migrate to Microsoft 365 with user training for Yondo CRM</p>
 </div>
 </div>
 <div class="mt-4 text-center">
-<span class="inline-block bg-[#006D77]/10 text-[#006D77] px-3 py-1 rounded-full text-sm font-medium">
+<span class="inline-block bg-[#006D77]/10 text-[#006D77] px-3 py-1 rounded-full font-medium" style="font-size: clamp(9px, 1.1vw, 12px); padding: clamp(4px, 0.8vw, 8px) clamp(8px, 1.5vw, 12px); line-height: 1.3;">
                         Impact: Critical risk mitigation and immediate performance improvements
                     </span>
 </div>
@@ -501,29 +556,29 @@ html {
 <div class="action-icon text-[#EE6C4D]">
 <i class="fas fa-desktop"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Procure New Systems:</span> Replace 14 outdated computer systems</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Procure New Systems:</span> Replace 14 outdated computer systems</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#EE6C4D]">
 <i class="fas fa-cloud-upload-alt"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Cloud Migration:</span> Migrate physical server to cloud infrastructure</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Cloud Migration:</span> Migrate physical server to cloud infrastructure</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#EE6C4D]">
 <i class="fas fa-phone-alt"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Modernize Communications:</span> Implement Cloud PBX, SIP Trunking, and VoIP</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Modernize Communications:</span> Implement Cloud PBX, SIP Trunking, and VoIP</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#EE6C4D]">
 <i class="fas fa-globe"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Digital Presence:</span> Develop website for condominiums</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Digital Presence:</span> Develop website for condominiums</p>
 </div>
 </div>
 <div class="mt-4 text-center">
-<span class="inline-block bg-[#EE6C4D]/10 text-[#EE6C4D] px-3 py-1 rounded-full text-sm font-medium">
+<span class="inline-block bg-[#EE6C4D]/10 text-[#EE6C4D] px-3 py-1 rounded-full font-medium" style="font-size: clamp(9px, 1.1vw, 12px); padding: clamp(4px, 0.8vw, 8px) clamp(8px, 1.5vw, 12px); line-height: 1.3;">
                         Impact: Long-term modernization and sustainability
                     </span>
 </div>
@@ -539,29 +594,35 @@ html {
 <div class="action-icon text-[#F4A261]">
 <i class="fas fa-check-circle"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Regularize Software Licenses:</span> Acquire licenses for 16 unlicensed systems</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Regularize Software Licenses:</span> Acquire licenses for 16 unlicensed systems</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#F4A261]">
 <i class="fas fa-desktop"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Complete PC Upgrades:</span> RAM & SSD upgrades for remaining systems</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Complete PC Upgrades:</span> RAM & SSD upgrades for remaining systems</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#F4A261]">
 <i class="fas fa-tv"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Upgrade Monitors:</span> 18 units with existing monitors as second screens</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Upgrade Monitors:</span> 18 units with existing monitors as second screens</p>
 </div>
 <div class="action-item">
 <div class="action-icon text-[#F4A261]">
 <i class="fas fa-wifi"></i>
 </div>
-<p class="text-[#2F3E46]"><span class="font-semibold">Optimize Connectivity:</span> Consolidate ISPs and optimize landline services</p>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Optimize Connectivity:</span> Consolidate ISPs and optimize landline services</p>
+</div>
+<div class="action-item">
+<div class="action-icon text-[#F4A261]">
+<i class="fas fa-ticket-alt"></i>
+</div>
+<p class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px); line-height: 1.5;"><span class="font-semibold">Implement IT Ticketing System:</span> Deploy centralized support management for ticket tracking and performance metrics</p>
 </div>
 </div>
 <div class="mt-4 text-center">
-<span class="inline-block bg-[#F4A261]/10 text-[#F4A261] px-3 py-1 rounded-full text-sm font-medium">
+<span class="inline-block bg-[#F4A261]/10 text-[#F4A261] px-3 py-1 rounded-full font-medium" style="font-size: clamp(9px, 1.1vw, 12px); padding: clamp(4px, 0.8vw, 8px) clamp(8px, 1.5vw, 12px); line-height: 1.3;">
                         Impact: Medium-priority items with significant user impact
                     </span>
 </div>

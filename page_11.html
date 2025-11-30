@@ -472,7 +472,7 @@ html {
 <div class="col-span-1 md:col-span-3 flex flex-col gap-3 min-h-0 overflow-y-auto">
 <h2 class="font-bold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(18px, 2.2vw, 24px);">Expected Returns on Investment</h2>
 <!-- ROI Cards -->
-<div class="grid grid-cols-2 gap-3 flex-shrink-0" style="grid-template-rows: repeat(4, auto);">
+<div class="grid grid-cols-2 gap-3 flex-shrink-0" style="grid-template-rows: repeat(5, auto);">
 <!-- Productivity Card -->
 <div class="roi-card p-3 flex items-start">
 <div class="icon-container bg-[#006D77] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
@@ -561,6 +561,17 @@ html {
 <p class="text-[#006D77] text-xs font-semibold">Business Value: Enhanced operational visibility, proactive issue resolution, improved system reliability, remote monitoring capabilities, better security oversight</p>
 </div>
 </div>
+<!-- IT Ticketing System Card -->
+<div class="roi-card p-3 flex items-start">
+<div class="icon-container bg-[#F4A261] text-white mr-3 flex-shrink-0 flex items-center justify-center" style="width: clamp(40px, 4vw, 50px); height: clamp(40px, 4vw, 50px);">
+<i class="fas fa-ticket-alt" style="font-size: clamp(14px, 1.6vw, 20px);"></i>
+</div>
+<div class="flex-1">
+<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">IT Service Management Enhancement</h3>
+<p class="text-[#2F3E46] mb-1" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Implementation of IT ticketing system establishes centralized support management, automated ticket tracking, priority-based issue resolution, and comprehensive performance metrics. Enables data-driven IT support decisions, reduces response times, and improves overall IT service delivery efficiency.</p>
+<p class="text-[#F4A261] text-xs font-semibold">Business Value: Improved support response times, better issue tracking and prioritization, enhanced IT productivity, data-driven support decisions, reduced IT support overhead</p>
+</div>
+</div>
 </div>
 <!-- ROI Visualization -->
 <div class="roi-chart mt-2 bg-white rounded-lg p-3 shadow flex-shrink-0">
@@ -593,7 +604,11 @@ html {
 <p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Complete Microsoft 365 email migration for all 35 users with comprehensive user training to enable full Yondo CRM integration, standardized corporate communications, and enhanced collaboration capabilities. This unlocks complete CRM functionality and eliminates fragmented communication systems.</p>
 </div>
 <div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
-<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">6. Performance Monitoring &amp; Governance</h3>
+<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">6. IT Ticketing System Implementation (Q2 2026)</h3>
+<p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Deploy IT ticketing system in Phase 2 to establish structured IT support processes, centralized ticket tracking, priority-based issue resolution, and performance metrics. This enables data-driven IT support decisions, reduces response times, and improves overall IT service delivery efficiency.</p>
+</div>
+<div class="recommendation-item flex-shrink-0" style="border-left: 3px solid #F4A261; padding-left: clamp(12px, 1.5vw, 16px); margin-bottom: clamp(10px, 1.5vw, 16px);">
+<h3 class="font-bold text-[#2F3E46] mb-1" style="font-size: clamp(13px, 1.5vw, 18px);">7. Performance Monitoring &amp; Governance</h3>
 <p class="text-[#2F3E46]" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">Establish quarterly review cycles with key performance indicators (KPIs) to track implementation progress, measure return on investment, and enable data-driven decision-making for priority adjustments based on evolving business requirements.</p>
 </div>
 <div class="mt-auto p-3 bg-[#006D77]/10 rounded-lg border border-[#006D77]/20 flex-shrink-0">
@@ -603,8 +618,8 @@ html {
 </div>
 <p class="text-[#2F3E46] mb-2" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.4;">This strategic investment of ₱1,614,430 represents a critical enabler for organizational resilience, operational excellence, and sustainable competitive advantage in an increasingly digital business environment.</p>
 <div class="grid grid-cols-2 gap-2 text-xs text-[#2F3E46]">
-<div><strong>Immediate Benefits (0-6 months):</strong> Risk mitigation, regulatory compliance, operational efficiency improvements, system access restoration, M365 email completion</div>
-<div><strong>Sustained Value (12+ months):</strong> Scalable infrastructure foundation, optimized operational costs, digital transformation capabilities, full CRM integration, enhanced monitoring and visibility</div>
+<div><strong>Immediate Benefits (0-6 months):</strong> Risk mitigation, regulatory compliance, operational efficiency improvements, system access restoration, M365 email completion, IT ticketing system deployment</div>
+<div><strong>Sustained Value (12+ months):</strong> Scalable infrastructure foundation, optimized operational costs, digital transformation capabilities, full CRM integration, enhanced monitoring and visibility, structured IT service management</div>
 </div>
 </div>
 </div>
@@ -625,7 +640,8 @@ html {
             {category: "Network", value: 12, color: "#F4A261"},
             {category: "Modernization", value: 10, color: "#EE6C4D"},
             {category: "CRM Integration", value: 8, color: "#2F3E46"},
-            {category: "Visibility", value: 7, color: "#006D77"}
+            {category: "Visibility", value: 7, color: "#006D77"},
+            {category: "IT Service Mgmt", value: 6, color: "#F4A261"}
         ];
         
         const chartContainer = document.getElementById("roi-chart");
