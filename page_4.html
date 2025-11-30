@@ -475,20 +475,62 @@ html {
 <h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 20px);">Security &amp; Compliance Risks</h2>
 </div>
 <div class="flex-grow mb-3" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.5;">
-<div class="mb-3">
+<div class="mb-2">
 <p class="text-[#2F3E46] font-semibold mb-1">Unlicensed Software (16 systems)</p>
 <p class="text-[#2F3E46] text-xs">Windows and Microsoft Office running without valid licenses, exposing company to legal penalties and security vulnerabilities from unpatched systems.</p>
 </div>
-<div class="mb-3">
+<div class="mb-2">
 <p class="text-[#2F3E46] font-semibold mb-1">Critical UPS Failure</p>
 <p class="text-[#2F3E46] text-xs">Server UPS protecting Fujitsu Primergy RX1330 M3 is failing - IMMEDIATE replacement required to prevent data loss and server downtime.</p>
 </div>
-<div class="bg-[#EE6C4D]/10 p-2 rounded text-xs text-[#EE6C4D]">
-<strong>Risk Level:</strong> HIGH - Legal exposure, data loss risk, and potential business interruption
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Network Security Vulnerabilities (18 users)</p>
+<p class="text-[#2F3E46] text-xs">Unlabeled network cables, shared ports (3-4 users per port), and patch panel at capacity create security blind spots and make network troubleshooting difficult during security incidents.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">CCTV System Security & Access Issues</p>
+<p class="text-[#2F3E46] text-xs">HIKVISION DS-7616NI-Q2/16P NVR with 8 IP cameras - admin password unknown/not accessible. Cannot verify storage status, enable cloud monitoring (Hik-Connect), check recording status, or access security footage. Critical security monitoring gap prevents real-time threat detection and incident investigation.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Inadequate Data Backup Strategy</p>
+<p class="text-[#2F3E46] text-xs">Single external HDD (4TB) connected to server - no offsite backup, no cloud backup, no automated backup verification. Risk of complete data loss in case of fire, theft, or hardware failure.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Missing Security Policies & Tools</p>
+<p class="text-[#2F3E46] text-xs">No documented password policies, antivirus management unclear, no endpoint protection strategy, no security awareness training program. Compliance gaps for data protection regulations.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">WiFi Security Gaps</p>
+<p class="text-[#2F3E46] text-xs">2 WiFi access points (Ruijie Reyee RG-RAP2260) - no guest network separation, unclear access controls, potential unauthorized network access. 18 users experiencing network issues may indicate security misconfigurations.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">No Multi-Factor Authentication (MFA)</p>
+<p class="text-[#2F3E46] text-xs">Critical systems (server, network equipment, email) lack MFA protection. Single-factor authentication vulnerable to credential theft and unauthorized access. M365 email rollout incomplete (35 users) - opportunity to implement MFA during migration.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">No Incident Response Plan</p>
+<p class="text-[#2F3E46] text-xs">No documented procedures for security breaches, data leaks, or cyberattacks. No defined roles, escalation paths, or recovery procedures. Extended downtime and data loss risk in case of security incident.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Data Privacy & Compliance Gaps</p>
+<p class="text-[#2F3E46] text-xs">No clear data classification, retention policies, or privacy controls. Risk of non-compliance with Data Privacy Act of 2012 (Philippines). No data encryption strategy for sensitive information at rest or in transit.</p>
+</div>
+<div class="bg-[#EE6C4D]/10 p-2 rounded text-xs text-[#EE6C4D] mb-2">
+<strong>Risk Level:</strong> HIGH - Legal exposure, data loss risk, security vulnerabilities, compliance violations, and potential business interruption
+</div>
+<div class="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-[#EE6C4D] p-2 rounded text-xs">
+<strong class="text-[#EE6C4D]">⚠️ Critical Actions Required:</strong>
+<ul class="list-disc ml-4 mt-1 text-[#2F3E46]">
+<li>Immediate: Replace failing server UPS</li>
+<li>Phase 1: License all software (16 systems)</li>
+<li>Phase 1: Implement MFA for critical systems</li>
+<li>Phase 2: Establish backup & recovery procedures</li>
+<li>Phase 2: Document security policies & incident response plan</li>
+</ul>
 </div>
 </div>
 <div class="mt-auto flex-shrink-0">
-<div class="w-full" id="security-chart" style="height: clamp(80px, 12vh, 100px);"></div>
+<div class="w-full" id="security-chart" style="height: clamp(180px, 22vh, 200px);"></div>
 </div>
 </div>
 <!-- Infrastructure Deficiencies -->
@@ -513,19 +555,15 @@ html {
 <p class="text-[#2F3E46] text-xs">Unlabeled cables, shared ports (3-4 users per port), and patch panel at full capacity causing bandwidth competition.</p>
 </div>
 <div class="mb-2">
-<p class="text-[#2F3E46] font-semibold mb-1">CCTV System Access Limitation</p>
-<p class="text-[#2F3E46] text-xs">HIKVISION NVR requires admin password to access dashboard. Cannot verify storage status, enable cloud monitoring, or check current operational status without credentials.</p>
-</div>
-<div class="mb-2">
 <p class="text-[#2F3E46] font-semibold mb-1">Microsoft 365 Email Rollout Incomplete (35 users)</p>
 <p class="text-[#2F3E46] text-xs">M365 email migration not yet completed for 35 users. Required for Yondo CRM integration and corporate email standardization. User training needed for full adoption.</p>
 </div>
 <div class="bg-[#F4A261]/10 p-2 rounded text-xs text-[#F4A261]">
-<strong>Impact:</strong> Interrupted workflows, slow data transfers, increased troubleshooting time, limited security monitoring capabilities, incomplete CRM integration, fragmented communication systems
+<strong>Impact:</strong> Interrupted workflows, slow data transfers, increased troubleshooting time, incomplete CRM integration, fragmented communication systems
 </div>
 </div>
 <div class="mt-auto flex-shrink-0">
-<div class="w-full" id="infrastructure-chart" style="height: clamp(140px, 18vh, 160px);"></div>
+<div class="w-full" id="infrastructure-chart" style="height: clamp(120px, 15vh, 140px);"></div>
 </div>
 </div>
 </div>
@@ -612,18 +650,26 @@ html {
         // Security & Compliance Chart
         const securityData = [
             {label: "Unlicensed Software", value: 16},
+            {label: "Network Security Issues", value: 18},
+            {label: "WiFi Security Gaps", value: 2},
+            {label: "No MFA Protection", value: 1},
+            {label: "CCTV Security Issues", value: 1},
+            {label: "Inadequate Backup", value: 1},
+            {label: "Missing Security Policies", value: 1},
+            {label: "No Incident Response Plan", value: 1},
+            {label: "Compliance Gaps", value: 1},
             {label: "Failing Server UPS", value: 1}
         ];
         
         const secContainer = document.getElementById("security-chart");
         const secWidth = secContainer.offsetWidth || 250;
-        const secHeight = secContainer.offsetHeight || 100;
+        const secHeight = secContainer.offsetHeight || 200;
         
         const securityChart = d3.select("#security-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(secWidth, 250)} ${Math.max(secHeight, 100)}`)
+            .attr("viewBox", `0 0 ${Math.max(secWidth, 250)} ${Math.max(secHeight, 200)}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
             
         const securityX = d3.scaleLinear()
@@ -632,8 +678,8 @@ html {
             
         const securityY = d3.scaleBand()
             .domain(securityData.map(d => d.label))
-            .range([10, Math.max(secHeight, 100) - 10])
-            .padding(0.3);
+            .range([10, Math.max(secHeight, 200) - 10])
+            .padding(0.12);
             
         securityChart.selectAll("rect")
             .data(securityData)
@@ -681,30 +727,29 @@ html {
             .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
             .attr("text-anchor", "end")
             .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, secHeight * 0.18) + "px");
+            .attr("font-size", Math.min(6, secHeight * 0.09) + "px");
             
         // Infrastructure Chart
         const infrastructureData = [
             {label: "Display Issues", value: 18},
             {label: "Printer Problems", value: 2},
             {label: "Network Issues", value: 18},
-            {label: "CCTV Access Limitation", value: 1},
             {label: "M365 Email Incomplete", value: 35}
         ];
         
         // Note: Network Issues affect 18 units, with 15 users specifically needing check and fix
-        // CCTV: 1 NVR system with access limitation (password required)
         // M365: Email rollout incomplete, affects 35 users for CRM integration
+        // CCTV: Moved to Security & Compliance Risks section
         
         const infraContainer = document.getElementById("infrastructure-chart");
         const infraWidth = infraContainer.offsetWidth || 250;
-        const infraHeight = infraContainer.offsetHeight || 160;
+        const infraHeight = infraContainer.offsetHeight || 140;
         
         const infrastructureChart = d3.select("#infrastructure-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(infraWidth, 250)} ${Math.max(infraHeight, 160)}`)
+            .attr("viewBox", `0 0 ${Math.max(infraWidth, 250)} ${Math.max(infraHeight, 140)}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
             
         const infrastructureX = d3.scaleLinear()
@@ -713,8 +758,8 @@ html {
             
         const infrastructureY = d3.scaleBand()
             .domain(infrastructureData.map(d => d.label))
-            .range([10, Math.max(infraHeight, 160) - 10])
-            .padding(0.18);
+            .range([10, Math.max(infraHeight, 140) - 10])
+            .padding(0.2);
             
         infrastructureChart.selectAll("rect")
             .data(infrastructureData)

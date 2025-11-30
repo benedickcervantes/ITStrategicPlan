@@ -166,8 +166,25 @@
                 grid-template-columns: 1fr !important;
             }
             .budget-card, .category-card, .issue-card, .risk-card, .goal-card, .phase-card, .inventory-card, .info-card {
-                padding: clamp(12px, 3vw, 20px) !important;
-                margin-bottom: 12px;
+                padding: clamp(16px, 4vw, 24px) !important;
+                margin-bottom: clamp(16px, 4vw, 24px) !important;
+                min-height: auto !important;
+            }
+            .risk-card {
+                min-height: auto !important;
+                max-height: none !important;
+            }
+            .icon-container {
+                width: clamp(40px, 8vw, 60px) !important;
+                height: clamp(40px, 8vw, 60px) !important;
+            }
+            .impact-icon {
+                width: clamp(32px, 6vw, 40px) !important;
+                height: clamp(32px, 6vw, 40px) !important;
+                margin-right: clamp(10px, 2vw, 14px) !important;
+            }
+            .impact-item {
+                margin-bottom: clamp(10px, 2vw, 14px) !important;
             }
             h1, h2 {
                 margin-bottom: clamp(8px, 2vw, 16px) !important;
@@ -182,7 +199,34 @@
                 gap: clamp(12px, 3vw, 24px) !important;
             }
             .gap-6 {
-                gap: clamp(10px, 2.5vw, 20px) !important;
+                gap: clamp(16px, 4vw, 24px) !important;
+            }
+            /* Main content grid for mobile */
+            .flex-grow.grid {
+                gap: clamp(16px, 4vw, 24px) !important;
+                max-height: none !important;
+                overflow-y: visible !important;
+                padding-right: 0 !important;
+            }
+            /* Risk card content adjustments */
+            .risk-card h2 {
+                font-size: clamp(16px, 4vw, 20px) !important;
+            }
+            .risk-card p {
+                font-size: clamp(13px, 3.5vw, 15px) !important;
+                line-height: 1.6 !important;
+            }
+            .risk-card h3 {
+                font-size: clamp(14px, 3.5vw, 16px) !important;
+                margin-bottom: clamp(10px, 2vw, 14px) !important;
+            }
+            .risk-card span {
+                font-size: clamp(12px, 3vw, 14px) !important;
+                line-height: 1.5 !important;
+            }
+            .risk-card .bg-\[#.*\]\/10 {
+                padding: clamp(12px, 3vw, 16px) !important;
+                font-size: clamp(11px, 2.8vw, 13px) !important;
             }
             .gap-4 {
                 gap: clamp(8px, 2vw, 16px) !important;
@@ -248,14 +292,75 @@
                 opacity: 1 !important;
                 font-size: clamp(11px, 3vw, 13px) !important;
             }
+            /* Footer text wrapping on mobile */
+            .mt-auto.flex {
+                flex-direction: column !important;
+                gap: clamp(8px, 2vw, 12px) !important;
+                text-align: center !important;
+            }
+            .mt-auto.flex > div {
+                width: 100% !important;
+            }
+            .mt-auto.flex > div.text-right {
+                text-align: center !important;
+            }
+            /* Prevent horizontal scroll on mobile */
+            body, html {
+                overflow-x: hidden !important;
+            }
+            .slide {
+                overflow-x: hidden !important;
+            }
+            /* Better padding for small screens */
+            @media (max-width: 360px) {
+                .risk-card {
+                    padding: clamp(12px, 3vw, 16px) !important;
+                }
+                .risk-card h2 {
+                    font-size: clamp(14px, 4vw, 16px) !important;
+                }
+                .risk-card p {
+                    font-size: clamp(11px, 3vw, 13px) !important;
+                }
+            }
         }
         @media (max-width: 480px) {
             .slide {
-                padding: 10px !important;
+                padding: clamp(12px, 3vw, 16px) !important;
             }
             h1 {
-                font-size: clamp(18px, 7vw, 24px) !important;
-                line-height: 1.2;
+                font-size: clamp(20px, 6vw, 28px) !important;
+                line-height: 1.3;
+                margin-bottom: clamp(12px, 3vw, 16px) !important;
+            }
+            .risk-card {
+                padding: clamp(14px, 3.5vw, 20px) !important;
+                border-radius: 10px !important;
+            }
+            .risk-card h2 {
+                font-size: clamp(15px, 4vw, 18px) !important;
+            }
+            .risk-card p {
+                font-size: clamp(12px, 3.2vw, 14px) !important;
+                margin-bottom: clamp(10px, 2.5vw, 14px) !important;
+            }
+            .icon-container {
+                width: clamp(36px, 7vw, 50px) !important;
+                height: clamp(36px, 7vw, 50px) !important;
+            }
+            .icon-container i {
+                font-size: clamp(16px, 4vw, 24px) !important;
+            }
+            .impact-icon {
+                width: clamp(28px, 5.5vw, 36px) !important;
+                height: clamp(28px, 5.5vw, 36px) !important;
+            }
+            .impact-icon i {
+                font-size: clamp(11px, 2.5vw, 14px) !important;
+            }
+            .risk-card .bg-\[#.*\]\/10 {
+                padding: clamp(10px, 2.5vw, 14px) !important;
+                font-size: clamp(10px, 2.5vw, 12px) !important;
             }
             h2 {
                 font-size: clamp(16px, 6vw, 20px) !important;
@@ -307,13 +412,61 @@
         }
         @media (max-width: 480px) and (orientation: landscape) {
             .slide {
-                padding: 8px !important;
+                padding: clamp(10px, 2vw, 14px) !important;
             }
             .mb-8 {
-                margin-bottom: 12px !important;
+                margin-bottom: clamp(12px, 2vw, 16px) !important;
             }
             .mb-4 {
-                margin-bottom: 8px !important;
+                margin-bottom: clamp(10px, 2vw, 14px) !important;
+            }
+            .risk-card {
+                padding: clamp(12px, 2.5vw, 16px) !important;
+                min-height: auto !important;
+            }
+            .risk-card h2 {
+                font-size: clamp(14px, 3vw, 16px) !important;
+            }
+            .risk-card p {
+                font-size: clamp(11px, 2.5vw, 13px) !important;
+            }
+        }
+        /* Tablet specific adjustments */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .risk-card {
+                min-height: 380px !important;
+            }
+            .risk-card h2 {
+                font-size: clamp(17px, 2.2vw, 22px) !important;
+            }
+            .risk-card p {
+                font-size: clamp(13px, 1.6vw, 15px) !important;
+            }
+        }
+        /* Better touch targets for mobile */
+        @media (max-width: 768px) {
+            .impact-item {
+                padding: clamp(4px, 1vw, 8px) 0 !important;
+                min-height: 44px !important; /* Better touch target */
+            }
+            .risk-card .mb-3 {
+                margin-bottom: clamp(12px, 3vw, 18px) !important;
+            }
+            /* Chart container adjustments */
+            #unlicensed-chart {
+                height: clamp(80px, 12vh, 110px) !important;
+            }
+            /* Ensure proper spacing between cards */
+            .risk-card + .risk-card {
+                margin-top: clamp(16px, 4vw, 24px) !important;
+            }
+            /* Better text readability */
+            .risk-card {
+                line-height: 1.6 !important;
+            }
+            /* Icon sizing for mobile */
+            .icon-container i {
+                font-size: clamp(18px, 4.5vw, 28px) !important;
             }
         }
         h1 {
@@ -321,12 +474,16 @@
         }
         .risk-card {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
         }
         .risk-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
         }
         .icon-container {
             width: 70px;
@@ -455,7 +612,7 @@ html {
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4 min-h-0 overflow-hidden">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6 min-h-0 overflow-y-auto" style="max-height: calc(100vh - 180px); padding-right: 8px;" id="main-content-grid">
 <!-- Unlicensed Software Risk -->
 <div class="risk-card p-4 flex flex-col overflow-y-auto">
 <div class="flex items-center mb-3 flex-shrink-0">
@@ -465,9 +622,9 @@ html {
 <h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Unlicensed Software</h2>
 </div>
 <div class="mb-3 flex-shrink-0">
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(12px, 1.4vw, 18px); line-height: 1.4;">16 systems are running unlicensed or cracked versions of Windows and Microsoft Office, representing 57% of the total audited systems (28-30 users).</p>
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">16 systems are running unlicensed or cracked versions of Windows and Microsoft Office, representing <strong>57% of the total audited systems</strong> (28-30 users).</p>
 <div class="w-full mb-2" id="unlicensed-chart" style="height: clamp(100px, 15vh, 130px);"></div>
-<div class="bg-[#EE6C4D]/10 p-2 rounded text-xs text-[#EE6C4D] mb-2">
+<div class="bg-[#EE6C4D]/10 p-3 rounded-lg border-l-4 border-[#EE6C4D] text-sm text-[#EE6C4D] mb-3">
 <strong>Compliance Status:</strong> Non-compliant - Immediate action required in Phase 2
 </div>
 </div>
@@ -477,25 +634,25 @@ html {
 <div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-gavel" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Legal penalties and compliance violations - Risk of fines and legal action from Microsoft</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Legal penalties and compliance violations - Risk of fines and legal action from Microsoft</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-user-secret" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Increased vulnerability to cyberattacks - No security updates or patches available</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Increased vulnerability to cyberattacks - No security updates or patches available</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-database" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">System instability and crashes - Unlicensed software causing compatibility issues</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">System instability and crashes - Unlicensed software causing compatibility issues</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-ban" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">No technical support - Unable to receive official Microsoft support for critical issues</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">No technical support - Unable to receive official Microsoft support for critical issues</span>
 </div>
 </div>
 </div>
@@ -508,7 +665,7 @@ html {
 <h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Failing Server UPS</h2>
 </div>
 <div class="mb-3 flex-shrink-0">
-<p class="text-[#2F3E46] mb-2" style="font-size: clamp(12px, 1.4vw, 18px); line-height: 1.4;">The APC UPS unit protecting the Fujitsu Primergy RX1330 M3 Rack Server is failing and requires <strong>IMMEDIATE replacement</strong> in Phase 1. Recommended: 2200 VA or 3000 VA capacity for critical network infrastructure protection.</p>
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">The APC UPS unit protecting the <strong>Fujitsu Primergy RX1330 M3 Rack Server</strong> is failing and requires <strong class="text-[#EE6C4D]">IMMEDIATE replacement</strong> in Phase 1. Recommended: <strong>2200 VA or 3000 VA capacity</strong> for critical network infrastructure protection.</p>
 <div class="flex flex-col items-center mb-3" style="height: clamp(100px, 15vh, 130px);">
 <div class="relative mb-2" style="width: clamp(120px, 15vw, 160px); height: clamp(100px, 12vh, 120px);">
 <div class="absolute inset-0 flex items-center justify-center z-10">
@@ -520,7 +677,7 @@ html {
 </div>
 <span class="bg-[#EE6C4D] text-white px-2 py-0.5 rounded-full font-bold" style="font-size: clamp(10px, 1.2vw, 14px);">Critical - Phase 1</span>
 </div>
-<div class="bg-[#006D77]/10 p-2 rounded text-xs text-[#006D77] mb-2">
+<div class="bg-[#006D77]/10 p-3 rounded-lg border-l-4 border-[#006D77] text-sm text-[#006D77] mb-3">
 <strong>Priority:</strong> Highest - Address immediately to prevent server failure and data loss
 </div>
 </div>
@@ -530,25 +687,277 @@ html {
 <div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-clock" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">High risk of data loss during power outages - No protection for critical server</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">High risk of data loss during power outages - No protection for critical server</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-business-time" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Extended system downtime affecting business continuity - Network services at risk</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Extended system downtime affecting business continuity - Network services at risk</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-shield-alt" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Compromised backup systems and data integrity - External storage at risk</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Compromised backup systems and data integrity - External storage at risk</span>
 </div>
 <div class="impact-item" style="margin-bottom: 8px;">
 <div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
 <i class="fas fa-exclamation-circle" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
 </div>
-<span class="text-[#2F3E46]" style="font-size: clamp(11px, 1.2vw, 14px);">Potential hardware damage from power surges or sudden shutdowns</span>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Potential hardware damage from power surges or sudden shutdowns</span>
+</div>
+    </div>
+</div>
+<!-- Network Security Vulnerabilities Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#F4A261] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-network-wired" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Network Security Vulnerabilities</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;"><strong>18 users</strong> affected by network infrastructure issues: unlabeled cables, shared ports (3-4 users per port), patch panel at capacity. Creates <strong>security blind spots</strong> and complicates incident response.</p>
+<div class="bg-[#F4A261]/10 p-3 rounded-lg border-l-4 border-[#F4A261] text-sm text-[#F4A261] mb-3">
+<strong>Priority:</strong> High - Address in Phase 2 for network security hardening
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-search" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Security blind spots - Cannot trace network issues during security incidents</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-users" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Shared network ports increase attack surface - One compromised device affects multiple users</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-tools" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Delayed incident response - Unlabeled cables slow down troubleshooting and isolation</span>
+</div>
+</div>
+</div>
+<!-- CCTV Security Issues Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#2F3E46] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-video" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">CCTV Security Issues</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;"><strong>HIKVISION DS-7616NI-Q2/16P NVR</strong> with 8 IP cameras - admin password unknown/not accessible. Cannot verify storage, enable cloud monitoring, or access security footage for incident investigation.</p>
+<div class="bg-[#2F3E46]/10 p-3 rounded-lg border-l-4 border-[#2F3E46] text-sm text-[#2F3E46] mb-3">
+<strong>Priority:</strong> High - Critical security monitoring gap
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#2F3E46]/20 text-[#2F3E46]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-eye-slash" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">No real-time threat detection - Cannot monitor security events as they occur</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#2F3E46]/20 text-[#2F3E46]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-file-video" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Cannot access footage for incident investigation - Evidence collection compromised</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#2F3E46]/20 text-[#2F3E46]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-cloud" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">No cloud monitoring enabled - Cannot access remotely or receive alerts</span>
+</div>
+</div>
+</div>
+<!-- Inadequate Backup Strategy Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-database" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Inadequate Backup Strategy</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">Single external HDD (<strong>4TB Seagate Backup Plus Hub</strong>) connected to server. <strong>No offsite backup, no cloud backup, no automated verification.</strong> Complete data loss risk in case of fire, theft, or hardware failure.</p>
+<div class="bg-[#EE6C4D]/10 p-3 rounded-lg border-l-4 border-[#EE6C4D] text-sm text-[#EE6C4D] mb-3">
+<strong>Priority:</strong> Critical - Address in Phase 2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-fire" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Complete data loss in disaster scenarios - Fire, flood, or theft would destroy all backups</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-check-circle" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">No backup verification - Cannot confirm backup integrity or successful restoration</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-clock" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Manual backup process - Risk of human error and missed backups</span>
+</div>
+</div>
+</div>
+<!-- Missing MFA Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#006D77] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-key" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">No Multi-Factor Authentication</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">Critical systems (server, network equipment, email) <strong>lack MFA protection</strong>. Single-factor authentication vulnerable to credential theft. M365 email rollout incomplete (<strong>35 users</strong>) - opportunity to implement MFA during migration.</p>
+<div class="bg-[#006D77]/10 p-3 rounded-lg border-l-4 border-[#006D77] text-sm text-[#006D77] mb-3">
+<strong>Priority:</strong> High - Implement in Phase 1-2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-user-shield" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Unauthorized access risk - Stolen or compromised passwords grant full system access</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-server" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Server and network equipment vulnerable - Single password compromise = full network access</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-envelope" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Email account takeover risk - Phishing attacks can compromise entire email system</span>
+</div>
+</div>
+</div>
+<!-- Missing Security Policies Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#EE6C4D] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-file-alt" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">Missing Security Policies</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">No documented password policies, antivirus management unclear, no endpoint protection strategy, no security awareness training program. <strong>Compliance gaps</strong> for data protection regulations including <strong>Data Privacy Act of 2012 (Philippines)</strong>.</p>
+<div class="bg-[#EE6C4D]/10 p-3 rounded-lg border-l-4 border-[#EE6C4D] text-sm text-[#EE6C4D] mb-3">
+<strong>Priority:</strong> High - Address in Phase 2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-balance-scale" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Compliance violations - Risk of penalties under Data Privacy Act of 2012</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-shield-virus" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Inconsistent security practices - No standardized approach to endpoint protection</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#EE6C4D]/20 text-[#EE6C4D]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-user-graduate" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Human error risk - No security awareness training increases phishing/social engineering vulnerability</span>
+</div>
+</div>
+</div>
+<!-- No Incident Response Plan Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#F4A261] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-exclamation-triangle" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">No Incident Response Plan</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;">No documented procedures for security breaches, data leaks, or cyberattacks. <strong>No defined roles, escalation paths, or recovery procedures.</strong> Extended downtime and data loss risk in case of security incident.</p>
+<div class="bg-[#F4A261]/10 p-3 rounded-lg border-l-4 border-[#F4A261] text-sm text-[#F4A261] mb-3">
+<strong>Priority:</strong> High - Address in Phase 2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-hourglass-half" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Extended incident response time - No clear procedures delay containment and recovery</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-users-cog" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Unclear responsibilities - No defined roles lead to confusion during security incidents</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#F4A261]/20 text-[#F4A261]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-chart-line" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Increased business impact - Delayed response increases financial and reputational damage</span>
+</div>
+</div>
+</div>
+<!-- WiFi Security Gaps Risk -->
+<div class="risk-card p-4 flex flex-col overflow-y-auto">
+<div class="flex items-center mb-3 flex-shrink-0">
+<div class="icon-container bg-[#006D77] text-white mr-3 flex items-center justify-center" style="width: clamp(50px, 5vw, 70px); height: clamp(50px, 5vw, 70px);">
+<i class="fas fa-wifi" style="font-size: clamp(20px, 2.5vw, 32px);"></i>
+</div>
+<h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(16px, 2vw, 24px);">WiFi Security Gaps</h2>
+</div>
+<div class="mb-3 flex-shrink-0">
+<p class="text-[#2F3E46] mb-3" style="font-size: clamp(13px, 1.5vw, 16px); line-height: 1.6;"><strong>2 WiFi access points</strong> (Ruijie Reyee RG-RAP2260) - <strong>no guest network separation</strong>, unclear access controls, potential unauthorized network access. 18 users experiencing network issues may indicate security misconfigurations.</p>
+<div class="bg-[#006D77]/10 p-3 rounded-lg border-l-4 border-[#006D77] text-sm text-[#006D77] mb-3">
+<strong>Priority:</strong> Medium-High - Address in Phase 2
+</div>
+</div>
+<h3 class="font-semibold text-[#006D77] mb-2 flex-shrink-0" style="font-size: clamp(14px, 1.6vw, 20px);">Associated Risks:</h3>
+<div class="grid grid-cols-1 gap-1.5 flex-shrink-0">
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-user-friends" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Unauthorized network access - Visitors/guests can access internal network resources</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-lock" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Weak or default WiFi passwords - Easy for attackers to gain network access</span>
+</div>
+<div class="impact-item" style="margin-bottom: 8px;">
+<div class="impact-icon bg-[#006D77]/20 text-[#006D77]" style="width: clamp(28px, 3vw, 36px); height: clamp(28px, 3vw, 36px);">
+<i class="fas fa-network-wired" style="font-size: clamp(12px, 1.4vw, 16px);"></i>
+</div>
+<span class="text-[#2F3E46]" style="font-size: clamp(12px, 1.3vw, 15px); line-height: 1.5;">Network segmentation failure - No isolation between guest and corporate networks</span>
 </div>
 </div>
 </div>
@@ -556,7 +965,7 @@ html {
 <!-- Footer -->
 <div class="mt-auto pt-2 flex justify-between items-center text-[#2F3E46] opacity-70 flex-shrink-0" style="font-size: clamp(9px, 1.1vw, 13px); gap: 10px;">
 <div class="flex-1">
-<p>Immediate action required to mitigate these security vulnerabilities</p>
+<p><strong>10 Critical Security Risks Identified</strong> - Immediate action required to mitigate vulnerabilities and ensure compliance</p>
 </div>
 <div class="text-right flex-shrink-0">
 <p>IT Equipment Audit Report, November 2025</p>
@@ -750,5 +1159,35 @@ html {
             goToPage(11);
         }
     });
+    
+    // Mobile-specific optimizations
+    function optimizeForMobile() {
+        const isMobile = window.innerWidth <= 768;
+        const mainGrid = document.getElementById('main-content-grid');
+        
+        if (isMobile && mainGrid) {
+            // Remove max-height constraint on mobile for better scrolling
+            mainGrid.style.maxHeight = 'none';
+            mainGrid.style.overflowY = 'visible';
+            
+            // Ensure cards are full width on mobile
+            const riskCards = document.querySelectorAll('.risk-card');
+            riskCards.forEach(card => {
+                card.style.width = '100%';
+                card.style.maxWidth = '100%';
+            });
+        }
+    }
+    
+    // Run on load and resize
+    optimizeForMobile();
+    window.addEventListener('resize', optimizeForMobile);
+    
+    // Smooth scroll for mobile navigation
+    if (window.innerWidth <= 768) {
+        document.querySelectorAll('.risk-card').forEach((card, index) => {
+            card.style.scrollMarginTop = '20px';
+        });
+    }
 </script>
 </body></html>
