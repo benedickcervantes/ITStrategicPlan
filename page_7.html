@@ -384,6 +384,27 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             height: 100%;
             padding: clamp(16px, 2vw, 24px) !important;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        /* Custom scrollbar styling */
+        .goal-card::-webkit-scrollbar,
+        .flex-grow::-webkit-scrollbar {
+            width: 4px;
+        }
+        .goal-card::-webkit-scrollbar-track,
+        .flex-grow::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 2px;
+        }
+        .goal-card::-webkit-scrollbar-thumb,
+        .flex-grow::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 2px;
+        }
+        .goal-card::-webkit-scrollbar-thumb:hover,
+        .flex-grow::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.3);
         }
         .icon-circle {
             width: clamp(60px, 8vw, 80px);
@@ -394,9 +415,11 @@
             justify-content: center;
             margin: 0 auto;
             margin-bottom: clamp(16px, 2vw, 24px) !important;
+            flex-shrink: 0;
         }
         .icon-circle i {
-            font-size: clamp(24px, 3vw, 32px) !important;
+            font-size: clamp(28px, 3.5vw, 40px) !important;
+            line-height: 1;
         }
         .goal-card h2 {
             font-size: clamp(16px, 2vw, 24px) !important;
@@ -506,11 +529,11 @@ html {
 <div class="h-1 bg-[#F4A261] rounded" style="width: clamp(80px, 10vw, 128px);"></div>
 </div>
 <!-- Main Content -->
-<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 min-h-0 overflow-hidden">
+<div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 min-h-0 overflow-y-auto" style="overflow-y: auto; -webkit-overflow-scrolling: touch;">
 <!-- Mitigate Critical Risks -->
 <div class="goal-card p-6 flex flex-col">
 <div class="icon-circle bg-[#006D77] text-white mb-6">
-<i class="fas fa-exclamation-triangle text-4xl"></i>
+<i class="fas fa-exclamation-triangle"></i>
 </div>
 <h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Mitigate Critical Risks</h2>
 <div class="flex-grow">
@@ -548,7 +571,7 @@ html {
 <!-- Strategic Modernization -->
 <div class="goal-card p-6 flex flex-col">
 <div class="icon-circle bg-[#EE6C4D] text-white mb-6">
-<i class="fas fa-rocket text-4xl"></i>
+<i class="fas fa-rocket"></i>
 </div>
 <h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Strategic Modernization</h2>
 <div class="flex-grow">
@@ -586,7 +609,7 @@ html {
 <!-- Systematic Upgrades -->
 <div class="goal-card p-6 flex flex-col">
 <div class="icon-circle bg-[#F4A261] text-white mb-6">
-<i class="fas fa-tools text-4xl"></i>
+<i class="fas fa-tools"></i>
 </div>
 <h2 class="text-2xl font-bold text-[#2F3E46] text-center mb-6">Systematic Upgrades</h2>
 <div class="flex-grow">
