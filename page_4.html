@@ -450,20 +450,32 @@ html {
 <h2 class="font-bold text-[#2F3E46]" style="font-size: clamp(14px, 1.6vw, 20px);">Performance Bottlenecks</h2>
 </div>
 <div class="flex-grow mb-3" style="font-size: clamp(10px, 1.1vw, 14px); line-height: 1.5;">
-<div class="mb-3">
+<div class="mb-2">
 <p class="text-[#2F3E46] font-semibold mb-1">RAM Deficiency (17 units)</p>
 <p class="text-[#2F3E46] text-xs">Operating with only 8GB RAM, causing application crashes and limiting multitasking. Modern applications require 16GB minimum.</p>
 </div>
-<div class="mb-3">
+<div class="mb-2">
 <p class="text-[#2F3E46] font-semibold mb-1">Storage Issues (14 units)</p>
 <p class="text-[#2F3E46] text-xs">HDD or low-capacity SSD causing 5-10 minute boot times and slow application loading (2-5 minutes per app).</p>
 </div>
-<div class="bg-[#006D77]/10 p-2 rounded text-xs text-[#006D77]">
-<strong>Impact:</strong> Estimated 15-20% productivity loss due to system lag and wait times
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Graphics Card Deficiency (16 units)</p>
+<p class="text-[#2F3E46] text-xs"><strong>High Priority for Engineers:</strong> Critical for AutoCAD and CAD software users - missing or outdated graphics cards cause slow rendering, poor 3D performance, and workflow interruptions. <strong>General Users:</strong> Recommended for dual monitor setup to improve productivity, but not critical for standard office applications.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">System Instability & Freezes (6 units)</p>
+<p class="text-[#2F3E46] text-xs">Frequent system freezes and crashes requiring forced restarts. Contributing factors: unlicensed software, hardware incompatibility, and outdated drivers.</p>
+</div>
+<div class="mb-2">
+<p class="text-[#2F3E46] font-semibold mb-1">Outdated Hardware (14 units)</p>
+<p class="text-[#2F3E46] text-xs">14 systems recommended for complete replacement due to age and cumulative performance issues. Cost of upgrades may exceed replacement value.</p>
+</div>
+<div class="bg-[#006D77]/10 p-3 rounded-lg border-l-4 border-[#006D77] text-xs text-[#006D77]">
+<strong>Impact:</strong> Estimated 15-20% productivity loss due to system lag, wait times, crashes, and inability to run modern software efficiently
 </div>
 </div>
 <div class="mt-auto flex-shrink-0">
-<div class="w-full" id="performance-chart" style="height: clamp(80px, 12vh, 100px);"></div>
+<div class="w-full" id="performance-chart" style="height: clamp(140px, 18vh, 180px);"></div>
 </div>
 </div>
 <!-- Security &amp; Compliance Risks -->
@@ -576,18 +588,21 @@ html {
         // Performance Bottlenecks Chart
         const performanceData = [
             {label: "Insufficient RAM", value: 17},
-            {label: "Outdated Storage", value: 14}
+            {label: "Outdated Storage", value: 14},
+            {label: "Graphics Card Issues", value: 16},
+            {label: "System Instability", value: 6},
+            {label: "Outdated Hardware", value: 14}
         ];
         
         const perfContainer = document.getElementById("performance-chart");
         const perfWidth = perfContainer.offsetWidth || 250;
-        const perfHeight = perfContainer.offsetHeight || 100;
+        const perfHeight = perfContainer.offsetHeight || 180;
         
         const performanceChart = d3.select("#performance-chart")
             .append("svg")
             .attr("width", "100%")
             .attr("height", "100%")
-            .attr("viewBox", `0 0 ${Math.max(perfWidth, 250)} ${Math.max(perfHeight, 100)}`)
+            .attr("viewBox", `0 0 ${Math.max(perfWidth, 250)} ${Math.max(perfHeight, 180)}`)
             .attr("preserveAspectRatio", "xMidYMid meet");
             
         const performanceX = d3.scaleLinear()
@@ -596,8 +611,8 @@ html {
             
         const performanceY = d3.scaleBand()
             .domain(performanceData.map(d => d.label))
-            .range([10, Math.max(perfHeight, 100) - 10])
-            .padding(0.3);
+            .range([10, Math.max(perfHeight, 180) - 10])
+            .padding(0.18);
             
         performanceChart.selectAll("rect")
             .data(performanceData)
@@ -645,7 +660,7 @@ html {
             .text(d => d.label.length > 15 ? d.label.substring(0, 12) + "..." : d.label)
             .attr("text-anchor", "end")
             .attr("fill", "#2F3E46")
-            .attr("font-size", Math.min(9, perfHeight * 0.18) + "px");
+            .attr("font-size", Math.min(7, perfHeight * 0.11) + "px");
             
         // Security & Compliance Chart
         const securityData = [
